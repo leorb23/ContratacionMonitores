@@ -194,9 +194,17 @@ public class ContratacionMonitores {
          * El metodo elimina un monitor registrado en el sistema
          * @param identificacion != null && != ""
          */
-        public void eliminarEstudiante(String identificacion)
+        public void eliminarEstudiante(String identificacion) throws Exception
         {
-		
+            Monitor buscar = buscarEstudiante(identificacion );
+                if( buscar != null )
+                {                   
+                    monitores.remove(buscar);
+                }
+                else
+                {
+                    throw new Exception("El Estudiante que desea eliminar no existe!!!");
+                }		
 	}
         
         /**
