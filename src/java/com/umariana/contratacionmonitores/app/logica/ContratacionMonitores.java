@@ -172,11 +172,11 @@ public class ContratacionMonitores {
                 }
                 else
                 {
-                    buscado.setNombre(nombre);
-                    buscado.setApellido(apellido);                    
+                    buscado.setNombres(nombre);
+                    buscado.setApellidos(apellido);                    
                     buscado.setFoto(foto);
-                    buscado.setPromedio(promedioAcum);
-                    buscado.setSemestre(semestre);                    
+                    buscado.setPromedioAcumulado(promedioAcum);
+                    buscado.setSemestreActual(semestre);                    
                     
                 }
 	}
@@ -204,18 +204,17 @@ public class ContratacionMonitores {
          */
         public Monitor buscarEstudiante(String identificacion)
         {
-				Monitor monitorBuscado = null;
-				for (int i=0;i<monitores.size() ;i++ ) {
-					monitorBuscado=monitores.getIndex(i);
-					if(monitorBuscado.getIdentificacion().equals(identificacion))
-					{
-						return monitorBuscado
-					}
-					monitorBuscado = null;
-				}
+            Monitor monitorBuscado = null;
+            for (int i=0;i < monitores.size() ;i++ ) {
+		monitorBuscado = monitores.get(i);
+		if(monitorBuscado.getIdentificacion().equals(identificacion))
+		{
+                    i = monitores.size();
+		}
+            }
 
-                return monitorBuscado;
-		}    
+            return monitorBuscado;
+	}    
         
         /**
 	 * El metodo se encarga de agregar una Dependencia en el sistema

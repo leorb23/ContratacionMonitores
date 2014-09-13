@@ -6,8 +6,7 @@ public class Monitor
 {
     //
     //ATRIBUTOS
-    //
-    
+    // 
         /**
 	 * Es el monitor 
 	 */
@@ -71,6 +70,94 @@ public class Monitor
         puntajePrueba = puntPrueba;
         puntajeEntrevista = puntEntrev;
         puntajePromedio = nPuntProm;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getEstadoMatricula() {
+        return estadoMatricula;
+    }
+
+    public void setEstadoMatricula(String estadoMatricula) {
+        this.estadoMatricula = estadoMatricula;
+    }
+
+    public File getFoto() {
+        return foto;
+    }
+
+    public void setFoto(File foto) {
+        this.foto = foto;
+    }
+
+    public double getPromedioAcumulado() {
+        return promedioAcumulado;
+    }
+
+    public void setPromedioAcumulado(double promedioAcumulado) {
+        this.promedioAcumulado = promedioAcumulado;
+    }
+
+    public int getSemestreActual() {
+        return semestreActual;
+    }
+
+    public void setSemestreActual(int semestreActual) {
+        this.semestreActual = semestreActual;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public int getPuntajePrueba() {
+        return puntajePrueba;
+    }
+
+    public void setPuntajePrueba(int puntajePrueba) {
+        this.puntajePrueba = puntajePrueba;
+    }
+
+    public int getPuntajeEntrevista() {
+        return puntajeEntrevista;
+    }
+
+    public void setPuntajeEntrevista(int puntajeEntrevista) {
+        this.puntajeEntrevista = puntajeEntrevista;
+    }
+
+    public double getPuntajePromedio() {
+        return puntajePromedio;
+    }
+
+    public void setPuntajePromedio(double puntajePromedio) {
+        this.puntajePromedio = puntajePromedio;
     }
 
 }
