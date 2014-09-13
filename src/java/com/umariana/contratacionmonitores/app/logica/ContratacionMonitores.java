@@ -152,29 +152,7 @@ public class ContratacionMonitores {
                 }
 	}
         
-        public void modificarEstudiante(String nombre, String apellido, int codigo, String estadoMatri, File foto, double promedioAcum, int semestreAct, String identifi, int puntajePru, int puntajeEntre, double puntajeProm )throws Exception
-        {
-            	Monitor buscado = buscarEstudiante(identifi );
-                if( buscado == null )
-                {
-                    throw new Exception("El Estudiante que desea modificar no existe");
-                }
-                else
-                {
-                    buscado.setNombre(nombre);
-                    buscado.setApellido(apellido);
-                    buscado.setCodigo(codigo);
-                    buscado.setEstado(estadoMatri);
-                    buscado.setFoto(foto);
-                    buscado.setPromedio(promedioAcum);
-                    buscado.setSemestre(semestreAct);
-                    buscado.setIdentificacion(identifi);
-                    buscado.setCalificacion(puntajePru);
-                    buscado.entrevista(puntajeEntre);
-                    buscado.setPuntajePromedio(puntajeProm);
-                    
-                }
-	}
+       
         /**
 	 * El metodo se encarga de modificar un monitor en el sistema
 	 * <PostCondiciones> Se modifico correctamente el usuario al sistema 
@@ -185,9 +163,22 @@ public class ContratacionMonitores {
 	 * @param semestre > 0 && <=10
 	 * @param promedioAcum > 0 && <= 5
 	 */
-	public void modificarEstudiante(String nombre, String apellido, String identificacion, File foto, int semestre, double promedioAcum  )
+	public void modificarEstudiante(String nombre, String apellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
         {
-		
+		Monitor buscado = buscarEstudiante(identificacion );
+                if( buscado == null )
+                {
+                    throw new Exception("El Estudiante que desea modificar no existe");
+                }
+                else
+                {
+                    buscado.setNombre(nombre);
+                    buscado.setApellido(apellido);                    
+                    buscado.setFoto(foto);
+                    buscado.setPromedio(promedioAcum);
+                    buscado.setSemestre(semestre);                    
+                    
+                }
 	}
         
         /**
