@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.umariana.contratacionmonitores.app.controladores;
+package com.umariana.contratacionmonitores.controladores;
 
 /**
  *

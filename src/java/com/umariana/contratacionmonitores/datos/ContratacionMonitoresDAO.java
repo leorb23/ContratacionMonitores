@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.umariana.contratacionmonitores.app.datos;
+package com.umariana.contratacionmonitores.datos;
 
 /**
  *

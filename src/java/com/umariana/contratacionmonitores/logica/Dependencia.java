@@ -1,4 +1,4 @@
-package com.umariana.contratacionmonitores.app.logica;
+package com.umariana.contratacionmonitores.logica;
 
 import java.io.File;
 
@@ -69,6 +69,13 @@ public class Dependencia
 
     public void setHorario(String horario) {
         this.horario = horario;
+    }
+    /**
+     * Metodo que retorna la informacion de la dependencia
+     * @return String 
+     */
+    public String toString(){
+        return id+" - "+nombre+" - "+" - "+ descripcion+" - "+horario;
     }
 
 }

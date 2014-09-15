@@ -1,4 +1,4 @@
-package com.umariana.contratacionmonitores.app.logica;
+package com.umariana.contratacionmonitores.logica;
 
 import java.io.File;
 
