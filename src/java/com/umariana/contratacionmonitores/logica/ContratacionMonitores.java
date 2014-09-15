@@ -245,7 +245,7 @@ public class ContratacionMonitores {
     public Dependencia buscarDependencia(String nId)
     {       
         for(Dependencia dependenciaBuscada: dependencias ){
-            if(dependenciaBuscada.getId().equals(nId)){
+            if(dependenciaBuscada.darId().equals(nId)){
                 return dependenciaBuscada;
             }
         }     

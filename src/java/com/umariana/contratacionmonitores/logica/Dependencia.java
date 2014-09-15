@@ -39,35 +39,35 @@ public class Dependencia
         horario = nHorario;
     }
 
-    public String getId() {
+    public String darId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void cambiarId(String id) {
         this.id = id;
     }
 
-    public String getNombre() {
+    public String darNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void cambiarNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
+    public String darDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void cambiarDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public String getHorario() {
+    public String darHorario() {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    public void cambiarHorario(String horario) {
         this.horario = horario;
     }
     /**
