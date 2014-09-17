@@ -122,59 +122,63 @@ public class ContratacionMonitores {
     /**
      * El metodo se encarga de registrar un estudiate en el sistema
      * <PostCondiciones> Se registro correctamente el estudiante al sistema 
-     * @param nombre != null && != ""
-     * @param apellido != null && != ""
+     * @param primerNombre != null && != ""
+     * @param segundoNombre
+     * @param primerApellido != null && != ""
+     * @param segundoApellido 
      * @param codigo != null && != ""
-     * @param estadoMatri != null && != ""
-     * @param foto != null
-     * @param promedioAcum != null && != ""
-     * @param semestreAct != null && != ""
-     * @param identifi != null && != ""
-     * @param puntajePru > 0 && <=10
-     * @param puntajeEntre > 0 && <=10
-     * @param puntajeProm > 0 && <=10
+     * @param estadoMatricula != null && != ""
+     * @param foto 
+     * @param promedioAcumulado > 0 && <=5
+     * @param semestreActual > 0 && <=10
+     * @param identificacion != null && != ""
+     * @throws Exception 
      */
-    public void registrarEstudiante(String nombre, String apellido, int codigo, String estadoMatri, File foto, double promedioAcum, int semestreAct, String identifi, int puntajePru, int puntajeEntre, double puntajeProm )throws Exception
+    public void registrarEstudiante(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, int codigo, String estadoMatricula, File foto, double promedioAcumulado, int semestreActual, String identificacion)throws Exception
     {
-            Monitor buscar = buscarEstudiante(identifi );
+            Monitor buscar = buscarEstudiante(identificacion );
             if( buscar != null )
             {
                 throw new Exception("El Estudiante que desea registrar ya existe !!");
             }
             else
             {
-                Monitor nuevoMonitor = new Monitor( nombre, apellido, codigo, estadoMatri, foto, promedioAcum, semestreAct, identifi, puntajePru, puntajeEntre, puntajeProm);
+                Monitor nuevoMonitor = new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
                 monitores.add( nuevoMonitor );
             }
     }
-
-
+    
     /**
      * El metodo se encarga de modificar un monitor en el sistema
      * <PostCondiciones> Se modifico correctamente el usuario al sistema 
-     * @param nombre != null && != ""
-     * @param apellido != null && != ""
+     * @param primerNombre!= null && != ""
+     * @param segundoNombre
+     * @param primerApellido != null && != ""
+     * @param segundoApellido
      * @param identificacion != null && != ""
-     * @param foto != null
+     * @param foto
      * @param semestre > 0 && <=10
      * @param promedioAcum > 0 && <= 5
+     * @throws Exception 
      */
-    public void modificarEstudiante(String nombre, String apellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
+    public void modificarEstudiante(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
     {
-            Monitor buscado = buscarEstudiante(identificacion );
-            if( buscado == null )
-            {
-                throw new Exception("El Estudiante que desea modificar no existe");
-            }
-            else
-            {
-                buscado.setNombres(nombre);
-                buscado.setApellidos(apellido);                    
-                buscado.setFoto(foto);
-                buscado.setPromedioAcumulado(promedioAcum);
-                buscado.setSemestreActual(semestre);                    
+        Monitor buscado = buscarEstudiante(identificacion );
+        if( buscado == null )
+        {
+            throw new Exception("El Estudiante que desea modificar no existe");
+        }
+        else
+        {
+            buscado.cambiarPrimerNombre(primerNombre);
+            buscado.cambiarSegundoNombre(segundoNombre);
+            buscado.cambiarPrimerApellido(primerApellido);  
+            buscado.cambiarSegundoApellido(segundoApellido);  
+            buscado.cambiarFoto(foto);
+            buscado.cambiarPromedioAcumulado(promedioAcum);
+            buscado.cambiarSemestreActual(semestre);                    
 
-            }
+        }
     }
 
     /**
@@ -203,7 +207,7 @@ public class ContratacionMonitores {
         Monitor monitorBuscado = null;
         for (int i=0;i < monitores.size() ;i++ ) {
             monitorBuscado = monitores.get(i);
-            if(monitorBuscado.getIdentificacion().equals(identificacion))
+            if(monitorBuscado.darIdentificacion().equals(identificacion))
             {
                 i = monitores.size();
             }
@@ -258,9 +262,25 @@ public class ContratacionMonitores {
      */
     public static void main(String[] args) 
     {
+        
+           
         try {
-
-
+            //Pruebas para Aspirante
+            Aspirante a1 = new Aspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+            
+            System.out.println(a1.toString());
+            
+            Aspirante a2 = new Aspirante("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+            System.out.println(a2.toString());
+            
+            //Pruebas para Monitor
+            Monitor m1 = new Monitor("primerNombreM1","segundoNombreM1", "primerApellidoM1","segundoApellidoM1", 1, "estadoMatriculaM1", null,1.0,1,"101");
+            System.out.println(m1.toString());
+            Monitor m2 = new Monitor("primerNombreM2","segundoNombreM2", "primerApellidoM2","segundoApellidoM2", 2, "estadoMatriculaM2", null,1.0,1,"102");
+            System.out.println(m2.toString());
+            
+            
+            
             ContratacionMonitores cm = new ContratacionMonitores();   
 
             //Pruebas para Dependencia
@@ -273,9 +293,10 @@ public class ContratacionMonitores {
             }
             System.out.println("Numero Dependencias: "+cm.darDependencias().size());
 
-            //Pruebas para Estudiante
-            cm.registrarEstudiante("nombre", "apellido", 1, "estadoMatricula", null,4.5,5,"10853034",5  ,5 ,5.0);
-            cm.registrarEstudiante("nombre", "apellido", 1, "estadoMatricula", null,4.5,5,"10853034",5  ,5 ,5.0);
+            //Pruebas para Monitor
+            cm.registrarEstudiante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+            cm.registrarEstudiante("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+            cm.registrarEstudiante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
         } catch (Exception ex) {          
             System.out.println("Error: "+ex.getMessage());
         }
