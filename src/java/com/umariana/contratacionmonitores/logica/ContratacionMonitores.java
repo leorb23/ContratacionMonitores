@@ -1,5 +1,6 @@
 package com.umariana.contratacionmonitores.logica;
 
+import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
 import java.io.File;
 import java.util.ArrayList;
 /**
@@ -35,11 +36,13 @@ public class ContratacionMonitores {
      * Es el constructor de la clase Principal
      */
     public ContratacionMonitores()
-    {
-            aspirantes = new ArrayList<>();
-            resultados = new ArrayList<Resultado>();
-            monitores = new ArrayList<Monitor>();
-            dependencias = new ArrayList<Dependencia>();                      
+    {             
+        
+        ContratacionMonitoresDAO  cmDAO = new ContratacionMonitoresDAO();
+        aspirantes   =  cmDAO.darAspirantesRegistrados();
+        resultados   =  cmDAO.darResultadosRegistrados();
+        monitores    =  cmDAO.darMonitoresRegistrados();
+        dependencias =  cmDAO.darDependenciasRegistrados();   
     }           
     //
     //METODOS
