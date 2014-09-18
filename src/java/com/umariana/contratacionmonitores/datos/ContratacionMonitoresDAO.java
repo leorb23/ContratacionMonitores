@@ -53,7 +53,7 @@ public class ContratacionMonitoresDAO {
      */
     public ArrayList<Aspirante> darAspirantesRegistrados(){
     
-        return null;
+        return new ArrayList<Aspirante>();
     }
     /**
      * Metodo que retorna la lista de Monitores que estan registrados en la base de datos del sistema
@@ -76,7 +76,7 @@ public class ContratacionMonitoresDAO {
      * @return ArrayList<Dependencia>
      */
     public ArrayList<Dependencia> darDependenciasRegistrados(){  
-        return null;
+        return new ArrayList<Dependencia>();
     }
     
 }

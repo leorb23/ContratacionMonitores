@@ -139,9 +139,10 @@ public class ContratacionMonitores {
             Aspirante nuevo = buscarAspirante(identificacion );
             if( nuevo != null )
             {
-                throw new Exception("El Estudiante que desea registrar ya existe !!");
+                //throw new Exception("El Estudiante que desea registrar ya existe !!");
             }
-            else{           
+            else{      
+                nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
                 aspirantes.add( nuevo );
             }
     }

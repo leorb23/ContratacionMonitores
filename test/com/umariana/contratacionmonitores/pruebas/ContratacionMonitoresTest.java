@@ -25,133 +25,11 @@ import static org.junit.Assert.*;
  */
 public class ContratacionMonitoresTest {
     
+    ContratacionMonitores contratacionMonitores;
+    
     public ContratacionMonitoresTest() {
+        contratacionMonitores = new ContratacionMonitores();
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of darMonitores method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarMonitores() {
-        System.out.println("darMonitores");
-        ContratacionMonitores instance = new ContratacionMonitores();
-        ArrayList<Monitor> expResult = null;
-        ArrayList<Monitor> result = instance.darMonitores();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of cambiarMonitores method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarMonitores() {
-        System.out.println("cambiarMonitores");
-        ArrayList<Monitor> monitores = null;
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.cambiarMonitores(monitores);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of darDependencias method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarDependencias() {
-        System.out.println("darDependencias");
-        ContratacionMonitores instance = new ContratacionMonitores();
-        ArrayList<Dependencia> expResult = null;
-        ArrayList<Dependencia> result = instance.darDependencias();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of cambiarDependencias method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarDependencias() {
-        System.out.println("cambiarDependencias");
-        ArrayList<Dependencia> dependencias = null;
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.cambiarDependencias(dependencias);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of darResultados method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarResultados() {
-        System.out.println("darResultados");
-        ContratacionMonitores instance = new ContratacionMonitores();
-        ArrayList<Resultado> expResult = null;
-        ArrayList<Resultado> result = instance.darResultados();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of cambiarResultados method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarResultados() {
-        System.out.println("cambiarResultados");
-        ArrayList<Resultado> resultados = null;
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.cambiarResultados(resultados);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of darAspirantes method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarAspirantes() {
-        System.out.println("darAspirantes");
-        ContratacionMonitores instance = new ContratacionMonitores();
-        ArrayList<Aspirante> expResult = null;
-        ArrayList<Aspirante> result = instance.darAspirantes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of cambiarAspirantes method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarAspirantes() {
-        System.out.println("cambiarAspirantes");
-        ArrayList<Aspirante> aspirantes = null;
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.cambiarAspirantes(aspirantes);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of registrarAspirante method, of class ContratacionMonitores.
      */
@@ -168,10 +46,12 @@ public class ContratacionMonitoresTest {
         double promedioAcumulado = 0.0;
         int semestreActual = 0;
         String identificacion = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        contratacionMonitores.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        assertTrue(contratacionMonitores.darAspirantes().size()==1);
+        contratacionMonitores.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        assertTrue(contratacionMonitores.darAspirantes().size()==1);
+       
     }
 
     /**
@@ -192,6 +72,8 @@ public class ContratacionMonitoresTest {
         instance.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+        
+     
     }
 
     /**
@@ -256,14 +138,13 @@ public class ContratacionMonitoresTest {
     @Test
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
-        String nId = "";
-        String nNombre = "";
-        String nDescripcion = "";
-        String nHorario = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.agregarDependencia(nId, nNombre, nDescripcion, nHorario);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String nId = "id";
+        String nNombre = "nombre";
+        String nDescripcion = "descripcion";
+        String nHorario = "mañana";
+        contratacionMonitores.agregarDependencia(nId, nNombre, nDescripcion, nHorario);
+        assertTrue(contratacionMonitores.darDependencias().size()== 1);
+        assertFalse(contratacionMonitores.darDependencias().size()!= 1);
     }
 
     /**
@@ -279,18 +160,6 @@ public class ContratacionMonitoresTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of main method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        ContratacionMonitores.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    }    
     
 }
