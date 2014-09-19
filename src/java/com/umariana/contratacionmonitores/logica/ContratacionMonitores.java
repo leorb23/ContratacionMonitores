@@ -36,7 +36,7 @@ public class ContratacionMonitores {
     /**
      * Es el constructor de la clase Principal
      */
-    public ContratacionMonitores() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    public ContratacionMonitores() 
     {             
         
         ContratacionMonitoresDAO  cmDAO = new ContratacionMonitoresDAO();

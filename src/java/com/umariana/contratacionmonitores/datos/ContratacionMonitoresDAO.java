@@ -63,7 +63,7 @@ public class ContratacionMonitoresDAO {
     private DependenciaDAO dependenciaDAO;
 
     
-    public ContratacionMonitoresDAO() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+    public ContratacionMonitoresDAO() {
         
         driver="org.postgresql.Driver";
 
@@ -81,7 +81,7 @@ public class ContratacionMonitoresDAO {
 
         st = null ;
 
-        conectar();
+       // conectar();
         
         aspiranteDAO = new AspiranteDAO();
         monitorDAO = new MonitorDAO();

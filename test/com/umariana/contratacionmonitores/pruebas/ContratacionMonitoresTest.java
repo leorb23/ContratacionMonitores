@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.umariana.contratacionmonitores.pruebas;
 
 import com.umariana.contratacionmonitores.logica.Aspirante;
@@ -10,27 +11,81 @@ import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.File;
-import java.sql.SQLException;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
- * @author SERVIDOR
+ * @author Andres
  */
 public class ContratacionMonitoresTest {
     
-    ContratacionMonitores contratacionMonitores;
+    ContratacionMonitores cm;
     
-    public ContratacionMonitoresTest() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-        contratacionMonitores = new ContratacionMonitores();
+    public ContratacionMonitoresTest() {
+        cm = new ContratacionMonitores();
     }
+
+    /**
+     * Test of darMonitores method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testDarMonitores() {
+    }
+
+    /**
+     * Test of cambiarMonitores method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testCambiarMonitores() {
+    }
+
+    /**
+     * Test of darDependencias method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testDarDependencias() {
+    }
+
+    /**
+     * Test of cambiarDependencias method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testCambiarDependencias() {
+    }
+
+    /**
+     * Test of darResultados method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testDarResultados() {
+    }
+
+    /**
+     * Test of cambiarResultados method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testCambiarResultados() {
+    }
+
+    /**
+     * Test of darAspirantes method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testDarAspirantes() {
+    }
+
+    /**
+     * Test of cambiarAspirantes method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testCambiarAspirantes() {
+    }
+
     /**
      * Test of registrarAspirante method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testRegistrarAspirante() throws Exception {
         System.out.println("registrarAspirante");
         String primerNombre = "";
@@ -44,18 +99,19 @@ public class ContratacionMonitoresTest {
         int semestreActual = 0;
         String identificacion = "";
         
-        contratacionMonitores.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        assertTrue(contratacionMonitores.darAspirantes().size()==1);
-        contratacionMonitores.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        assertTrue(contratacionMonitores.darAspirantes().size()==1);
+        cm.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        assertTrue(cm.darAspirantes().size()==1);
+        cm.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        assertTrue(cm.darAspirantes().size()==1);
        
     }
 
     /**
      * Test of modificarAspirante method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testModificarAspirante() throws Exception {
+        
         System.out.println("modificarAspirante");
         String primerNombre = "";
         String segundoNombre = "";
@@ -69,86 +125,75 @@ public class ContratacionMonitoresTest {
         instance.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
 
         
-     
     }
 
     /**
      * Test of eliminarAspirante method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testEliminarAspirante() throws Exception {
         System.out.println("eliminarAspirante");
         String identificacion = "";
         ContratacionMonitores instance = new ContratacionMonitores();
         instance.eliminarAspirante(identificacion);
-
     }
 
     /**
      * Test of eliminarMonitor method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testEliminarMonitor() throws Exception {
         System.out.println("eliminarMonitor");
         String identificacion = "";
         ContratacionMonitores instance = new ContratacionMonitores();
         instance.eliminarMonitor(identificacion);
-
     }
 
     /**
      * Test of buscarAspirante method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testBuscarAspirante() {
         System.out.println("buscarAspirante");
         String identificacion = "123";
         Aspirante expResult = null;
-        Aspirante result = contratacionMonitores.buscarAspirante(identificacion);
+        Aspirante result = cm.buscarAspirante(identificacion);
         assertEquals(expResult, result);
         assertTrue(expResult == result);
-
     }
 
     /**
      * Test of buscarMonitor method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testBuscarMonitor() {
-        System.out.println("buscarMonitor");
-        String identificacion = "";
-        Monitor expResult = null;
-        Monitor result = contratacionMonitores.buscarMonitor(identificacion);
-        assertEquals(expResult, result);
-
     }
 
     /**
      * Test of agregarDependencia method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
         String nId = "id";
         String nNombre = "nombre";
         String nDescripcion = "descripcion";
         String nHorario = "mañana";
-        contratacionMonitores.agregarDependencia(nId, nNombre, nDescripcion, nHorario);
-        assertTrue(contratacionMonitores.darDependencias().size()== 1);
-        assertFalse(contratacionMonitores.darDependencias().size()!= 1);
+        cm.agregarDependencia(nId, nNombre, nDescripcion, nHorario);
+        assertTrue(cm.darDependencias().size()== 1);
+        assertFalse(cm.darDependencias().size()!= 1);
     }
 
     /**
      * Test of buscarDependencia method, of class ContratacionMonitores.
      */
-
+    @Test
     public void testBuscarDependencia() {
         System.out.println("buscarDependencia");
         String nId = "";
         Dependencia expResult = null;
-        Dependencia result = contratacionMonitores.buscarDependencia(nId);
+        Dependencia result = cm.buscarDependencia(nId);
         assertEquals(expResult, result);
+    }
 
-    }    
-    
 }
