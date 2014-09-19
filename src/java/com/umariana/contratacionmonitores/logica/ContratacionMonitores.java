@@ -2,6 +2,7 @@ package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 /**
 * Es la clase principal del sistema Contratacion de Monitores
@@ -35,7 +36,7 @@ public class ContratacionMonitores {
     /**
      * Es el constructor de la clase Principal
      */
-    public ContratacionMonitores()
+    public ContratacionMonitores() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {             
         
         ContratacionMonitoresDAO  cmDAO = new ContratacionMonitoresDAO();

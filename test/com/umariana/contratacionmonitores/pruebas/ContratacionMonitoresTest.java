@@ -12,6 +12,7 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import java.io.File;
 import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class ContratacionMonitoresTest {
     /**
      * Test of registrarAspirante method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testRegistrarAspirante() throws Exception {
         System.out.println("registrarAspirante");
         String primerNombre = "";
@@ -57,7 +58,7 @@ public class ContratacionMonitoresTest {
     /**
      * Test of modificarAspirante method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testModificarAspirante() throws Exception {
         System.out.println("modificarAspirante");
         String primerNombre = "";
@@ -70,8 +71,7 @@ public class ContratacionMonitoresTest {
         double promedioAcum = 0.0;
         ContratacionMonitores instance = new ContratacionMonitores();
         instance.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
         
      
     }
@@ -79,14 +79,13 @@ public class ContratacionMonitoresTest {
     /**
      * Test of eliminarAspirante method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testEliminarAspirante() throws Exception {
         System.out.println("eliminarAspirante");
         String identificacion = "";
         ContratacionMonitores instance = new ContratacionMonitores();
         instance.eliminarAspirante(identificacion);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -98,14 +97,13 @@ public class ContratacionMonitoresTest {
         String identificacion = "";
         ContratacionMonitores instance = new ContratacionMonitores();
         instance.eliminarMonitor(identificacion);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of buscarAspirante method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testBuscarAspirante() {
         System.out.println("buscarAspirante");
         String identificacion = "";
@@ -113,14 +111,13 @@ public class ContratacionMonitoresTest {
         Aspirante expResult = null;
         Aspirante result = instance.buscarAspirante(identificacion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of buscarMonitor method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testBuscarMonitor() {
         System.out.println("buscarMonitor");
         String identificacion = "";
@@ -128,14 +125,13 @@ public class ContratacionMonitoresTest {
         Monitor expResult = null;
         Monitor result = instance.buscarMonitor(identificacion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of agregarDependencia method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
         String nId = "id";

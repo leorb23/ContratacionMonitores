@@ -4,6 +4,11 @@ import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import com.umariana.contratacionmonitores.logica.Resultado;
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +17,102 @@ import java.util.ArrayList;
  */
 public class ContratacionMonitoresDAO {
     
-    public ContratacionMonitoresDAO(){
+    // -----------------------------------------------------------------
+    // ATRIBUTOS
+    // -----------------------------------------------------------------
+    /**
+     * Es la base de datos
+     */
+    private String bd;
+    /**
+     * Modo de conexion
+     */
+    private String conectionString;
+    /**
+     * Es la conexion
+     */
+    private Connection conexion;
+    /**
+     * Es el driver de postgres
+     */
+    private String driver;
+    /**
+     * Es el usuario de la BD
+     */
+    private String usuario;
+    /**
+     * Es el password del usuario de la BD
+     */
+    private String password;
+    /**
+     * Es el puerto por el cual el servidor acepta las peticiones
+     */
+    private int puerto;
+    /**
+     * Es el servidor donde se alojan los datos
+     */
+    private String servidor;
+    /**
+     * Es el Statement
+     */
+    private Statement st;
+
+    
+    public ContratacionMonitoresDAO() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        
+        driver="org.postgresql.Driver";
+
+        conectionString="jdbc:postgresql";
+
+        bd="contratacionMonitores";
+
+        usuario="postgres";
+
+        password="123";
+
+        servidor="192.168.0.13";//192.168.0.11
+
+        puerto=5432;   
+
+        st = null ;
+
+        conectar();
         
     }
+    /**
+     * Metodo que se encarga de realizar la conexion con la Base de Datos
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException 
+     */
+    public void conectar() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        
+        Class.forName(driver).newInstance();
+
+        this.conexion = DriverManager.getConnection(conectionString+":"+"//"+servidor+":"+puerto+"/"+bd,usuario,password);
+
+        this.st=(Statement) conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+        System.out.println("Conectado...");
+    }
     
+    
+    /**
+     * Metodo que se encarga de desconectar con la base de datos
+     */
+    public void desconectar(){
+        try 
+        {
+            this.conexion.close();
+
+            System.out.println("Desconectado...");
+        } 
+        catch (SQLException e) 
+        {		
+            System.out.println("Error al cerrar la conexion + "+e.toString());
+        }
+    }
     
     public void registrarAspiranteEnBD(){
         
