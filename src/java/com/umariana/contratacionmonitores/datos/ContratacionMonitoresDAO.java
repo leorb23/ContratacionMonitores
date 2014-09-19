@@ -56,6 +56,11 @@ public class ContratacionMonitoresDAO {
      * Es el Statement
      */
     private Statement st;
+    
+    private AspiranteDAO aspiranteDAO;
+    private MonitorDAO monitorDAO;
+    private ResultadoDAO resultadoDAO;
+    private DependenciaDAO dependenciaDAO;
 
     
     public ContratacionMonitoresDAO() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
@@ -70,13 +75,18 @@ public class ContratacionMonitoresDAO {
 
         password="123";
 
-        servidor="192.168.0.13";//192.168.0.11
+        servidor="";//"192.168.0.13";//192.168.0.11
 
         puerto=5432;   
 
         st = null ;
 
         conectar();
+        
+        aspiranteDAO = new AspiranteDAO();
+        monitorDAO = new MonitorDAO();
+        resultadoDAO = new ResultadoDAO();
+        dependenciaDAO = new DependenciaDAO();
         
     }
     /**
@@ -99,7 +109,7 @@ public class ContratacionMonitoresDAO {
     
     
     /**
-     * Metodo que se encarga de desconectar con la base de datos
+     * Metodo que se encarga de desconectar el sistema con la base de datos
      */
     public void desconectar(){
         try 
@@ -115,6 +125,8 @@ public class ContratacionMonitoresDAO {
     }
     
     public void registrarAspiranteEnBD(){
+              
+        //aD.resgistrarAspiranteEnBD();
         
     }
     public void actualizarAspiranteEnBD(){
