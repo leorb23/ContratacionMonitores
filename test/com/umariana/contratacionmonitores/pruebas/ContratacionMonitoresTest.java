@@ -9,16 +9,12 @@ import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Monitor;
-import com.umariana.contratacionmonitores.logica.Resultado;
 import java.io.File;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -28,7 +24,7 @@ public class ContratacionMonitoresTest {
     
     ContratacionMonitores contratacionMonitores;
     
-    public ContratacionMonitoresTest() {
+    public ContratacionMonitoresTest() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         contratacionMonitores = new ContratacionMonitores();
     }
     /**
@@ -91,7 +87,7 @@ public class ContratacionMonitoresTest {
     /**
      * Test of eliminarMonitor method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testEliminarMonitor() throws Exception {
         System.out.println("eliminarMonitor");
         String identificacion = "";
@@ -106,11 +102,11 @@ public class ContratacionMonitoresTest {
 
     public void testBuscarAspirante() {
         System.out.println("buscarAspirante");
-        String identificacion = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
+        String identificacion = "123";
         Aspirante expResult = null;
-        Aspirante result = instance.buscarAspirante(identificacion);
+        Aspirante result = contratacionMonitores.buscarAspirante(identificacion);
         assertEquals(expResult, result);
+        assertTrue(expResult == result);
 
     }
 
@@ -121,9 +117,8 @@ public class ContratacionMonitoresTest {
     public void testBuscarMonitor() {
         System.out.println("buscarMonitor");
         String identificacion = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
         Monitor expResult = null;
-        Monitor result = instance.buscarMonitor(identificacion);
+        Monitor result = contratacionMonitores.buscarMonitor(identificacion);
         assertEquals(expResult, result);
 
     }
@@ -146,16 +141,14 @@ public class ContratacionMonitoresTest {
     /**
      * Test of buscarDependencia method, of class ContratacionMonitores.
      */
-    @Test
+
     public void testBuscarDependencia() {
         System.out.println("buscarDependencia");
         String nId = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
         Dependencia expResult = null;
-        Dependencia result = instance.buscarDependencia(nId);
+        Dependencia result = contratacionMonitores.buscarDependencia(nId);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }    
     
 }
