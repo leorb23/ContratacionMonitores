@@ -10,7 +10,6 @@ import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Monitor;
-import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -65,10 +64,7 @@ public class ContratacionMonitoresTest {
         assertTrue(aspiranteModificado.darSegundoApellido().equals("segundoApellidoModificado"));
         assertTrue(aspiranteModificado.darEstadoMatricula().equals("estadoMatricula"));
         assertTrue(aspiranteModificado.darPromedioAcumulado() == 2.0);
-        assertTrue(aspiranteModificado.darSemestreActual()== 2);
-        
-        
-        
+        assertTrue(aspiranteModificado.darSemestreActual()== 2);  
     }
 
     /**
@@ -124,8 +120,7 @@ public class ContratacionMonitoresTest {
         assertTrue(monitorEliminado == null);
         
         monitorEliminado= cm.buscarMonitor("104");
-        assertTrue(monitorEliminado != null);
-                
+        assertTrue(monitorEliminado != null);              
     }
     
      /**

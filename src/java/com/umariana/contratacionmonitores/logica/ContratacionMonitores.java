@@ -382,6 +382,19 @@ public class ContratacionMonitores {
             dependenciaModificar.cambiarHorario(nHorario);
         }
     }
+    
+    
+    public void agregarResultado(String id, String idEstudiante, int resultadoPrueba, int resultadoEntrevista){
+        Resultado resultadoBuscado = buscarResultado(id);
+       // if(resultadoBuscado=)
+    }
+    public Resultado buscarResultado(String identificacion){
+        for(Resultado resultadoBuscado: resultados){
+            if(resultadoBuscado.darIdEstudiante().equals(identificacion))
+                return resultadoBuscado;
+        }
+        return null;
+    }
     /**
      * Metodo para hacer pruebas
      * @param args 
