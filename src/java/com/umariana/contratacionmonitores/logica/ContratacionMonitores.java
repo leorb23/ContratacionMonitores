@@ -330,13 +330,28 @@ public class ContratacionMonitores {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
             {
-                throw new Exception("La Dependencia que desea agregar ya existe !!");
+                //throw new Exception("La Dependencia que desea agregar ya existe !!");
             }
             else
             {
                 Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario);
                 dependencias.add( nuevaDependencia );
             }
+    }
+    /**
+     * Metodo que se encarga de eliminar una dependencia del sistema
+     * @param codigo != null && !=""
+     * @throws Exception 
+     */
+    public void eliminarDependencia(String codigo) throws Exception{
+        
+        Dependencia dependenciaEliminar= buscarDependencia(codigo);
+        
+        if(dependenciaEliminar==null){
+            //throw new Exception("La Dependencia que desea buscar no existe !!");
+        }
+        else
+            dependencias.remove(dependenciaEliminar);      
     }
 
     /**

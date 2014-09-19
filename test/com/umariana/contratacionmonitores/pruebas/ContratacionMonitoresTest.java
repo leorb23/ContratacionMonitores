@@ -73,9 +73,26 @@ public class ContratacionMonitoresTest {
     @Test
     public void testEliminarAspirante() throws Exception {
         System.out.println("eliminarAspirante");
-        String identificacion = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.eliminarAspirante(identificacion);
+        cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarAspirante("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 4, "estadoMatricula3", null,3.0,3,"104");    
+        
+        cm.eliminarAspirante("101");
+        assertTrue(cm.darAspirantes().size()==3);
+        
+        Aspirante aspiranteEliminado= cm.buscarAspirante("101");
+        assertTrue(aspiranteEliminado == null);
+        
+        aspiranteEliminado= cm.buscarAspirante("102");
+        assertTrue(aspiranteEliminado != null);
+        
+        cm.eliminarAspirante("103");
+        aspiranteEliminado= cm.buscarAspirante("103");
+        assertTrue(aspiranteEliminado == null);
+        
+        aspiranteEliminado= cm.buscarAspirante("104");
+        assertTrue(aspiranteEliminado != null);
     }
 
     /**
@@ -84,8 +101,27 @@ public class ContratacionMonitoresTest {
     @Test
     public void testEliminarMonitor() throws Exception {
         System.out.println("eliminarMonitor");
-        String identificacion = "";
-        cm.eliminarMonitor(identificacion);
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarMonitor("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 4, "estadoMatricula3", null,3.0,3,"104");    
+        
+        cm.eliminarMonitor("101");
+        assertTrue(cm.darMonitores().size()==3);
+        
+        Monitor monitorEliminado= cm.buscarMonitor("101");
+        assertTrue(monitorEliminado == null);
+        
+        monitorEliminado= cm.buscarMonitor("102");
+        assertTrue(monitorEliminado != null);
+        
+        cm.eliminarMonitor("103");
+        monitorEliminado= cm.buscarMonitor("103");
+        assertTrue(monitorEliminado == null);
+        
+        monitorEliminado= cm.buscarMonitor("104");
+        assertTrue(monitorEliminado != null);
+                
     }
     
      /**
@@ -174,25 +210,72 @@ public class ContratacionMonitoresTest {
     @Test
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
-        String nId = "id";
-        String nNombre = "nombre";
-        String nDescripcion = "descripcion";
-        String nHorario = "mañana";
-        cm.agregarDependencia(nId, nNombre, nDescripcion, nHorario);
+        
+        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
         assertTrue(cm.darDependencias().size()== 1);
-        assertFalse(cm.darDependencias().size()!= 1);
+        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        assertTrue(cm.darDependencias().size()== 2);
+        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        assertTrue(cm.darDependencias().size()== 3);
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        assertTrue(cm.darDependencias().size()== 4);
+        
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        assertTrue(cm.darDependencias().size()== 4);
+
     }
 
     /**
      * Test of buscarDependencia method, of class ContratacionMonitores.
      */
     @Test
-    public void testBuscarDependencia() {
+    public void testBuscarDependencia() throws Exception {
         System.out.println("buscarDependencia");
-        String nId = "";
-        Dependencia expResult = null;
-        Dependencia result = cm.buscarDependencia(nId);
-        assertEquals(expResult, result);
+        
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
+        assertTrue(cm.darDependencias().size()== 1);
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        assertTrue(cm.darDependencias().size()== 2);
+        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        assertTrue(cm.darDependencias().size()== 3);
+        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        assertTrue(cm.darDependencias().size()== 4);
+        
+        Dependencia dependenciaBuscada = cm.buscarDependencia("Cod1");
+        assertTrue(dependenciaBuscada!=null && dependenciaBuscada.darId().equals("Cod1"));
+        
+        dependenciaBuscada = cm.buscarDependencia("Cod2");
+        assertTrue(dependenciaBuscada!=null && dependenciaBuscada.darId().equals("Cod2"));
+        
+        dependenciaBuscada = cm.buscarDependencia("Cod100");
+        assertTrue(dependenciaBuscada==null );   
+    }
+    
+     /**
+     * Test of EliminarDependencia method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testEliminarDependencia() throws Exception {
+        System.out.println("EliminarDependencia");
+        
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");      
+        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");       
+        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        
+        cm.eliminarDependencia("Cod1");
+        Dependencia dependenciaEliminada= cm.buscarDependencia("Cod1");
+        assertTrue(dependenciaEliminada == null);
+        
+        cm.eliminarDependencia("Cod2");
+        dependenciaEliminada= cm.buscarDependencia("Cod2");
+        assertTrue(dependenciaEliminada == null);
+        
+        cm.eliminarDependencia("Cod100");
+        dependenciaEliminada= cm.buscarDependencia("Cod100");
+        assertTrue(dependenciaEliminada == null);
+        
+        assertTrue(cm.darDependencias().size()==2);
     }
 
 }
