@@ -170,7 +170,7 @@ public class ContratacionMonitoresDAO {
      */
     public ArrayList<Monitor> darMonitoresRegistrados(){
     
-        return null;
+        return new ArrayList<Monitor>();
     }
     /**
      * Metodo que retorna la lista de Resultados que estan registrados en la base de datos del sistema
@@ -178,7 +178,7 @@ public class ContratacionMonitoresDAO {
      */
     public ArrayList<Resultado> darResultadosRegistrados(){
     
-        return null;
+        return new ArrayList<Resultado>();
     }
     /**
      * Metodo que retorna la lista de Dependenciaa que estan registradas en la base de datos del sistema

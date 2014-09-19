@@ -26,84 +26,24 @@ public class ContratacionMonitoresTest {
         cm = new ContratacionMonitores();
     }
 
-    /**
-     * Test of darMonitores method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarMonitores() {
-    }
-
-    /**
-     * Test of cambiarMonitores method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarMonitores() {
-    }
-
-    /**
-     * Test of darDependencias method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarDependencias() {
-    }
-
-    /**
-     * Test of cambiarDependencias method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarDependencias() {
-    }
-
-    /**
-     * Test of darResultados method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarResultados() {
-    }
-
-    /**
-     * Test of cambiarResultados method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarResultados() {
-    }
-
-    /**
-     * Test of darAspirantes method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testDarAspirantes() {
-    }
-
-    /**
-     * Test of cambiarAspirantes method, of class ContratacionMonitores.
-     */
-    @Test
-    public void testCambiarAspirantes() {
-    }
-
-    /**
+     /**
      * Test of registrarAspirante method, of class ContratacionMonitores.
      */
     @Test
-    public void testRegistrarAspirante() throws Exception {
-        System.out.println("registrarAspirante");
-        String primerNombre = "";
-        String segundoNombre = "";
-        String primerApellido = "";
-        String segundoApellido = "";
-        int codigo = 0;
-        String estadoMatricula = "";
-        File foto = null;
-        double promedioAcumulado = 0.0;
-        int semestreActual = 0;
-        String identificacion = "";
+    public void testRegistrarAspirante() throws Exception  {
+        System.out.println("registrarAspirante");     
         
-        cm.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
         assertTrue(cm.darAspirantes().size()==1);
-        cm.registrarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        assertTrue(cm.darAspirantes().size()==1);
-       
+        cm.registrarAspirante("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        assertTrue(cm.darAspirantes().size()==2);
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        assertTrue(cm.darAspirantes().size()==3);
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
+        assertTrue(cm.darAspirantes().size()==4);
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");     
+        assertTrue(cm.darAspirantes().size()==4);
+        
     }
 
     /**
@@ -145,20 +85,66 @@ public class ContratacionMonitoresTest {
     public void testEliminarMonitor() throws Exception {
         System.out.println("eliminarMonitor");
         String identificacion = "";
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.eliminarMonitor(identificacion);
+        cm.eliminarMonitor(identificacion);
+    }
+    
+     /**
+     * Test of registrarMonitor method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testRegistrarMonitor() throws Exception  {
+        System.out.println("registrarMonitor");     
+        
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        assertTrue(cm.darMonitores().size()==1);
+        cm.registrarMonitor("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        assertTrue(cm.darMonitores().size()==2);
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        assertTrue(cm.darMonitores().size()==3);
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
+        assertTrue(cm.darMonitores().size()==4);
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");     
+        assertTrue(cm.darMonitores().size()==4);
+        
+    }
+
+    /**
+     * Test of modificarAspirante method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testModificarMonitor() throws Exception {
+        
+        System.out.println("modificarMonitor");
+        String primerNombre = "";
+        String segundoNombre = "";
+        String primerApellido = "";
+        String segundoApellido = "";
+        String identificacion = "";
+        File foto = null;
+        int semestre = 0;
+        double promedioAcum = 0.0;      
+        cm.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
+
+        
     }
 
     /**
      * Test of buscarAspirante method, of class ContratacionMonitores.
      */
     @Test
-    public void testBuscarAspirante() {
+    public void testBuscarAspirante() throws Exception {
         System.out.println("buscarAspirante");
-        String identificacion = "123";
+
+        cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarAspirante("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        cm.registrarAspirante("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");        
+            
+        Aspirante result = cm.buscarAspirante("103");
         Aspirante expResult = null;
-        Aspirante result = cm.buscarAspirante(identificacion);
-        assertEquals(expResult, result);
+        
+        assertTrue(expResult != result);
+        result = cm.buscarAspirante("105");
         assertTrue(expResult == result);
     }
 
@@ -166,7 +152,20 @@ public class ContratacionMonitoresTest {
      * Test of buscarMonitor method, of class ContratacionMonitores.
      */
     @Test
-    public void testBuscarMonitor() {
+    public void testBuscarMonitor() throws Exception {
+        System.out.println("buscarAspirante");
+
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        cm.registrarMonitor("primerNombre2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+        cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");        
+            
+        Monitor result = cm.buscarMonitor("103");
+        Monitor expResult = null;
+        
+        assertTrue(expResult != result);
+        result = cm.buscarMonitor("105");
+        assertTrue(expResult == result);
     }
 
     /**

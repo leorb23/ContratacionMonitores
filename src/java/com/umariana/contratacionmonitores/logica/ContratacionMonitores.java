@@ -30,6 +30,10 @@ public class ContratacionMonitores {
      */
     private ArrayList<Aspirante> aspirantes;
 
+    /**
+     * Es la comunicacion con la clase que controla la base de datos
+     */
+    private ContratacionMonitoresDAO  cmDAO;
     //
     //CONSTRUCTOR
     //
@@ -39,7 +43,7 @@ public class ContratacionMonitores {
     public ContratacionMonitores() 
     {             
         
-        ContratacionMonitoresDAO  cmDAO = new ContratacionMonitoresDAO();
+        cmDAO = new ContratacionMonitoresDAO();
         aspirantes   =  cmDAO.darAspirantesRegistrados();
         resultados   =  cmDAO.darResultadosRegistrados();
         monitores    =  cmDAO.darMonitoresRegistrados();
@@ -122,7 +126,7 @@ public class ContratacionMonitores {
 
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
-     * <PostCondiciones> Se registro correctamente el estudiante al sistema 
+     * <PostCondiciones> Se registro correctamente el aspirante al sistema 
      * @param primerNombre != null && != ""
      * @param segundoNombre
      * @param primerApellido != null && != ""
@@ -148,7 +152,7 @@ public class ContratacionMonitores {
             }
     }
     
-    /**
+     /**
      * El metodo se encarga de modificar un aspirante en el sistema
      * <PostCondiciones> Se modifico correctamente el usuario al sistema 
      * @param primerNombre!= null && != ""
@@ -180,7 +184,65 @@ public class ContratacionMonitores {
 
         }
     }
+     /**
+     * El metodo se encarga de modificar un Monitor en el sistema
+     * <PostCondiciones> Se modifico correctamente el usuario en el sistema 
+     * @param primerNombre!= null && != ""
+     * @param segundoNombre
+     * @param primerApellido != null && != ""
+     * @param segundoApellido
+     * @param identificacion != null && != ""
+     * @param foto
+     * @param semestre > 0 && <=10
+     * @param promedioAcum > 0 && <= 5
+     * @throws Exception 
+     */
+    public void modificarMonitor(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
+    {
+        Monitor modificar = buscarMonitor(identificacion );
+        if( modificar == null )
+        {
+            throw new Exception("El Estudiante que desea modificar no existe");
+        }
+        else
+        {
+            modificar.cambiarPrimerNombre(primerNombre);
+            modificar.cambiarSegundoNombre(segundoNombre);
+            modificar.cambiarPrimerApellido(primerApellido);  
+            modificar.cambiarSegundoApellido(segundoApellido);  
+            modificar.cambiarFoto(foto);
+            modificar.cambiarPromedioAcumulado(promedioAcum);
+            modificar.cambiarSemestreActual(semestre);                    
 
+        }
+    }
+     /**
+     * El metodo se encarga de registrar un monitor en el sistema
+     * <PostCondiciones> Se registro correctamente el monitor al sistema 
+     * @param primerNombre != null && != ""
+     * @param segundoNombre
+     * @param primerApellido != null && != ""
+     * @param segundoApellido 
+     * @param codigo != null && != ""
+     * @param estadoMatricula != null && != ""
+     * @param foto 
+     * @param promedioAcumulado > 0 && <=5
+     * @param semestreActual > 0 && <=10
+     * @param identificacion != null && != ""
+     * @throws Exception 
+     */
+    public void registrarMonitor(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, int codigo, String estadoMatricula, File foto, double promedioAcumulado, int semestreActual, String identificacion)throws Exception
+    {
+            Monitor nuevo = buscarMonitor(identificacion );
+            if( nuevo != null )
+            {
+                //throw new Exception("El Estudiante que desea registrar ya existe !!");
+            }
+            else{      
+                nuevo= new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+                monitores.add( nuevo );
+            }
+    }
     /**
      * El metodo elimina un aspirante registrado en el sistema
      * @param identificacion != null && != ""
@@ -230,7 +292,7 @@ public class ContratacionMonitores {
             }
         }
 
-        return aspiranteBuscado;
+        return null;
     }    
     
     
@@ -250,7 +312,7 @@ public class ContratacionMonitores {
             }
         }
 
-        return monitorBuscado;
+        return null;
     }    
 
     /**
