@@ -53,17 +53,21 @@ public class ContratacionMonitoresTest {
     public void testModificarAspirante() throws Exception {
         
         System.out.println("modificarAspirante");
-        String primerNombre = "";
-        String segundoNombre = "";
-        String primerApellido = "";
-        String segundoApellido = "";
-        String identificacion = "";
-        File foto = null;
-        int semestre = 0;
-        double promedioAcum = 0.0;
-        ContratacionMonitores instance = new ContratacionMonitores();
-        instance.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
-
+        cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        System.out.println(cm.buscarAspirante("101").toString());
+        
+        cm.modificarAspirante("primerNombreModificado","segundoNombreModificado", "primerApellidoModificado","segundoApellidoModificado", "101", null,2,2.0);
+        System.out.println(cm.buscarAspirante("101").toString());
+        Aspirante aspiranteModificado=cm.buscarAspirante("101");
+        assertTrue(aspiranteModificado.darPrimerNombre().equals("primerNombreModificado"));
+        assertTrue(aspiranteModificado.darSegundoNombre().equals("segundoNombreModificado"));
+        assertTrue(aspiranteModificado.darPrimerApellido().equals("primerApellidoModificado"));
+        assertTrue(aspiranteModificado.darSegundoApellido().equals("segundoApellidoModificado"));
+        assertTrue(aspiranteModificado.darEstadoMatricula().equals("estadoMatricula"));
+        assertTrue(aspiranteModificado.darPromedioAcumulado() == 2.0);
+        assertTrue(aspiranteModificado.darSemestreActual()== 2);
+        
+        
         
     }
 
@@ -151,15 +155,19 @@ public class ContratacionMonitoresTest {
     public void testModificarMonitor() throws Exception {
         
         System.out.println("modificarMonitor");
-        String primerNombre = "";
-        String segundoNombre = "";
-        String primerApellido = "";
-        String segundoApellido = "";
-        String identificacion = "";
-        File foto = null;
-        int semestre = 0;
-        double promedioAcum = 0.0;      
-        cm.modificarAspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, identificacion, foto, semestre, promedioAcum);
+        cm.registrarMonitor("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+        System.out.println(cm.buscarMonitor("101").toString());
+        
+        cm.modificarMonitor("primerNombreModificado","segundoNombreModificado", "primerApellidoModificado","segundoApellidoModificado", "101", null,2,2.0);
+        System.out.println(cm.buscarMonitor("101").toString());
+        Monitor monitorModificado=cm.buscarMonitor("101");
+        assertTrue(monitorModificado.darPrimerNombre().equals("primerNombreModificado"));
+        assertTrue(monitorModificado.darSegundoNombre().equals("segundoNombreModificado"));
+        assertTrue(monitorModificado.darPrimerApellido().equals("primerApellidoModificado"));
+        assertTrue(monitorModificado.darSegundoApellido().equals("segundoApellidoModificado"));
+        assertTrue(monitorModificado.darEstadoMatricula().equals("estadoMatricula"));
+        assertTrue(monitorModificado.darPromedioAcumulado() == 2.0);
+        assertTrue(monitorModificado.darSemestreActual()== 2);
 
         
     }
@@ -277,5 +285,23 @@ public class ContratacionMonitoresTest {
         
         assertTrue(cm.darDependencias().size()==2);
     }
-
+    
+     /**
+     * Test of ModificarDependencia method, of class ContratacionMonitores.
+     */
+    @Test
+    public void testModificarDependencia() throws Exception {
+        System.out.println("ModificarDependencia");
+        
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana"); 
+        System.out.println(cm.buscarDependencia("Cod1").toString());
+        
+        cm.modificarDependencia("Cod1", "Dependencia 1 Modificado", "Esta es la Dependencia 1 Modificado", "TardeModificado");   
+        assertTrue(cm.buscarDependencia("Cod1").darNombre().equals("Dependencia 1 Modificado"));
+        assertTrue(cm.buscarDependencia("Cod1").darDescripcion().equals("Esta es la Dependencia 1 Modificado"));
+        assertTrue(cm.buscarDependencia("Cod1").darHorario().equals("TardeModificado"));
+        System.out.println(cm.buscarDependencia("Cod1").toString());
+    
+    }
 }

@@ -1,6 +1,7 @@
 package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
+import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -370,6 +371,18 @@ public class ContratacionMonitores {
         return null;
     }  
 
+    public void modificarDependencia(String nId, String nNombre, String nDescripcion, String nHorario) throws ExcepcionNoExiste{
+        Dependencia dependenciaModificar= buscarDependencia(nId);
+        if(dependenciaModificar==null){
+            //throw  new ExcepcionNoExiste("La dependencia que desea");
+        }
+        else
+        {
+            dependenciaModificar.cambiarNombre(nNombre);
+            dependenciaModificar.cambiarDescripcion(nDescripcion);
+            dependenciaModificar.cambiarHorario(nHorario);
+        }
+    }
     /**
      * Metodo para hacer pruebas
      * @param args 
