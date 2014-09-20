@@ -124,17 +124,20 @@ public class ContratacionMonitores {
         this.aspirantes = aspirantes;
     }
 
-    public void registrarAspirante2(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+    public void registrarAspirante2(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionNoExiste{
         Aspirante nuevo = buscarAspirante(identificacion );
         if( nuevo != null )
         {
             //throw new Exception("El Estudiante que desea registrar ya existe !!");
             //Se muestran las dependencias en que esta registrado el aspirante
         }
-        else{
-            nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
+        else{          
             //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-            aspirantes.add( nuevo );
+            nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
+            if(nuevo==null)
+                throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
+            else
+                aspirantes.add( nuevo );
         }
     }
     /**
