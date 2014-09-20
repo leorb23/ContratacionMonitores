@@ -19,74 +19,41 @@ public class ContratacionMonitoresDAO {
     
     // -----------------------------------------------------------------
     // ATRIBUTOS
-    // -----------------------------------------------------------------
+    // -----------------------------------------------------------------   
     /**
-     * Es la base de datos
+     * Es la conexion con la Base de datos de estudiantes de la Univerisidad
      */
-    private String bd;
+    private Connection conexionUniversidad;
     /**
-     * Modo de conexion
+     * Es la conexion con la Base de datos del Sistema Contratacion de Monitores
      */
-    private String conectionString;
+    private Connection conexionContratacionMonitores;
     /**
-     * Es la conexion
+     * Es el Statement que conecta con la Base de datos de estudiantes de la Univerisidad
      */
-    private Connection conexion;
+    private Statement stBdUniversidad;
     /**
-     * Es el driver de postgres
+     * Es el Statement que conecta con la Base de datos del Sistema Contratacion de Monitores
      */
-    private String driver;
-    /**
-     * Es el usuario de la BD
-     */
-    private String usuario;
-    /**
-     * Es el password del usuario de la BD
-     */
-    private String password;
-    /**
-     * Es el puerto por el cual el servidor acepta las peticiones
-     */
-    private int puerto;
-    /**
-     * Es el servidor donde se alojan los datos
-     */
-    private String servidor;
-    /**
-     * Es el Statement
-     */
-    private Statement st;
+    private Statement stBdContratacionMonitores;
     
     private AspiranteDAO aspiranteDAO;
     private MonitorDAO monitorDAO;
     private ResultadoDAO resultadoDAO;
     private DependenciaDAO dependenciaDAO;
+    
+    private EstudianteUniversidadDAO estudianteUDAO;
 
     
-    public ContratacionMonitoresDAO() {
-        
-        driver="org.postgresql.Driver";
-
-        conectionString="jdbc:postgresql";
-
-        bd="contratacionMonitores";
-
-        usuario="postgres";
-
-        password="123";
-
-        servidor="";//"192.168.0.13";//192.168.0.11
-
-        puerto=5432;   
-
-        st = null ;
-
-       // conectar();
+    public ContratacionMonitoresDAO() {      
+        //conectarBdSistema();
         
         aspiranteDAO = new AspiranteDAO();
         monitorDAO = new MonitorDAO();
         resultadoDAO = new ResultadoDAO();
         dependenciaDAO = new DependenciaDAO();
+        
+        estudianteUDAO = new EstudianteUniversidadDAO();
         
     }
     /**
@@ -96,25 +63,60 @@ public class ContratacionMonitoresDAO {
      * @throws InstantiationException
      * @throws IllegalAccessException 
      */
-    public void conectar() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+    public void conectarBdSistema() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+              
+        String driver="org.postgresql.Driver";
+        String conectionString="jdbc:postgresql";
+        String bd="contratacionMonitores";
+        String usuario="postgres";
+        String password="123";
+        String servidor="";//"192.168.0.13";//192.168.0.11
+        int puerto=5432;   
+        //stBdSistema = null ;
         
         Class.forName(driver).newInstance();
 
-        this.conexion = DriverManager.getConnection(conectionString+":"+"//"+servidor+":"+puerto+"/"+bd,usuario,password);
+        this.conexionContratacionMonitores = DriverManager.getConnection(conectionString+":"+"//"+servidor+":"+puerto+"/"+bd,usuario,password);
 
-        this.st=(Statement) conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        this.stBdContratacionMonitores=(Statement) conexionContratacionMonitores.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-        System.out.println("Conectado...");
+        System.out.println("Conectado con la base de datos del sistema contratacion de monitores...");
+    }
+    /**
+     * Metodo que se encarga de realizar la conexion con la Base de Datos
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException 
+     */
+    public void conectarBdUniversidad() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+              
+        String driver="org.postgresql.Driver";
+        String conectionString="jdbc:postgresql";
+        String bd="estudiantes";
+        String usuario="postgres";
+        String password="123";
+        String servidor="";//"192.168.0.13";//192.168.0.11
+        int puerto=5432;   
+
+        
+        Class.forName(driver).newInstance();
+
+        this.conexionUniversidad = DriverManager.getConnection(conectionString+":"+"//"+servidor+":"+puerto+"/"+bd,usuario,password);
+
+        this.stBdUniversidad=(Statement) conexionUniversidad.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+        System.out.println("Conectado con la base de datos de estudiantes de la Universidad...");
     }
     
     
     /**
      * Metodo que se encarga de desconectar el sistema con la base de datos
      */
-    public void desconectar(){
+    public void desconectarBdContratacionMonitores(){
         try 
         {
-            this.conexion.close();
+            this.conexionContratacionMonitores.close();
 
             System.out.println("Desconectado...");
         } 
@@ -124,9 +126,34 @@ public class ContratacionMonitoresDAO {
         }
     }
     
-    public void registrarAspiranteEnBD(){
-              
-        //aD.resgistrarAspiranteEnBD();
+    /**
+     * Metodo que se encarga de desconectar el sistema con la base de datos
+     */
+    public void desconectarBdUniversidad(){
+        try 
+        {
+            this.conexionUniversidad.close();
+
+            System.out.println("Desconectado...");
+        } 
+        catch (SQLException e) 
+        {		
+            System.out.println("Error al cerrar la conexion + "+e.toString());
+        }
+    }
+    
+    public Aspirante registrarAspiranteEnBD(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        
+        conectarBdUniversidad();
+        
+        Aspirante encontrado = estudianteUDAO.buscarEstudiante(identificacion);
+        
+        desconectarBdUniversidad();
+        
+        if(encontrado!=null)
+            aspiranteDAO.resgistrarAspiranteEnBD(encontrado);
+
+        return encontrado;
         
     }
     public void actualizarAspiranteEnBD(){

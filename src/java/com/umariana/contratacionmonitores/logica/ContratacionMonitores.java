@@ -124,6 +124,19 @@ public class ContratacionMonitores {
         this.aspirantes = aspirantes;
     }
 
+    public void registrarAspirante2(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        Aspirante nuevo = buscarAspirante(identificacion );
+        if( nuevo != null )
+        {
+            //throw new Exception("El Estudiante que desea registrar ya existe !!");
+            //Se muestran las dependencias en que esta registrado el aspirante
+        }
+        else{
+            nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
+            //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+            aspirantes.add( nuevo );
+        }
+    }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
      * <PostCondiciones> Se registro correctamente el aspirante al sistema 
@@ -239,7 +252,7 @@ public class ContratacionMonitores {
                 //throw new Exception("El Estudiante que desea registrar ya existe !!");
             }
             else{      
-                nuevo= new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+                nuevo= new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion, null);
                 monitores.add( nuevo );
             }
     }
@@ -414,9 +427,9 @@ public class ContratacionMonitores {
             System.out.println(a2.toString());
             
             //Pruebas para Monitor
-            Monitor m1 = new Monitor("primerNombreM1","segundoNombreM1", "primerApellidoM1","segundoApellidoM1", 1, "estadoMatriculaM1", null,1.0,1,"101");
+            Monitor m1 = new Monitor("primerNombreM1","segundoNombreM1", "primerApellidoM1","segundoApellidoM1", 1, "estadoMatriculaM1", null,1.0,1,"101", null);
             System.out.println(m1.toString());
-            Monitor m2 = new Monitor("primerNombreM2","segundoNombreM2", "primerApellidoM2","segundoApellidoM2", 2, "estadoMatriculaM2", null,1.0,1,"102");
+            Monitor m2 = new Monitor("primerNombreM2","segundoNombreM2", "primerApellidoM2","segundoApellidoM2", 2, "estadoMatriculaM2", null,1.0,1,"102", null);
             System.out.println(m2.toString());
 
             cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
