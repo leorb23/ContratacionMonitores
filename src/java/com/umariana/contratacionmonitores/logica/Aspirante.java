@@ -4,12 +4,13 @@ import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Aspirante extends Estudiante{
     /**
      * Es la lista de postulaciones a las que se ha inscrito el estudiante
      */
-    private ArrayList<Dependencia> postulaciones;
+    private ArrayList<Postulacion> postulaciones;
     
     /**
      * Es el constructor de la clase Aspirante
@@ -27,14 +28,14 @@ public class Aspirante extends Estudiante{
     public Aspirante(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, int codigo, String estadoMatricula, File foto, double promedioAcumulado, int semestreActual, String identificacion)
     {
         super(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        postulaciones = new ArrayList<Dependencia>();
+        postulaciones = new ArrayList<Postulacion>();
     }  
 
     /**
      * 
      * @return 
      */
-    public ArrayList<Dependencia> darPostulaciones() 
+    public ArrayList<Postulacion> darPostulaciones() 
     {
         return postulaciones;
     }
@@ -42,7 +43,7 @@ public class Aspirante extends Estudiante{
      * 
      * @param postulaciones 
      */
-    public void cambiarPostulaciones(ArrayList<Dependencia> postulaciones) 
+    public void cambiarPostulaciones(ArrayList<Postulacion> postulaciones) 
     {
         this.postulaciones = postulaciones;
     }
@@ -51,10 +52,10 @@ public class Aspirante extends Estudiante{
      * @param eliminarPostulacion
      * @throws ExcepcionNoExiste 
      */
-    public void quitarPostulacion(Dependencia eliminarPostulacion) throws ExcepcionNoExiste
+    public void quitarPostulacion(String idDependencia) throws ExcepcionNoExiste
     {    
-        if(buscarPostulacion(eliminarPostulacion.darId())!=null)
-            postulaciones.remove(eliminarPostulacion);
+        if(buscarPostulacion(idDependencia)!=null)
+            postulaciones.remove(idDependencia);
         else
             throw  new ExcepcionNoExiste("La postulacion que desea eliminar no existe!!");
     } 
@@ -63,10 +64,12 @@ public class Aspirante extends Estudiante{
      * @param agregarPostulacion
      * @throws ExcepcionYaExiste 
      */
-    public void agregarPostulacion(Dependencia agregarPostulacion) throws ExcepcionYaExiste
+    public void agregarPostulacion(String idDependencia, Date fechaPostulacion, String identificaiconAspirante) throws ExcepcionYaExiste
     {
-        if(buscarPostulacion(agregarPostulacion.darId())==null)
-            postulaciones.add(agregarPostulacion);
+        if(buscarPostulacion(idDependencia)==null){
+            Postulacion nuevaPostulacion= new Postulacion(idDependencia, fechaPostulacion, identificaiconAspirante);
+            postulaciones.add(nuevaPostulacion);
+        }
         else
             throw  new ExcepcionYaExiste("Ya se ha postulado a esta dependencia anteriormente!!");
     }
@@ -75,11 +78,11 @@ public class Aspirante extends Estudiante{
      * @param idPostulacion
      * @return 
      */
-    public Dependencia buscarPostulacion(String idPostulacion){
+    public Postulacion buscarPostulacion(String idDependencia){
         
-        for(Dependencia buscarDependencia: postulaciones ){
-            if(buscarDependencia.darId().equals(idPostulacion))
-                return buscarDependencia;
+        for(Postulacion buscarPostulacion: postulaciones ){
+            if(buscarPostulacion.darIdDependencia().equals(idDependencia))
+                return buscarPostulacion;
         }
         return null;
     }

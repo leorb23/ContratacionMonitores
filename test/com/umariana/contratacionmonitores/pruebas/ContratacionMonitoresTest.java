@@ -55,7 +55,7 @@ public class ContratacionMonitoresTest {
         cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
         System.out.println(cm.buscarAspirante("101").toString());
         
-        cm.modificarAspirante("primerNombreModificado","segundoNombreModificado", "primerApellidoModificado","segundoApellidoModificado", "101", null,2,2.0);
+        cm.modificarAspirante("primerNombreModificado","segundoNombreModificado", "primerApellidoModificado","segundoApellidoModificado", "101", null,2);
         System.out.println(cm.buscarAspirante("101").toString());
         Aspirante aspiranteModificado=cm.buscarAspirante("101");
         assertTrue(aspiranteModificado.darPrimerNombre().equals("primerNombreModificado"));

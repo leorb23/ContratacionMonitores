@@ -2,9 +2,11 @@ package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
+import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 /**
 * Es la clase principal del sistema Contratacion de Monitores
 * @author CocoSoft
@@ -123,22 +125,35 @@ public class ContratacionMonitores {
     {
         this.aspirantes = aspirantes;
     }
+    /**
+     * 
+     * @param identificacion
+     * @return  Retorna 1 en caso de que la cedula pertenesca a un estudiante que es aspirante existente en el sistema
+     *          Retorna 2 en caso de que la cedula pertenesca a un estudiante que es monitor existente en el sistema
+     *          Retorna 3 en caso de que la cedula pertenesca a un estudiante que no este registrado en el sistema
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ExcepcionNoExiste lanza la excepcion si la cedula no esta en la base de datos de estudiantes de la univeridad
+     */
+    public int ingreso(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionNoExiste{
+        
+        Aspirante existeAspirante = buscarAspirante(identificacion );
+        if( existeAspirante != null )
+            return 1;
+          
+        Monitor monitorExiste = buscarMonitor(identificacion );
+        if( monitorExiste != null )
+            return 2;      
 
-    public void registrarAspirante2(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionNoExiste{
-        Aspirante nuevo = buscarAspirante(identificacion );
-        if( nuevo != null )
-        {
-            //throw new Exception("El Estudiante que desea registrar ya existe !!");
-            //Se muestran las dependencias en que esta registrado el aspirante
-        }
-        else{          
-            //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-            nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
-            if(nuevo==null)
-                throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
-            else
-                aspirantes.add( nuevo );
-        }
+        //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
+        Aspirante nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
+        if(nuevo==null)
+            throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
+        else
+            aspirantes.add( nuevo );
+        return 1;
     }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
@@ -178,10 +193,9 @@ public class ContratacionMonitores {
      * @param identificacion != null && != ""
      * @param foto
      * @param semestre > 0 && <=10
-     * @param promedioAcum > 0 && <= 5
      * @throws Exception 
      */
-    public void modificarAspirante(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
+    public void modificarAspirante(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String identificacion, File foto, int semestre) throws Exception
     {
         Aspirante modificar = buscarAspirante(identificacion );
         if( modificar == null )
@@ -195,9 +209,7 @@ public class ContratacionMonitores {
             modificar.cambiarPrimerApellido(primerApellido);  
             modificar.cambiarSegundoApellido(segundoApellido);  
             modificar.cambiarFoto(foto);
-            modificar.cambiarPromedioAcumulado(promedioAcum);
             modificar.cambiarSemestreActual(semestre);                    
-
         }
     }
      /**
@@ -229,7 +241,6 @@ public class ContratacionMonitores {
             modificar.cambiarFoto(foto);
             modificar.cambiarPromedioAcumulado(promedioAcum);
             modificar.cambiarSemestreActual(semestre);                    
-
         }
     }
      /**
@@ -311,7 +322,40 @@ public class ContratacionMonitores {
         return null;
     }    
     
+    /**
+     * El metodo se encarga de agregar una postulacion al aspirante
+     * @param identificacion != null && !=""
+     * @param idDependencia != null && !=""
+     * @throws ExcepcionYaExiste Lanza la excepcion si la postulacion que desea quitar no existe
+     * @throws ExcepcionNoExiste Lanza la excepcion si si el aspirante no existe
+     */
+    public void agregarPostulacionAspirante(String identificacion, String idDependencia) throws ExcepcionYaExiste, ExcepcionNoExiste{
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null){ 
+            Dependencia buscada= buscarDependencia(idDependencia);
+            if(buscada!=null)
+                aspirante.agregarPostulacion(buscada.darId(), new Date(), identificacion);
+        }
+        else
+            throw new ExcepcionNoExiste("No se puede agregar la postulacion al aspirante con identificacion :"+identificacion);
+    }
     
+    /**
+     * El metodo se encarga de quitar una postulacion al aspirante
+     * @param identificacion
+     * @param idDependencia
+     * @throws ExcepcionNoExiste 
+     */
+    public void quitarPostualacionAspirante(String identificacion, String idDependencia) throws ExcepcionNoExiste{
+        Aspirante aspirante= buscarAspirante(identificacion);
+        if(aspirante!=null){    
+            Dependencia buscada= buscarDependencia(idDependencia);
+            if(buscada!=null)
+                aspirante.quitarPostulacion(buscada.darId());
+        }
+        else
+            throw new ExcepcionNoExiste("No se puede quitar la postulacion al aspirante con identificacion :"+identificacion);
+    }
     /**
      * El metodo busca un monitor dado su identificacion
      * @param identificacion != null && != ""
@@ -451,13 +495,9 @@ public class ContratacionMonitores {
                 System.out.println("Dependencia: "+d.toString());
             }
             System.out.println("Numero Dependencias: "+cm.darDependencias().size());
-
-            
+          
         } catch (Exception ex) {          
             System.out.println("Error: "+ex.getMessage());
         }
-
-
     }
-
 }
