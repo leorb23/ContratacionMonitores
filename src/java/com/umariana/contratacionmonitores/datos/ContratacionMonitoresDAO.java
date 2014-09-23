@@ -2,9 +2,11 @@ package com.umariana.contratacionmonitores.datos;
 
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Dependencia;
+import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import java.beans.Statement;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -213,6 +215,11 @@ public class ContratacionMonitoresDAO {
      */
     public ArrayList<Dependencia> darDependenciasRegistrados(){  
         return new ArrayList<Dependencia>();
+    }
+
+    public Estudiante buscarEstudiante(String identificacion) {
+        Estudiante estudiante= new Estudiante("primerN", "segundoN", "pirmerA", "segundoA", 1, "estadoMaatricula", null, 5.0, 8, identificacion);
+        return estudiante;                 
     }
     
 }

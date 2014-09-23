@@ -184,21 +184,15 @@ public class ContratacionMonitores {
                                          aspirante.darCodigo(), aspirante.darEstadoMatricula(), 
                                          aspirante.darFoto() ,aspirante.darPromedioAcumulado(), 
                                          aspirante.darSemestreActual(), identificacion, dependencia);                   
-                    eliminarAspirante(identificacion);
-                    registrarMonitor2(monitor,codDependencia);
+                    eliminarAspirante(identificacion);                  
+                    monitores.add(monitor);
+                    cmDAO.registrarMonitorEnBD();
+
                 }
             }
         }           
     }
-    /**
-     * El metodo se encarga de registrar un monitor en el sistema
-     * @param nuevoMonitor != null
-     * @param codDependencia !=null && !=""
-     */
-    public void registrarMonitor2(Monitor nuevoMonitor, String codDependencia){
-        monitores.add(nuevoMonitor);
-        cmDAO.registrarMonitorEnBD();
-    }
+
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
      * <PostCondiciones> Se registro correctamente el aspirante al sistema 
@@ -544,5 +538,15 @@ public class ContratacionMonitores {
         } catch (Exception ex) {          
             System.out.println("Error: "+ex.getMessage());
         }
+    }
+
+    public Estudiante buscarEstudiante(String identificacion) {
+         Estudiante estudiante = null;
+         
+         estudiante= cmDAO.buscarEstudiante(identificacion);
+         if(estudiante!=null)
+             return estudiante;
+         
+         return null;
     }
 }

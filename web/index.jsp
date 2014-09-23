@@ -12,6 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello Fucking World!</h1>
+        <h1>Contratacion de Monitores</h1>
+        <form id="form_ingreso_estudiante" name="form_ingreso_estudiante" action="" method="post">
+            <label>Identificacion</label>
+            <input type="text" id="txt_identificaicon">
+            <input type="submit" id="btn_enviar" value="Enviar">
+        </form>
     </body>
 </html>
