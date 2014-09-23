@@ -126,8 +126,9 @@ public class ContratacionMonitores {
         this.aspirantes = aspirantes;
     }
     /**
-     * 
-     * @param identificacion
+     * El metodo se encarga de verificar si el estudiante es un aspirante, monitor o no esta registrado 
+     * pasandole como parametro unicamente la identificacion
+     * @param identificacion != null && !=""
      * @return  Retorna 1 en caso de que la cedula pertenesca a un estudiante que es aspirante existente en el sistema
      *          Retorna 2 en caso de que la cedula pertenesca a un estudiante que es monitor existente en el sistema
      *          Retorna 3 en caso de que la cedula pertenesca a un estudiante que no este registrado en el sistema
@@ -153,7 +154,50 @@ public class ContratacionMonitores {
             throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
         else
             aspirantes.add( nuevo );
-        return 1;
+        return 3;
+    }
+    /**
+     * El metodo se encarga de pasar un aspirante que paso las pruebas a un monitor con su respectiva dependencia
+     * @param identificacion != null && !=""
+     * @param codDependencia != null && !=""
+     * @throws ExcepcionNoExiste Lanza la excepcion en caso de que el aspirante no esta registrado en el sistema y tambien si la dependencia no esta registrada
+     * @throws ExcepcionYaExiste Lanza la excepcion en caso de que el estudiante ya esta registrado como monitor
+     * @throws Exception 
+     */
+    public void pasarAspiranteAMonitor(String identificacion , String codDependencia) throws ExcepcionNoExiste, ExcepcionYaExiste, Exception{        
+        Aspirante aspirante= buscarAspirante(identificacion);
+        if(aspirante==null)
+            throw  new ExcepcionNoExiste("El aspirante no esta registrado en el sistema");
+        else
+        {
+            Monitor monitor=buscarMonitor(identificacion);
+            if(monitor!=null)
+                throw  new ExcepcionYaExiste("El estudiante con la identificaicon : "+ identificacion+" ya se encuentra registrado como monitor");
+            else
+            {
+                Dependencia dependencia= buscarDependencia(codDependencia);
+                if(dependencia==null)
+                    throw  new ExcepcionNoExiste("La dependencia que desea agregar al monitor no existe");
+                else{
+                    monitor= new Monitor(aspirante.darPrimerNombre(), aspirante.darSegundoNombre(),   
+                                         aspirante.darPrimerApellido(), aspirante.darSegundoApellido(),
+                                         aspirante.darCodigo(), aspirante.darEstadoMatricula(), 
+                                         aspirante.darFoto() ,aspirante.darPromedioAcumulado(), 
+                                         aspirante.darSemestreActual(), identificacion, dependencia);                   
+                    eliminarAspirante(identificacion);
+                    registrarMonitor2(monitor,codDependencia);
+                }
+            }
+        }           
+    }
+    /**
+     * El metodo se encarga de registrar un monitor en el sistema
+     * @param nuevoMonitor != null
+     * @param codDependencia !=null && !=""
+     */
+    public void registrarMonitor2(Monitor nuevoMonitor, String codDependencia){
+        monitores.add(nuevoMonitor);
+        cmDAO.registrarMonitorEnBD();
     }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
@@ -280,6 +324,7 @@ public class ContratacionMonitores {
             if( eliminar != null )
             {                   
                 aspirantes.remove(eliminar);
+                cmDAO.eliminarAspiranteEnBD();
             }
             else
             {

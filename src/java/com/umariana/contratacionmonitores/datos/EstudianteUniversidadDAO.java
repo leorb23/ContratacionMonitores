@@ -16,7 +16,8 @@ public class EstudianteUniversidadDAO {
 
     Aspirante buscarEstudiante(String identificacion) {
         System.out.println("Estudiante encontrado!! -->>  /n");
-        return null;
+        Aspirante nuevo= new Aspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,identificacion);
+        return nuevo;
     }
     
 }

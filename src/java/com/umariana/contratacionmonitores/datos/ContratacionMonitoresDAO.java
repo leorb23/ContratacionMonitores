@@ -144,11 +144,11 @@ public class ContratacionMonitoresDAO {
     
     public Aspirante registrarAspiranteEnBD(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
         
-        conectarBdUniversidad();
+        //conectarBdUniversidad();
         
         Aspirante encontrado = estudianteUDAO.buscarEstudiante(identificacion);
         
-        desconectarBdUniversidad();
+        //desconectarBdUniversidad();
         
         if(encontrado!=null)
             aspiranteDAO.resgistrarAspiranteEnBD(encontrado);
