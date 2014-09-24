@@ -7,6 +7,7 @@ package com.umariana.contratacionmonitores.controladores;
 
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
+import com.umariana.contratacionmonitores.logica.Administrador;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Estudiante;
@@ -77,7 +78,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    //@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         String identificacion = request.getParameter("txt_identificaicon");
         System.out.println(identificacion);
@@ -95,7 +96,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    //@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)     throws ServletException, IOException {
    
         
@@ -107,6 +108,12 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 String identificacion = request.getParameter("txt_identificacion");   
                 ingreso(identificacion);
                     break;
+            case "admin":
+                String usuario = request.getParameter("txt_usuario");
+                String password = request.getParameter("txt_contrasena");                
+                ingresarAdmin(usuario,password);              
+                response.sendRedirect("admin.jsp");
+                break;
             case "cerrar":
                 cerrarSesion();
                 break;
@@ -132,7 +139,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
+    //@Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
@@ -148,6 +155,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println(aspirante.toString());
                 System.out.println("------------------------------------");
                 usuarioActual="aspirante";
+                sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("aspirante", aspirante);
             } 
             else if(n==2){
@@ -157,6 +165,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println(monitor.toString());
                 System.out.println("------------------------------------");
                 usuarioActual="monitor";
+                sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("monitor", monitor);
             }
             else if(n==3){
@@ -166,10 +175,15 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println(estudiante.toString());
                 System.out.println("------------------------------------");
                 usuarioActual="estudiante";
-                sesionGlobal.setAttribute("estudiante", estudiante);                         
+                sesionGlobal.setAttribute("estudiante", estudiante);  
+                sesionGlobal.removeAttribute("mensaje");
+            }
+            else if(n==4){
+                //La identificacion no corresponde a ningun estudiante de la universidad
             }
             
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException | ExcepcionNoExiste ex) {
+            sesionGlobal.setAttribute("mensaje", ex.getMessage());
             System.out.println(ex.getMessage());
         }
     }
@@ -178,17 +192,33 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     public void registrarAspirante(String identificacion){
             try {
                 cerrarSesion();
-                sesionGlobal.setAttribute("aspirante", cm.registrarAspirante2(identificacion));
+                Aspirante aspirante =cm.registrarAspirante2(identificacion);
+                sesionGlobal.setAttribute("mensaje","Se registro Correctamente el estudiante con identificacion : "+aspirante.darIdentificacion());
+                sesionGlobal.setAttribute("aspirante", aspirante);
+                usuarioActual="aspirante";
+                
             } catch (ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
                 System.out.println(ex.getMessage());
             }
     }
     public void cerrarSesion(){
         sesionGlobal.removeAttribute(usuarioActual);
+        sesionGlobal.removeAttribute("mensaje");
         
     }
     
     public HttpSession darSession(){
         return sesionGlobal;
+    }
+
+    private void ingresarAdmin(String usuario, String password) {
+            try {
+                Administrador admin= cm.ingresoAdmin(usuario,password);
+                cerrarSesion();
+                usuarioActual="admin";    
+                sesionGlobal.setAttribute("admin", admin);
+            } catch (ExcepcionNoExiste ex) {
+                Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }

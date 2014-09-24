@@ -78,8 +78,7 @@ public class ContratacionMonitores {
             
             
             
-            
-            
+                       
             
             agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
             agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
@@ -170,6 +169,7 @@ public class ContratacionMonitores {
      * @return  Retorna 1 en caso de que la cedula pertenesca a un estudiante que es aspirante existente en el sistema
      *          Retorna 2 en caso de que la cedula pertenesca a un estudiante que es monitor existente en el sistema
      *          Retorna 3 en caso de que la cedula pertenesca a un estudiante que no este registrado en el sistema
+     *          Retorna 4 en caso de que la cedula NO pertenesca a ningun estudiante de la universidad
      * @throws ClassNotFoundException
      * @throws SQLException
      * @throws InstantiationException
@@ -185,14 +185,12 @@ public class ContratacionMonitores {
         Monitor monitorExiste = buscarMonitor(identificacion );
         if( monitorExiste != null )
             return 2;      
-
-        //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        /*Aspirante nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
-        if(nuevo==null)
-            throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
-        else
-            aspirantes.add( nuevo );*/
-        return 3;
+        
+        Estudiante estudiante = buscarEstudiante(identificacion);
+        if(estudiante!=null)
+            return 3;
+        
+        return 4;
     }
     /**
      * El metodo se encarga de pasar un aspirante que paso las pruebas a un monitor con su respectiva dependencia
@@ -235,11 +233,14 @@ public class ContratacionMonitores {
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null)
             throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
+        
         Monitor monitor = buscarMonitor(identificacion);
         if(monitor!=null)
-            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");
+            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");           
         
-        return cmDAO.registrarAspiranteEnBD(identificacion);
+        aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
+        aspirantes.add(aspirante);
+        return aspirante;
     }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
@@ -545,7 +546,8 @@ public class ContratacionMonitores {
     
     
     
-    public Estudiante buscarEstudiante(String identificacion) {
+    public Estudiante buscarEstudiante(String identificacion) throws ExcepcionNoExiste {
+        
          Estudiante estudiante = null;
          
          estudiante= cmDAO.buscarEstudiante(identificacion);
@@ -598,6 +600,10 @@ public class ContratacionMonitores {
         } catch (Exception ex) {          
             System.out.println("Error: "+ex.getMessage());
         }
+    }
+
+    public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
+        return cmDAO.buscarAdministrador(usuario,password);
     }
 
     
