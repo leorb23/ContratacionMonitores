@@ -7,6 +7,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
 * Es la clase principal del sistema Contratacion de Monitores
 * @author CocoSoft
@@ -50,10 +52,46 @@ public class ContratacionMonitores {
         resultados   =  cmDAO.darResultadosRegistrados();
         monitores    =  cmDAO.darMonitoresRegistrados();
         dependencias =  cmDAO.darDependenciasRegistrados();   
+        
+        
+        registrosDePrueba();
+        
+       
+        
+        
+        
     }           
     //
     //METODOS
     //
+    void registrosDePrueba(){
+        try {
+            registrarAspirante("aspirante1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
+            registrarAspirante("aspirante2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
+            registrarAspirante("aspirante3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
+            registrarAspirante("aspirante4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
+            
+            registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
+            registrarMonitor("monitor2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"106");
+            registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
+            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");
+            
+            
+            
+            
+            
+            
+            agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
+            agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+            agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+            agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+            
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * Retorna la lista de monitores
      * @return monitores
@@ -149,11 +187,11 @@ public class ContratacionMonitores {
             return 2;      
 
         //nuevo= new Aspirante(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
-        Aspirante nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
+        /*Aspirante nuevo = cmDAO.registrarAspiranteEnBD(identificacion);
         if(nuevo==null)
             throw  new ExcepcionNoExiste("No se ha encontrado ningun resultado con la identificacion : "+identificacion);
         else
-            aspirantes.add( nuevo );
+            aspirantes.add( nuevo );*/
         return 3;
     }
     /**
@@ -193,6 +231,16 @@ public class ContratacionMonitores {
         }           
     }
 
+    public Aspirante registrarAspirante2(String identificacion) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");
+        
+        return cmDAO.registrarAspiranteEnBD(identificacion);
+    }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
      * <PostCondiciones> Se registro correctamente el aspirante al sistema 
@@ -494,6 +542,18 @@ public class ContratacionMonitores {
         }
         return null;
     }
+    
+    
+    
+    public Estudiante buscarEstudiante(String identificacion) {
+         Estudiante estudiante = null;
+         
+         estudiante= cmDAO.buscarEstudiante(identificacion);
+         if(estudiante!=null)
+             return estudiante;
+         
+         return null;
+    }
     /**
      * Metodo para hacer pruebas
      * @param args 
@@ -540,13 +600,5 @@ public class ContratacionMonitores {
         }
     }
 
-    public Estudiante buscarEstudiante(String identificacion) {
-         Estudiante estudiante = null;
-         
-         estudiante= cmDAO.buscarEstudiante(identificacion);
-         if(estudiante!=null)
-             return estudiante;
-         
-         return null;
-    }
+    
 }

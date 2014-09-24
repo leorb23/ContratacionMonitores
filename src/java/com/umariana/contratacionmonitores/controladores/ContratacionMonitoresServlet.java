@@ -6,6 +6,7 @@
 package com.umariana.contratacionmonitores.controladores;
 
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
+import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Estudiante;
@@ -19,14 +20,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author SERVIDOR
  */
 public class ContratacionMonitoresServlet extends HttpServlet {
-
-    ContratacionMonitores cm = new ContratacionMonitores();
+    
+    /**
+     * Es la sesion global de toda la aplicacion
+     */
+	private static HttpSession sesionGlobal;
+        private static String usuarioActual;
+    
+        public static ContratacionMonitores cm = new ContratacionMonitores();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,16 +46,23 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String identificacion = request.getParameter("txt_identificacion");
+        System.out.println("identificacion: "+identificacion);
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet ContratacionMonitoresServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ContratacionMonitoresServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1> Contratacion de Monitores </h1>");
+            out.println("<h2> Identificacion Estudiante :"+request.getParameter("txt_identificacion")+"</h2>");
+            out.println("<h2> Identificacion Estudiante :"+request.getParameter("accion")+"</h2>");
+            out.println("<h2> Identificacion Estudiante :"+request.getParameter("select_registrar")+"</h2>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,9 +78,13 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+        String identificacion = request.getParameter("txt_identificaicon");
+        System.out.println(identificacion);
+        sesionGlobal=request.getSession(true);
+        ingreso(identificacion);
+        
+        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -77,9 +96,35 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)     throws ServletException, IOException {
+   
+        
+        String accion = request.getParameter("accion");
+        
+        sesionGlobal=request.getSession(true);
+        switch (accion){
+            case "ingreso":
+                String identificacion = request.getParameter("txt_identificacion");   
+                ingreso(identificacion);
+                    break;
+            case "cerrar":
+                cerrarSesion();
+                break;
+                
+            case "reg_estu":
+                String registrar=request.getParameter("select_registrar");
+                if(registrar.equals("si")){
+                    Estudiante estudiante = (Estudiante)sesionGlobal.getAttribute("estudiante");
+                    registrarAspirante(estudiante.darIdentificacion());
+                }
+                else
+                    cerrarSesion();
+                    break;
+        }
+            
+        
+        
+        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -95,7 +140,6 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     
     public void ingreso(String identificacion){
         try {
-            identificacion="101";
             int n = cm.ingreso(identificacion);
             if(n==1){
                 Aspirante aspirante = cm.buscarAspirante(identificacion);
@@ -103,6 +147,8 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println("El ingreso del ASPIRANTE :");
                 System.out.println(aspirante.toString());
                 System.out.println("------------------------------------");
+                usuarioActual="aspirante";
+                sesionGlobal.setAttribute("aspirante", aspirante);
             } 
             else if(n==2){
                 Monitor monitor = cm.buscarMonitor(identificacion);
@@ -110,6 +156,8 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println("El ingreso del MONITOR :");
                 System.out.println(monitor.toString());
                 System.out.println("------------------------------------");
+                usuarioActual="monitor";
+                sesionGlobal.setAttribute("monitor", monitor);
             }
             else if(n==3){
                 Estudiante estudiante = cm.buscarEstudiante(identificacion);
@@ -117,18 +165,30 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println("Preguntar al estudiante si desea registrar la cuenta como ASPIRANTE en el sistema");
                 System.out.println(estudiante.toString());
                 System.out.println("------------------------------------");
+                usuarioActual="estudiante";
+                sesionGlobal.setAttribute("estudiante", estudiante);                         
             }
             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExcepcionNoExiste ex) {
-            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException | ExcepcionNoExiste ex) {
+            System.out.println(ex.getMessage());
         }
+    }
+    
+    
+    public void registrarAspirante(String identificacion){
+            try {
+                cerrarSesion();
+                sesionGlobal.setAttribute("aspirante", cm.registrarAspirante2(identificacion));
+            } catch (ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                System.out.println(ex.getMessage());
+            }
+    }
+    public void cerrarSesion(){
+        sesionGlobal.removeAttribute(usuarioActual);
+        
+    }
+    
+    public HttpSession darSession(){
+        return sesionGlobal;
     }
 }
