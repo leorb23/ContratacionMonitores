@@ -4,6 +4,9 @@
     Author     : Cocosoft
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet"%>
+<%@page import="com.umariana.contratacionmonitores.logica.Administrador"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Estudiante"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Monitor"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
@@ -12,7 +15,9 @@
 <%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
-    String mensaje = (String)session.getAttribute("mensaje");%>
+    Administrador admin = (Administrador)session.getAttribute("admin");
+    String mensaje = (String)session.getAttribute("mensaje");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -22,7 +27,7 @@
     </head>
     <body>
         <h1>Contratacion de Monitores</h1>
-        <% if(aspirante==null && monitor==null && estudiante==null){%>
+        <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
             <%if(mensaje!=null){%>
                  <h4 style="color: red;"><%=mensaje%></h4>
             <%}%>
@@ -67,7 +72,7 @@
              <%if(mensaje!=null){%>
                  <h4 style="color: red;"><%=mensaje%></h4>
             <%}%>
-            <label>Aspirante :<%=aspirante.darPrimerNombre() %></label><br>
+            <label>Aspirante : <%=aspirante.darPrimerNombre() %></label><br>
             <label>Identificado : <%=aspirante.darIdentificacion() %></label><br>
             <label>Datos Personales : <%=aspirante.toString() %></label>  
             <form action="ContratacionMonitoresServlet" method="POST">
@@ -79,7 +84,7 @@
              <%if(mensaje!=null){%>
                  <h4 style="color: red;"><%=mensaje%></h4>
             <%}%>
-            <label>Monitor :<%=monitor.darPrimerNombre() %></label><br>
+            <label>Monitor : <%=monitor.darPrimerNombre() %></label><br>
             <label>Identificado : <%=monitor.darIdentificacion() %></label><br>
             <label>Datos Personales : <%=monitor.toString() %></label>  
             <form action="ContratacionMonitoresServlet" method="POST">
@@ -103,7 +108,51 @@
                 <input type="hidden" id="accion" name="accion" value="reg_estu">
                 <input type="submit"  value="Registrar">
             </form>
-        <%}%>
+        <%}
+        else if(admin!=null) {%>
+            <%if(mensaje!=null){%>
+                     <h4 style="color: red;"><%=mensaje%></h4>
+                <%}%>
+            <label>Administrador : <%=admin.darNombre() %></label><br>  
+            <form action="ContratacionMonitoresServlet" method="POST">
+                <input type="submit"  value="Cerrar Sesion">
+                <input type="hidden" id="accion" name="accion" value="cerrar">
+            </form><br>           
+            <%
+            ArrayList<Aspirante> aspirantes = ContratacionMonitoresServlet.cm.darAspirantes(); %>
+            <table border="1">
+                <th  colspan="8"><h3>Lista de Aspirantes</h3></th>                          
+                <%for(Aspirante asp: aspirantes){%>
+                <tr>
+                    <td><%=asp.darPrimerNombre() %></td>
+                    <td><%=asp.darPrimerApellido() %></td>
+                    <td><%=asp.darIdentificacion() %></td>
+                    <td><%=asp.darCodigo() %></td>
+                    <td><%=asp.darSemestreActual() %></td>
+                    <td><%=asp.darEstadoMatricula() %></td>
+                    <td><%=asp.darPromedioAcumulado() %></td>
+                    <td><a href="#">Eliminar</a></td>
+                </tr>
+               <%} %>
+           </table><br>
+           <table border="1">
+                <th  colspan="8"><h3>Lista de Monitores</h3></th>       
+                <%
+                ArrayList<Monitor> monitores = ContratacionMonitoresServlet.cm.darMonitores();
+                for(Monitor mon: monitores){%>
+                   <tr>
+                    <td><%=mon.darPrimerNombre() %></td>
+                    <td><%=mon.darPrimerApellido() %></td>
+                    <td><%=mon.darIdentificacion() %></td>
+                    <td><%=mon.darCodigo() %></td>
+                    <td><%=mon.darSemestreActual() %></td>
+                    <td><%=mon.darEstadoMatricula() %></td>
+                    <td><%=mon.darPromedioAcumulado() %></td>
+                    <td><a href="#">Eliminar</a></td>
+                </tr>
+               <%}%>
+           </table>
+        <%} %>
            
     </body>
 </html>

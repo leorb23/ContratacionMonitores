@@ -112,7 +112,6 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 String usuario = request.getParameter("txt_usuario");
                 String password = request.getParameter("txt_contrasena");                
                 ingresarAdmin(usuario,password);              
-                response.sendRedirect("admin.jsp");
                 break;
             case "cerrar":
                 cerrarSesion();
@@ -128,9 +127,6 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                     cerrarSesion();
                     break;
         }
-            
-        
-        
         response.sendRedirect("index.jsp");
     }
 
@@ -218,7 +214,8 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 usuarioActual="admin";    
                 sesionGlobal.setAttribute("admin", admin);
             } catch (ExcepcionNoExiste ex) {
-                Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
+                
+                System.out.println(ex.getMessage());
             }
     }
 }
