@@ -97,37 +97,56 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     //@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)     throws ServletException, IOException {
-   
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)     throws ServletException, IOException {       
         
-        String accion = request.getParameter("accion");
-        
-        sesionGlobal=request.getSession(true);
-        switch (accion){
-            case "ingreso":
-                String identificacion = request.getParameter("txt_identificacion");   
-                ingreso(identificacion);
-                    break;
-            case "admin":
-                String usuario = request.getParameter("txt_usuario");
-                String password = request.getParameter("txt_contrasena");                
-                ingresarAdmin(usuario,password);              
-                break;
-            case "cerrar":
-                cerrarSesion();
-                break;
-                
-            case "reg_estu":
-                String registrar=request.getParameter("select_registrar");
-                if(registrar.equals("si")){
-                    Estudiante estudiante = (Estudiante)sesionGlobal.getAttribute("estudiante");
-                    registrarAspirante(estudiante.darIdentificacion());
+            try {
+                String accion = request.getParameter("accion");
+                sesionGlobal=request.getSession(true);
+                switch (accion){
+                    case "ingreso":
+                        String identificacion = request.getParameter("txt_identificacion");
+                        ingreso(identificacion);
+                        break;
+                    case "admin":
+                        String usuario = request.getParameter("txt_usuario");
+                        String password = request.getParameter("txt_contrasena");
+                        ingresarAdmin(usuario,password);
+                        break;
+                    case "cerrar":
+                        cerrarSesion();
+                        break;
+                        
+                    case "reg_estu":
+                        String registrar=request.getParameter("select_registrar");
+                        if(registrar.equals("si")){
+                            Estudiante estudiante = (Estudiante)sesionGlobal.getAttribute("estudiante");
+                            registrarAspirante(estudiante.darIdentificacion());
+                        }
+                        else
+                            cerrarSesion();
+                        break;
+                    case "eliminar":
+                        identificacion=request.getParameter("identificacion");
+                        Estudiante estudianteSistema = cm.buscarEstudianteSistema(identificacion);
+                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        //eliminarEstudiante(identificacion);
+                        break;
+                    case "confirmarEliminar":
+                        String elimi=request.getParameter("select_eliminar");
+                        if(elimi.equals("si")){
+                            Estudiante eliminar = (Estudiante) sesionGlobal.getAttribute("eliminar");
+                            eliminarEstudiante(eliminar.darIdentificacion());
+                        }
+                        else
+                            sesionGlobal.removeAttribute("eliminar");
+                        break;
                 }
-                else
-                    cerrarSesion();
-                    break;
-        }
-        response.sendRedirect("index.jsp");
+                response.sendRedirect("index.jsp");
+            } catch (ExcepcionNoExiste ex) {
+                sesionGlobal.setAttribute("mensaje", ex.getMessage());               
+            } catch (Exception ex) {
+                sesionGlobal.setAttribute("mensaje", ex.getMessage()); 
+            }
     }
 
     /**
@@ -143,6 +162,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     
     public void ingreso(String identificacion){
         try {
+            cerrarSesion();
             int n = cm.ingreso(identificacion);
             if(n==1){
                 Aspirante aspirante = cm.buscarAspirante(identificacion);
@@ -151,36 +171,27 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 System.out.println(aspirante.toString());
                 System.out.println("------------------------------------");
                 usuarioActual="aspirante";
-                sesionGlobal.removeAttribute("mensaje");
+                //sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("aspirante", aspirante);
             } 
             else if(n==2){
                 Monitor monitor = cm.buscarMonitor(identificacion);
-                System.out.println("------------------------------------");
-                System.out.println("El ingreso del MONITOR :");
-                System.out.println(monitor.toString());
-                System.out.println("------------------------------------");
                 usuarioActual="monitor";
-                sesionGlobal.removeAttribute("mensaje");
+                //sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("monitor", monitor);
             }
             else if(n==3){
-                Estudiante estudiante = cm.buscarEstudiante(identificacion);
-                System.out.println("------------------------------------");
-                System.out.println("Preguntar al estudiante si desea registrar la cuenta como ASPIRANTE en el sistema");
-                System.out.println(estudiante.toString());
-                System.out.println("------------------------------------");
+                Estudiante estudiante = cm.buscarEstudianteUniversidad(identificacion);
                 usuarioActual="estudiante";
-                sesionGlobal.setAttribute("estudiante", estudiante);  
+                //sesionGlobal.setAttribute("estudiante", estudiante);  
                 sesionGlobal.removeAttribute("mensaje");
             }
             else if(n==4){
-                //La identificacion no corresponde a ningun estudiante de la universidad
+                sesionGlobal.setAttribute("mensaje", "La identificación : +"+identificacion+" no corresponde a ningun estudiante de la Universidad");
             }
             
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException | ExcepcionNoExiste ex) {
-            sesionGlobal.setAttribute("mensaje", ex.getMessage());
-            System.out.println(ex.getMessage());
+            sesionGlobal.setAttribute("mensaje", ex.getMessage());         
         }
     }
     
@@ -199,6 +210,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     }
     public void cerrarSesion(){
         sesionGlobal.removeAttribute(usuarioActual);
+        sesionGlobal.removeAttribute("eliminar");
         sesionGlobal.removeAttribute("mensaje");
         
     }
@@ -214,8 +226,11 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 usuarioActual="admin";    
                 sesionGlobal.setAttribute("admin", admin);
             } catch (ExcepcionNoExiste ex) {
-                
-                System.out.println(ex.getMessage());
+                sesionGlobal.setAttribute("mensaje", ex.getMessage());
             }
+    }
+
+    private void eliminarEstudiante(String identificacion) throws Exception {
+        cm.eliminarEstudianteSistema(identificacion);
     }
 }

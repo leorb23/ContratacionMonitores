@@ -216,16 +216,16 @@ public class ContratacionMonitoresTest {
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
         
-        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
+        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         assertTrue(cm.darDependencias().size()== 4);
         
-        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 1);
         assertTrue(cm.darDependencias().size()== 4);
 
     }
@@ -237,13 +237,13 @@ public class ContratacionMonitoresTest {
     public void testBuscarDependencia() throws Exception {
         System.out.println("buscarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
+        cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
+        cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         assertTrue(cm.darDependencias().size()== 4);
         
         Dependencia dependenciaBuscada = cm.buscarDependencia("Cod1");
@@ -263,10 +263,10 @@ public class ContratacionMonitoresTest {
     public void testEliminarDependencia() throws Exception {
         System.out.println("EliminarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");      
-        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");       
-        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);      
+        cm.agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);       
+        cm.agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
         
         cm.eliminarDependencia("Cod1");
         Dependencia dependenciaEliminada= cm.buscarDependencia("Cod1");
@@ -290,8 +290,8 @@ public class ContratacionMonitoresTest {
     public void testModificarDependencia() throws Exception {
         System.out.println("ModificarDependencia");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana"); 
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4); 
         System.out.println(cm.buscarDependencia("Cod1").toString());
         
         cm.modificarDependencia("Cod1", "Dependencia 1 Modificado", "Esta es la Dependencia 1 Modificado", "TardeModificado");   
@@ -339,8 +339,8 @@ public class ContratacionMonitoresTest {
         cm.ingreso("104");
         cm.ingreso("105");
         
-        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
-        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
+        cm.agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+        cm.agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
         
         cm.pasarAspiranteAMonitor("103", "Cod1");
         cm.pasarAspiranteAMonitor("104", "Cod2");     

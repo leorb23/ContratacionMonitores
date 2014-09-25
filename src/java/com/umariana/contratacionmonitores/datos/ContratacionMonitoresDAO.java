@@ -227,7 +227,7 @@ public class ContratacionMonitoresDAO {
         if(estudiante!=null)
             return  estudiante;   
         else
-            throw  new ExcepcionNoExiste("La identificación:"+ identificacion+" no corresponde a ningun estudiante de la Universidad");
+            throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun estudiante de la Universidad");
     }
 
     public Administrador buscarAdministrador(String usuario, String password) throws ExcepcionNoExiste {

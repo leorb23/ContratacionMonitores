@@ -74,16 +74,12 @@ public class ContratacionMonitores {
             registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
             registrarMonitor("monitor2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"106");
             registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
-            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");
+            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");                             
             
-            
-            
-                       
-            
-            agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");        
-            agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
-            agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
-            agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+            agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+            agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             
             
         } catch (Exception ex) {
@@ -186,10 +182,10 @@ public class ContratacionMonitores {
         if( monitorExiste != null )
             return 2;      
         
-        Estudiante estudiante = buscarEstudiante(identificacion);
+        Estudiante estudiante = buscarEstudianteUniversidad(identificacion);
         if(estudiante!=null)
             return 3;
-        
+    
         return 4;
     }
     /**
@@ -228,7 +224,16 @@ public class ContratacionMonitores {
             }
         }           
     }
-
+    /**
+     * 
+     * @param identificacion
+     * @return
+     * @throws ExcepcionYaExiste
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException 
+     */
     public Aspirante registrarAspirante2(String identificacion) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null)
@@ -241,6 +246,20 @@ public class ContratacionMonitores {
         aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
         aspirantes.add(aspirante);
         return aspirante;
+    }
+    
+    public Estudiante buscarEstudianteSistema(String identificacion) throws ExcepcionNoExiste{
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            return aspirante;
+        
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            return monitor;
+        
+        if(aspirante== null && monitor==null)
+            throw  new ExcepcionNoExiste("El estudiante con identificaicon : "+identificacion+" no existe!!");
+        return null;
     }
     /**
      * El metodo se encarga de registrar un aspirante en el sistema
@@ -473,7 +492,7 @@ public class ContratacionMonitores {
      * @param semestre > 0 && <=10
      * @param promedioAcum > 0 && <= 5
      */
-    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario)throws Exception
+    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario, int cupos)throws Exception
     {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
@@ -482,7 +501,7 @@ public class ContratacionMonitores {
             }
             else
             {
-                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario);
+                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario, cupos);
                 dependencias.add( nuevaDependencia );
             }
     }
@@ -546,7 +565,7 @@ public class ContratacionMonitores {
     
     
     
-    public Estudiante buscarEstudiante(String identificacion) throws ExcepcionNoExiste {
+    public Estudiante buscarEstudianteUniversidad(String identificacion) throws ExcepcionNoExiste {
         
          Estudiante estudiante = null;
          
@@ -555,6 +574,16 @@ public class ContratacionMonitores {
              return estudiante;
          
          return null;
+    }
+    
+    public void eliminarEstudianteSistema(String identificacion) throws Exception {
+        Aspirante aspirante = buscarAspirante(identificacion);
+        if(aspirante!=null)
+            eliminarAspirante(identificacion);
+        
+        Monitor monitor = buscarMonitor(identificacion);
+        if(monitor!=null)
+            eliminarMonitor(identificacion);
     }
     /**
      * Metodo para hacer pruebas
@@ -588,10 +617,10 @@ public class ContratacionMonitores {
             
 
             //Pruebas para Dependencia
-            cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde");
-            cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana");
-            cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde");
-            cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana");
+            cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+            cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             for (Dependencia d : cm.darDependencias()) {                
                 System.out.println("Dependencia: "+d.toString());
             }
@@ -605,6 +634,8 @@ public class ContratacionMonitores {
     public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
         return cmDAO.buscarAdministrador(usuario,password);
     }
+
+ 
 
     
 }
