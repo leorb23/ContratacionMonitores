@@ -152,9 +152,11 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 }
                 response.sendRedirect("index.jsp");
             } catch (ExcepcionNoExiste ex) {
-                sesionGlobal.setAttribute("mensaje", ex.getMessage());               
+                sesionGlobal.setAttribute("mensaje", ex.getMessage());      
+                response.sendRedirect("index.jsp");
             } catch (Exception ex) {
                 sesionGlobal.setAttribute("mensaje", ex.getMessage()); 
+                response.sendRedirect("index.jsp");
             }
     }
 

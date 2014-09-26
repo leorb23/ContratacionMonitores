@@ -31,16 +31,16 @@
     </head>
     <body>
         <h1>Contratacion de Monitores</h1>
-        <%if(admin!=null) {%>
-            <%if(mensaje!=null){%>
-                     <h4 style="color: red;"><%=mensaje%></h4>
-                <%}%>
+        <%if(admin!=null) {%>           
             <label>Administrador : <%=admin.darNombre() %></label><br>  
             <form action="ContratacionMonitoresServlet" method="POST">
                 <input type="submit"  value="Cerrar Sesion">
                 <input type="hidden" id="accion" name="accion" value="cerrar">
             </form><br>   
             <div>
+                <%if(mensaje!=null){%>
+                     <h4 style="color: red;"><%=mensaje%></h4>
+                <%}%>
                 <%if(eliminar!= null ){%>
                 <div id="div_eliminar">
                     <form action="ContratacionMonitoresServlet" method="POST">
