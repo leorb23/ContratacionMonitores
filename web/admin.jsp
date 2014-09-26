@@ -19,7 +19,7 @@
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
-    String eliminar = (String)session.getAttribute("eliminar");
+    Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
 %>
 
 <!DOCTYPE html>
@@ -42,16 +42,19 @@
             </form><br>   
             <div>
                 <%if(eliminar!= null ){%>
-                <form action="ContratacionMonitoresServlet" method="POST">
-                    <h2>Seguro que desea eliminar el registro del estudiante:</h2>
-                    <p><%=eliminar %></p>
-                    <select id="select_eliminar" name="select_eliminar">
-                    <option value="si">Si</option>
-                    <option value="no">No</option>
-                    </select>
-                    <input type="submit" id="btn_enviar" value="Eliminar">
-                    <input type="hidden" id="accion" name="accion" value="confirmarEliminar">
-                </form>
+                <div id="div_eliminar">
+                    <form action="ContratacionMonitoresServlet" method="POST">
+                        <h2>Seguro que desea eliminar el registro del estudiante:</h2>
+                        <p>Nombre: <%=eliminar.darPrimerNombre() %> <%=eliminar.darPrimerApellido() %></p>
+                        <p>Identificado: <%=eliminar.darIdentificacion() %></p>
+                        <select id="select_eliminar" name="select_eliminar">
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
+                        </select>
+                        <input type="submit" id="btn_enviar" value="Aceptar">
+                        <input type="hidden" id="accion" name="accion" value="confirmarEliminar">
+                    </form>
+                </div>
                 <%}%>
                 <table align="center" border="1">
                     <tr>
@@ -85,7 +88,11 @@
                     <td><%=dep.darDescripcion()%></td>
                     <td><%=dep.darHorario()%></td>  
                     <td><%=dep.darCupos()%></td>
-                    <td><a href="#">Eliminar</a></td>
+                    <form action="ContratacionMonitoresServlet" method="post">
+                        <td><input type="submit" value="Eliminar"></td>
+                        <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
+                        <input type="hidden" id="accion" name="accion" value="eliminarDependencia">
+                    </form>
                     <td><a href="#">Modificar</a></td>
                 </tr>
                <%}%>
@@ -174,7 +181,10 @@
                 </tr>
                <%}%>
            </table>
-        <%} %>
+        <%}else {
+            response.sendRedirect("index.jsp");
+        }%> 
+        %>
            
     </body>
 </html>

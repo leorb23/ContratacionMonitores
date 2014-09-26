@@ -8,3 +8,8 @@ table{
     width: 90%;
     background: #cccccc;
 }
+div#div_eliminar{
+    text-align: center;
+    margin: 0 auto 0;
+    background: #539fe2;
+}

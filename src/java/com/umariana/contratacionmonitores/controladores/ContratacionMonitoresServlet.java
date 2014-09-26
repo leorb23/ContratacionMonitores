@@ -15,8 +15,6 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -136,10 +134,19 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         if(elimi.equals("si")){
                             Estudiante eliminar = (Estudiante) sesionGlobal.getAttribute("eliminar");
                             eliminarEstudiante(eliminar.darIdentificacion());
+                            sesionGlobal.removeAttribute("eliminar");
                         }
                         else
                             sesionGlobal.removeAttribute("eliminar");
                         break;
+                    case "eliminarDependencia":
+                        
+                        break;
+                    case "confirmarEliminarD":
+                        
+                        break;
+                        
+                        
                 }
                 response.sendRedirect("index.jsp");
             } catch (ExcepcionNoExiste ex) {
