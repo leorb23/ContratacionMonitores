@@ -78,12 +78,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      */
     //@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-        String identificacion = request.getParameter("txt_identificaicon");
-        System.out.println(identificacion);
-        sesionGlobal=request.getSession(true);
-        ingreso(identificacion);
         
-        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -145,7 +140,14 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                     case "confirmarEliminarD":
                         
                         break;
-                        
+                    case"agregarDependencia":
+                        String cod = request.getParameter("txt_codigo");
+                        String nom = request.getParameter("txt_nombre");
+                        String des = request.getParameter("txt_descripcion");
+                        String jor = request.getParameter("slc_jornadaD");
+                        int cup = Integer.parseInt(request.getParameter("txt_cupos"));                   
+                        cm.agregarDependencia(cod, nom, des, jor, cup);                       
+                        break;
                         
                 }
                 response.sendRedirect("index.jsp");
@@ -190,7 +192,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
             else if(n==3){
                 Estudiante estudiante = cm.buscarEstudianteUniversidad(identificacion);
                 usuarioActual="estudiante";
-                //sesionGlobal.setAttribute("estudiante", estudiante);  
+                sesionGlobal.setAttribute("estudiante", estudiante);  
                 sesionGlobal.removeAttribute("mensaje");
             }
             else if(n==4){

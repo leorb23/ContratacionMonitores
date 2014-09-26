@@ -7,8 +7,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
 * Es la clase principal del sistema Contratacion de Monitores
 * @author CocoSoft
@@ -69,18 +68,31 @@ public class ContratacionMonitores {
             registrarAspirante("aspirante1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
             registrarAspirante("aspirante2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"102");
             registrarAspirante("aspirante3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
-            registrarAspirante("aspirante4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
+            registrarAspirante("aspirante4","segundoNombre3", "primerApellido3","segundoApellido3", 4, "estadoMatricula3", null,3.0,3,"104");
             
-            registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
+            
+            registrarAspirante("aspirante5","segundoNombre", "primerApellido","segundoApellido", 5, "estadoMatricula", null,1.0,1,"105");
+            registrarAspirante("aspirante6","segundoNombre6", "primerApellido","segundoApellido2", 6, "estadoMatricula", null,2.0,2,"106");
+            registrarAspirante("aspirante7","segundoNombre7", "primerApellido3","segundoApellido", 7, "estadoMatricula", null,3.0,3,"107");
+            registrarAspirante("aspirante8","segundoNombre8", "primerApellido","segundoApellido", 8, "estadoMatricula", null,3.0,3,"108");
+            
+            /*registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
             registrarMonitor("monitor2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"106");
             registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
-            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");                             
+            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");    */                      
             
-            agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
-            agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
-            agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
-            agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+            agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             
+            agregarPostulacionAspirante("101", "Cod1");
+            agregarPostulacionAspirante("101", "Cod2");
+            agregarPostulacionAspirante("102", "Cod2");
+            
+            pasarAspiranteAMonitor("105", "Cod1");
+            pasarAspiranteAMonitor("106", "Cod2");
+      
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -497,7 +509,7 @@ public class ContratacionMonitores {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
             {
-                //throw new Exception("La Dependencia que desea agregar ya existe !!");
+                throw new Exception("La Dependencia que desea agregar ya existe !!");
             }
             else
             {

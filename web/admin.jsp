@@ -22,7 +22,7 @@
     Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -71,13 +71,29 @@
                 </table>
             </div><br>
             <table align="center" border="1">
-                <th  colspan="10"><h3>Lista de Dependencias</h3></th>  
-                <tr>                   
+                <th  colspan="10"><h3>Lista de Dependencias</h3></th> 
+            <tr style="background: black; color: white;">                   
                     <td>Codigo</td>
                     <td>Nombre</td>
                     <td>Descripcion</td>
                     <td>Horario</td>
                     <td>Cupos</td>
+                </tr>
+                <tr>
+                    <form action="ContratacionMonitoresServlet" method="POST">
+                        <td> <input type="text" id="txt_codigo" name="txt_codigo" placeholder="Codigo" required></td>
+                        <td><input type="text" id="txt_nombre" name="txt_nombre" placeholder="Nombre" required></td>
+                        <td><input type="text" id="txt_descripcion" name="txt_descripcion" placeholder="Descripcion" required></td>
+                        <td><select id="slc_jornadaD" name="slc_jornadaD">
+                                <option value="mañana">Mañana</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="diurno">Diurno</option>
+                            </select></td>
+                        <td><input type="number" id="txt_cupos" name="txt_cupos" placeholder="No de Cupos" required></td>
+                        <td><input type="submit" id="btn_enviar" value="Agregar">
+                            <input type="hidden" id="accion" name="accion" value="agregarDependencia">
+                        </td>                   
+                    </form>
                 </tr>
                 <%
                 ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.cm.darDependencias();
@@ -101,7 +117,7 @@
             ArrayList<Aspirante> aspirantes = ContratacionMonitoresServlet.cm.darAspirantes(); %>
             <table align="center" border="1">
                 <th  colspan="13"><h3>Lista de Aspirantes</h3></th>  
-                <tr>
+                <tr style="background: black; color: white;">     
                     <td>Identificación</td>
                     <td>Codigo</td>
                     <td>Nombres</td>
@@ -150,7 +166,7 @@
            </table><br>
            <table align="center" border="1">
                 <th  colspan="10"><h3>Lista de Monitores</h3></th>  
-                <tr>
+                <tr style="background: black; color: white;">     
                     <td>Identificación</td>
                     <td>Codigo</td>
                     <td>Nombres</td>
@@ -171,7 +187,7 @@
                     <td><%=mon.darSemestreActual() %></td>
                     <td><%=mon.darEstadoMatricula() %></td>
                     <td><%=mon.darPromedioAcumulado() %></td>
-                    <td><%=mon.darDependencia() %></td>
+                    <td><%=mon.darDependencia().darNombre() %></td>
                     <form action="ContratacionMonitoresServlet" method="post">
                         <td><input type="submit" value="Eliminar"></td>
                         <input type="hidden" id="identificacion" name="identificacion" value="<%=mon.darIdentificacion() %>">
