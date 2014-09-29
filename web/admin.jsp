@@ -15,13 +15,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
+    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
     Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
 %>
-
 <!DOCTYPE html5>
 <html>
     <head>
@@ -30,8 +29,52 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <h1>Contratacion de Monitores</h1>
-        <%if(admin!=null) {%>           
+        <header>
+            <div id="cabecera">
+                <div>
+                    <a href="index.jsp"><img src="img/logo.png"></a>
+                </div>
+                <div>
+                    <h1>Contratacion de Monitores</h1>
+                </div>
+            </div>
+            <div id="barraNavegacion">
+                <nav id="barraNavPrincipal">
+                    <ul>
+                        <li><a href="index.jsp" >Inicio</a></li>
+                        <li><a href="#">Pruebas</a></li> 
+                        <li><a href="dependencia.jsp">Dependencias</a></li>
+                        <li><a href="estudiante.jsp">Estudiantes</a></li>
+                        <%if(admin==null) {%>
+                            <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;">Entrar</a></li>
+                        <%}else if(admin!=null){%>
+                            <li><a href="#" style="background:#56a2ff; text-decoration: underline;height: 32px;">Salir</a></li>
+                        <%}%>
+                    </ul>
+                </nav>
+            </div>     
+        </header>      
+        <section>
+            <div id="contenedor">
+            <%if(admin==null) {%>
+                <div>
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <label>Ingreso Para Administrador</label>
+                                <form action="ContratacionMonitoresServlet" method="POST">
+                                    <label>Usuario</label>
+                                    <input type="text" id="txt_usuario" name="txt_usuario">
+                                    <label>Contraseña</label>
+                                    <input type="password" id="txt_contrasena" name="txt_contrasena">
+                                    <input type="submit" id="btn_enviar" value="Entrar">
+                                    <input type="hidden" id="accion" name="accion" value="admin">                       
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>  
+            <%}else if(admin!=null) {%>           
             <label>Administrador : <%=admin.darNombre() %></label><br>  
             <form action="ContratacionMonitoresServlet" method="POST">
                 <input type="submit"  value="Cerrar Sesion">
@@ -39,7 +82,7 @@
             </form><br>   
             <div>
                 <%if(mensaje!=null){%>
-                     <h4 style="color: red;"><%=mensaje%></h4>
+                     <h4 style="color: black;"><%=mensaje%></h4>
                 <%}%>
                 <%if(eliminar!= null ){%>
                 <div id="div_eliminar">
@@ -197,11 +240,14 @@
                 </tr>
                <%}%>
            </table>
-        <%}else {
-            response.sendRedirect("index.jsp");
-        }%> 
-        %>
-           
+            <%}else {
+                response.sendRedirect("index.jsp");
+            }%> 
+        </div>
+        </section>  
+        <footer>
+            <a href="#">CocoSoft</a>
+        </footer>
     </body>
 </html>
 

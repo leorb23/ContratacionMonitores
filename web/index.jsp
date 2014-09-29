@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : index
     Created on : 11/09/2014, 09:20:24 PM
     Author     : Cocosoft
@@ -21,7 +21,7 @@
     String mensaje = (String)session.getAttribute("mensaje");
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,10 +29,32 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <h1>Contratacion de Monitores</h1>
-        <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
+        <header>
+            <div id="cabecera">
+                <div>
+                    <a href="index.jsp"><img src="img/logo.png"></a>
+                </div>
+                <div>
+                    <h1>Contratacion de Monitores</h1>
+                </div>
+            </div>
+            <div id="barraNavegacion">
+                <nav id="barraNavPrincipal">
+                    <ul>
+                        <li><a href="index.jsp" style="background:#56a2ff; height: 32px;">Inicio</a></li>
+                        <li><a href="#">Pruebas</a></li> 
+                        <li><a href="dependencia.jsp">Dependencias</a></li>
+                        <li><a href="estudiante.jsp">Estudiantes</a></li>
+                        <li><a href="admin.jsp">Entrar</a></li>
+                    </ul>
+                </nav>
+            </div>     
+        </header>      
+        <section>
+            <div id="contenedor">
+                <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
             <%if(mensaje!=null){%>
-                 <h4 style="color: red;"><%=mensaje%></h4>
+                 <h4 style="color: black;"><%=mensaje%></h4>
             <%}%>
            
                 <div>
@@ -83,6 +105,10 @@
         else if(admin!=null) {
             response.sendRedirect("admin.jsp");
         } %>
-           
+            </div>
+        </section>
+        <footer>
+            <a href="#">CocoSoft</a>
+        </footer>
     </body>
 </html>

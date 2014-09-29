@@ -15,13 +15,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
+    Monitor monitor = monitor =(Monitor) session.getAttribute("monitor");
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,11 +29,51 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <h1>Contratacion de Monitores</h1>
-        <% if(aspirante==null && monitor==null && estudiante==null && admin==null){
-            response.sendRedirect("index.jsp");
-        }       
-        if(aspirante!= null){%>
+        <header>
+            <div id="cabecera">
+                <div>
+                    <a href="index.jsp"><img src="img/logo.png"></a>
+                </div>
+                <div>
+                    <h1>Contratacion de Monitores</h1>
+                </div>
+            </div>
+            <div id="barraNavegacion">
+                <nav id="barraNavPrincipal">
+                    <ul>
+                        <li><a href="index.jsp" >Inicio</a></li>
+                        <li><a href="#">Pruebas</a></li> 
+                        <li><a href="dependencia.jsp">Dependencias</a></li>
+                        <li><a href="estudiante.jsp" style="background:#56a2ff;height: 32px;">Estudiantes</a></li>
+                        <li><a href="admin.jsp">Entrar</a></li>
+                    </ul>
+                </nav>
+            </div>     
+        </header>
+        <section>
+            <div id="contenedor">
+              <%if(aspirante==null && monitor==null && estudiante==null){%>
+                <%if(mensaje!=null){%>
+                <h4 style="color: black;"><%=mensaje%></h4>
+                <%}%>
+                <div>
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <label>Ingreso Para Estudiantes</label>
+                                <form action="ContratacionMonitoresServlet" method="POST">
+                                    <label>Identificacion</label>
+                                    <input type="text" id="txt_identificacion" name="txt_identificacion">
+                                    <input type="submit" id="btn_enviar" value="Enviar">
+                                    <input type="hidden" id="accion" name="accion" value="ingreso">
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>      
+               <%}%>
+            </div>
+            <% if(aspirante!= null){%>
             <%if(mensaje!=null){%>
                  <h4 style="color: red;"><%=mensaje%></h4>
             <%}%>
@@ -62,7 +102,7 @@
              <%if(mensaje!=null){%>
                  <h4 style="color: red;"><%=mensaje%></h4>
             <%}%>
-            <label>Estudiante :<%=monitor.darPrimerNombre() %> <%=monitor.darPrimerApellido() %></label><br>
+            <label>Monitor :<%=monitor.darPrimerNombre() %> <%=monitor.darPrimerApellido() %></label><br>
             <label>Identificado : <%=monitor.darIdentificacion() %></label><br>
             <label>Semestre : <%=monitor.darSemestreActual() %></label>  <br>
             <label>Estado Matricula : <%=monitor.darEstadoMatricula() %></label>  <br>
@@ -94,8 +134,11 @@
         <%}
         else if(admin!=null) {
             response.sendRedirect("admin.jsp");
-        } %>
-           
+        } %>     
+        </section>
+        <footer>
+            <a href="#">CocoSoft</a>
+        </footer>
     </body>
 </html>
 
