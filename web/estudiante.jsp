@@ -42,8 +42,8 @@
                 <nav id="barraNavPrincipal">
                     <ul>
                         <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="#">Pruebas</a></li> 
-                        <li><a href="dependencia.jsp">Dependencias</a></li>
+                        <li><a href="pruebas.jsp">Pruebas</a></li> 
+                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
                         <li><a href="estudiante.jsp" style="background:#56a2ff;height: 32px;">Estudiantes</a></li>
                         <li><a href="admin.jsp">Entrar</a></li>
                     </ul>
@@ -51,11 +51,63 @@
             </div>     
         </header>
         <section>
-            <div id="contenedor">
-              <%if(aspirante==null && monitor==null && estudiante==null){%>
+            <div id="contenedor">  
                 <%if(mensaje!=null){%>
-                <h4 style="color: black;"><%=mensaje%></h4>
+                    <h4><%=mensaje%></h4>
                 <%}%>
+                 <%if(aspirante!= null){%>
+                        <label>Aspirante : <%=aspirante.darPrimerNombre() %></label><br>
+                        <label>Identificado : <%=aspirante.darIdentificacion() %></label><br>
+                        <label>Semestre : <%=aspirante.darSemestreActual() %></label>  <br>
+                        <label>Estado Matricula : <%=aspirante.darEstadoMatricula() %></label>  <br>
+                        <label>Promedio Acumulado : <%=aspirante.darPromedioAcumulado() %></label>  <br>
+                        <label>Postulaciones : 
+                            <%if(aspirante.darPostulaciones().size()>0){%>
+                                <select>
+                                    <%for(Postulacion post: aspirante.darPostulaciones()){%>
+                                        <option value="<%=post.darIdDependencia() %>"><%=post.darIdDependencia() %></option>
+                                    <% }%>
+                                </select>        
+                          <%}else{%>
+                                N/A
+                            <%}%>
+                        </label>    
+                    <%}
+                    else if(monitor!= null){%>
+                        <label>Monitor :<%=monitor.darPrimerNombre() %> <%=monitor.darPrimerApellido() %></label><br>
+                        <label>Identificado : <%=monitor.darIdentificacion() %></label><br>
+                        <label>Semestre : <%=monitor.darSemestreActual() %></label>  <br>
+                        <label>Estado Matricula : <%=monitor.darEstadoMatricula() %></label>  <br>
+                        <label>Promedio Acumulado : <%=monitor.darPromedioAcumulado() %></label>  <br>
+                        <label>Dependencia: <%=monitor.darDependencia().darNombre() %></label>  <br>  
+                    <%}
+                    else if(estudiante!= null){%>  
+                        <label>Estudiante :<%=estudiante.darPrimerNombre() %> <%=estudiante.darPrimerApellido() %></label><br>
+                        <label>Identificado : <%=estudiante.darIdentificacion() %></label><br>
+                        <label>Semestre : <%=estudiante.darSemestreActual() %></label>  <br>
+                        <label>Estado Matricula : <%=estudiante.darEstadoMatricula() %></label>  <br>
+                        <label>Promedio Acumulado : <%=estudiante.darPromedioAcumulado() %></label>  <br>
+                        <%if(estudiante.darSemestreActual()>= 3){
+                            if(estudiante.darPromedioAcumulado()>=3.5){%>
+                            <label>Desea registrarse en el Sistema de Contratacion de Monitores ?</label>  
+                                <form action="ContratacionMonitoresServlet" method="POST">
+                                    <select id="select_registrar" name="select_registrar">
+                                        <option value="si">Si</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                    <input type="hidden" id="accion" name="accion" value="reg_estu">
+                                    <input type="submit"  value="Registrar">
+                                </form>
+                            <%}else{%>
+                            <h4>No puedes postularte como aspirante porque tiene un promedio de notas menor a 3.5</h4>
+                        <%}}else{%>
+                            <h4>Para registrarte como aspirante debes estar en tercer semestre o superior</h4>
+                        <%}%>    
+                    <%}
+                    else if(admin!=null) {
+                        response.sendRedirect("admin.jsp");
+                    } %>        
+                <%if(aspirante==null && monitor==null && estudiante==null){%>
                 <div>
                     <table border="1">
                         <tr>
@@ -71,70 +123,13 @@
                         </tr>
                     </table>
                 </div>      
+               <%}else { %>
+                <form action="ContratacionMonitoresServlet" method="POST">
+                    <input type="submit"  value="Cerrar Sesion">
+                    <input type="hidden" id="accion" name="accion" value="cerrar">
+                </form>
                <%}%>
             </div>
-            <% if(aspirante!= null){%>
-            <%if(mensaje!=null){%>
-                 <h4 style="color: red;"><%=mensaje%></h4>
-            <%}%>
-            <label>Aspirante : <%=aspirante.darPrimerNombre() %></label><br>
-            <label>Identificado : <%=aspirante.darIdentificacion() %></label><br>
-            <label>Semestre : <%=aspirante.darSemestreActual() %></label>  <br>
-            <label>Estado Matricula : <%=aspirante.darEstadoMatricula() %></label>  <br>
-            <label>Promedio Acumulado : <%=aspirante.darPromedioAcumulado() %></label>  <br>
-            <label>Postulaciones : 
-                <%if(aspirante.darPostulaciones().size()>0){%>
-                    <select>
-                        <%for(Postulacion post: aspirante.darPostulaciones()){%>
-                            <option value="<%=post.darIdDependencia() %>"><%=post.darIdDependencia() %></option>
-                        <% }%>
-                    </select>        
-              <%}else{%>
-                    N/A
-                <%}%>
-            </label>
-            <form action="ContratacionMonitoresServlet" method="POST">
-                <input type="submit"  value="Cerrar Sesion">
-                <input type="hidden" id="accion" name="accion" value="cerrar">
-            </form>
-        <%}
-        else if(monitor!= null){%>
-             <%if(mensaje!=null){%>
-                 <h4 style="color: red;"><%=mensaje%></h4>
-            <%}%>
-            <label>Monitor :<%=monitor.darPrimerNombre() %> <%=monitor.darPrimerApellido() %></label><br>
-            <label>Identificado : <%=monitor.darIdentificacion() %></label><br>
-            <label>Semestre : <%=monitor.darSemestreActual() %></label>  <br>
-            <label>Estado Matricula : <%=monitor.darEstadoMatricula() %></label>  <br>
-            <label>Promedio Acumulado : <%=monitor.darPromedioAcumulado() %></label>  <br>
-            <label>Dependencia: <%=monitor.darDependencia().darNombre() %></label>  <br> 
-            <form action="ContratacionMonitoresServlet" method="POST">
-                <input type="submit"  value="Cerrar Sesion">
-                <input type="hidden" id="accion" name="accion" value="cerrar">
-            </form>
-        <%}
-        else if(estudiante!= null){%>
-            <%if(mensaje!=null){%>
-                 <h4 style="color: red;"><%=mensaje%></h4>
-            <%}%>
-            <label>Estudiante :<%=estudiante.darPrimerNombre() %> <%=estudiante.darPrimerApellido() %></label><br>
-            <label>Identificado : <%=estudiante.darIdentificacion() %></label><br>
-            <label>Semestre : <%=estudiante.darSemestreActual() %></label>  <br>
-            <label>Estado Matricula : <%=estudiante.darEstadoMatricula() %></label>  <br>
-            <label>Promedio Acumulado : <%=estudiante.darPromedioAcumulado() %></label>  <br>
-            <label>Desea registrarse en el Sistema de Contratacion de Monitores ?</label>  
-            <form action="ContratacionMonitoresServlet" method="POST">
-                <select id="select_registrar" name="select_registrar">
-                    <option value="si">Si</option>
-                    <option value="no">No</option>
-                </select>
-                <input type="hidden" id="accion" name="accion" value="reg_estu">
-                <input type="submit"  value="Registrar">
-            </form>
-        <%}
-        else if(admin!=null) {
-            response.sendRedirect("admin.jsp");
-        } %>     
         </section>
         <footer>
             <a href="#">CocoSoft</a>

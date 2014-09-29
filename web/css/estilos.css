@@ -33,27 +33,50 @@ header div#cabecera  h1{
     font-size: 40px;
     margin-left: 50px;
 }
-
+/*-------------*/
 div#barraNavegacion{
     background: #4688da;
-    margin: 0 auto 0;
+    width: 100%;
+}
+div#barraSecundaria{
+    margin-top: 2px;
+    background: #4688da;
     width: 100%;
 }
 nav#barraNavPrincipal{
     margin: 0 auto 0;
-    padding-left: 180px;
+    width: 960px;
 }
-nav#barraNavPrincipal ul{
-    list-style: none;
+nav#barraNavSecundaria{
     margin: 0 auto 0;
+    width: 960px;
+}
+nav#barraNavPrincipal ul {
+    list-style: none;
+    height: 30px;
+}
+nav#barraNavSecundaria ul {
+    list-style: none;
     height: 30px;
 }
 nav#barraNavPrincipal ul li{
     float: left;
-    margin: 0 auto 0;
+}
+nav#barraNavSecundaria ul li{
+    float: right;
+
 }
 nav#barraNavPrincipal li a{
-    margin: 0 auto 0;
+    text-align: center;
+    display: block;
+    background: #4688da;
+    border-right:3px solid white;
+    text-decoration: none;
+    font-size: 20px;
+    width: 120px;
+    height: 30px;
+}
+nav#barraNavSecundaria li a{
     text-align: center;
     display: block;
     background: #4688da;
@@ -67,6 +90,11 @@ nav#barraNavPrincipal li a:hover{
     background: #56a2ff;
     border-right:3px solid black;
 }
+nav#barraNavSecundaria li a:hover{
+    background: #56a2ff;
+    border-right:3px solid black;
+}
+/*-----------------------------*/
 
 section{
     background: #56a2ff;

@@ -42,21 +42,22 @@
                 <nav id="barraNavPrincipal">
                     <ul>
                         <li><a href="index.jsp" style="background:#56a2ff; height: 32px;">Inicio</a></li>
-                        <li><a href="#">Pruebas</a></li> 
-                        <li><a href="dependencia.jsp">Dependencias</a></li>
+                        <li><a href="pruebas.jsp">Pruebas</a></li> 
+                        <%if(admin==null){%>
+                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
                         <li><a href="estudiante.jsp">Estudiantes</a></li>
-                        <li><a href="admin.jsp">Entrar</a></li>
+                        <%}%>
+                        <li><a href="admin.jsp"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
             </div>     
-        </header>      
+        </header>   
+        <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
         <section>
             <div id="contenedor">
-                <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
-            <%if(mensaje!=null){%>
-                 <h4 style="color: black;"><%=mensaje%></h4>
-            <%}%>
-           
+                <%if(mensaje!=null){%>
+                     <h4 style="color: black;"><%=mensaje%></h4>
+                <%}%>
                 <div>
                     <table border="1">
                         <tr>
@@ -91,22 +92,9 @@
                         </tr>
                     </table>
                 </div>   
-            
-        <%}       
-        if(aspirante!= null){
-            response.sendRedirect("estudiante.jsp");
-        }
-        else if(monitor!= null){
-             response.sendRedirect("estudiante.jsp");
-        }
-        else if(estudiante!= null){
-             response.sendRedirect("estudiante.jsp");
-        }
-        else if(admin!=null) {
-            response.sendRedirect("admin.jsp");
-        } %>
             </div>
         </section>
+        <%}%>
         <footer>
             <a href="#">CocoSoft</a>
         </footer>

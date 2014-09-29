@@ -9,7 +9,6 @@ import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import java.beans.Statement;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

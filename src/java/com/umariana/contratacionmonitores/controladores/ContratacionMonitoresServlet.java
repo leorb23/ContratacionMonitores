@@ -124,6 +124,12 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         sesionGlobal.setAttribute("eliminar", estudianteSistema);
                         //eliminarEstudiante(identificacion);
                         break;
+                    case "eliminarD":
+                        identificacion=request.getParameter("identificacion");
+                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
+                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        //eliminarEstudiante(identificacion);
+                        break;    
                     case "confirmarEliminar":
                         String elimi=request.getParameter("select_eliminar");
                         if(elimi.equals("si")){
@@ -150,7 +156,30 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         break;
                         
                 }
-                response.sendRedirect("index.jsp");
+                if(usuarioActual!=null){
+                    switch(usuarioActual){
+                        case "admin":
+                            response.sendRedirect("admin.jsp");
+                            break;
+                        case "aspirante":
+                            response.sendRedirect("estudiante.jsp");
+                            break;
+                        case "monitor":
+                            response.sendRedirect("estudiante.jsp");
+                            break;
+                        case "estudiante":
+                            response.sendRedirect("estudiante.jsp");
+                            break;
+                        case "":
+                            response.sendRedirect("index.jsp");
+                            break;
+                        case "null":
+                            response.sendRedirect("index.jsp");
+                            break;  
+                    }
+                }
+                else
+                    response.sendRedirect("index.jsp");
             } catch (ExcepcionNoExiste ex) {
                 sesionGlobal.setAttribute("mensaje", ex.getMessage());      
                 response.sendRedirect("index.jsp");

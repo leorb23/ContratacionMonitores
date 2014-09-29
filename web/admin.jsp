@@ -42,17 +42,26 @@
                 <nav id="barraNavPrincipal">
                     <ul>
                         <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="#">Pruebas</a></li> 
-                        <li><a href="dependencia.jsp">Dependencias</a></li>
-                        <li><a href="estudiante.jsp">Estudiantes</a></li>
+                        <li><a href="pruebas.jsp">Pruebas</a></li> 
                         <%if(admin==null) {%>
-                            <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;">Entrar</a></li>
-                        <%}else if(admin!=null){%>
-                            <li><a href="#" style="background:#56a2ff; text-decoration: underline;height: 32px;">Salir</a></li>
+                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
+                        <li><a href="estudiante.jsp">Estudiantes</a></li>
                         <%}%>
+                        <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
-            </div>     
+            </div>
+            <%if(admin!=null) {%>
+            <div id="barraSecundaria">
+                <nav id="barraNavSecundaria">
+                    <ul>
+                        <li><a href="dependencia.jsp" >Dependencias</a></li>
+                        <li><a href="aspirante.jsp">Aspirantes</a></li> 
+                        <li><a href="monitor.jsp">Monitores</a></li>                       
+                    </ul>
+                </nav>
+            </div>   
+            <%}%>
         </header>      
         <section>
             <div id="contenedor">

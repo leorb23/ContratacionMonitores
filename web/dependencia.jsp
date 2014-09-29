@@ -1,24 +1,25 @@
 <%-- 
-    Document   : dependencia
-    Created on : 28/09/2014, 10:50:23 PM
-    Author     : Andres
+    Document   : dependencias
+    Created on : 29/09/2014, 09:21:18 AM
+    Author     : SERVIDOR
 --%>
 
+<%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
+<%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <%@page import="com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
+<%@page import="com.umariana.contratacionmonitores.logica.Monitor"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Administrador"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Estudiante"%>
-<%@page import="com.umariana.contratacionmonitores.logica.Monitor"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
+    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
+    Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
 %>
-
 <!DOCTYPE html5>
 <html>
     <head>
@@ -39,20 +40,31 @@
             <div id="barraNavegacion">
                 <nav id="barraNavPrincipal">
                     <ul>
-                        <li><a href="index.jsp">Inicio</a></li>
-                        <li><a href="#">Pruebas</a></li> 
-                        <li><a href="dependencia.jsp" style="background:#56a2ff; height: 32px;">Dependencias</a></li>
-                        <li><a href="estudiante.jsp">Estudiantes</a></li>
-                        <li><a href="admin.jsp">Entrar</a></li>
+                        <li><a href="index.jsp" >Inicio</a></li>
+                        <li><a href="pruebas.jsp">Pruebas</a></li> 
+                        <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
-            </div>     
-        </header>      
-        <section>
+            </div>
+            <div id="barraSecundaria">
+                <nav id="barraNavSecundaria">
+                    <ul>
+                        <li><a href="dependencia.jsp" style="background:#56a2ff;height: 32px;">Dependencias</a></li>
+                        <li><a href="aspirante.jsp">Aspirantes</a></li> 
+                        <li><a href="monitor.jsp" >Monitores</a></li>                       
+                    </ul>
+                </nav>
+            </div>          
+        </header>   
+         <section>
+            <%if(admin!=null) {%> 
             <div id="contenedor">
+                <%if(mensaje!=null){%>
+                     <h4 style="color: black;"><%=mensaje%></h4>
+                <%}%>
                 <table align="center" border="1">
                     <th  colspan="10"><h3>Lista de Dependencias</h3></th> 
-                <tr style="background: black; color: white;">                   
+                    <tr style="background: black; color: white;">                   
                         <td>Codigo</td>
                         <td>Nombre</td>
                         <td>Descripcion</td>
@@ -92,8 +104,9 @@
                         <td><a href="#">Modificar</a></td>
                     </tr>
                    <%}%>
-                </table><br>
+                </table>   
             </div>
-        </section>
+         </section>
+         <%} else{ response.sendRedirect("admin.jsp"); }%>
     </body>
 </html>
