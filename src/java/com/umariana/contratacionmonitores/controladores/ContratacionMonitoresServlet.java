@@ -10,6 +10,7 @@ import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Administrador;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
+import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
@@ -122,35 +123,50 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         identificacion=request.getParameter("identificacion");
                         Estudiante estudianteSistema = cm.buscarEstudianteSistema(identificacion);
                         sesionGlobal.setAttribute("eliminar", estudianteSistema);
-                        //eliminarEstudiante(identificacion);
+                        break;
+                    case "eliminarDependencia":
+                        String idDependencia=request.getParameter("idDependencia");
+                        Dependencia dependencia = cm.buscarDependencia(idDependencia);
+                        sesionGlobal.setAttribute("eliminarD", dependencia);              
                         break;
                     case "eliminarD":
                         identificacion=request.getParameter("identificacion");
                         estudianteSistema = cm.buscarEstudianteSistema(identificacion);
                         sesionGlobal.setAttribute("eliminar", estudianteSistema);
-                        //eliminarEstudiante(identificacion);
-                        break;    
+                        sesionGlobal.setAttribute("eliminarString", "dependencia");
+                        break;
+                    case "eliminarA":
+                        identificacion=request.getParameter("identificacion");
+                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
+                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        sesionGlobal.setAttribute("eliminarString", "aspirante");
+                        break;
+                        
+                    case "eliminarM":
+                        identificacion=request.getParameter("identificacion");
+                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
+                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        sesionGlobal.setAttribute("eliminarString", "monitor");
+                        break;   
                     case "confirmarEliminar":
                         String elimi=request.getParameter("select_eliminar");
-                        if(elimi.equals("si")){
+                        if(elimi.equals("si"))
+                        {
                             Estudiante eliminar = (Estudiante) sesionGlobal.getAttribute("eliminar");
                             eliminarEstudiante(eliminar.darIdentificacion());
-                            sesionGlobal.removeAttribute("eliminar");
+                            sesionGlobal.removeAttribute("eliminar");                           
+                            sesionGlobal.removeAttribute("eliminarString");                           
                         }
-                        else
+                        else{
                             sesionGlobal.removeAttribute("eliminar");
-                        break;
-                    case "eliminarDependencia":
-                        
-                        break;
-                    case "confirmarEliminarD":
-                        
+                            sesionGlobal.removeAttribute("eliminarString");
+                        }
                         break;
                     case"agregarDependencia":
                         String cod = request.getParameter("txt_codigo");
                         String nom = request.getParameter("txt_nombre");
                         String des = request.getParameter("txt_descripcion");
-                        String jor = request.getParameter("slc_jornadaD");
+                        String jor = request.getParameter("slc_jornadaD");                       
                         int cup = Integer.parseInt(request.getParameter("txt_cupos"));                   
                         cm.agregarDependencia(cod, nom, des, jor, cup);                       
                         break;
@@ -159,7 +175,33 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 if(usuarioActual!=null){
                     switch(usuarioActual){
                         case "admin":
-                            response.sendRedirect("admin.jsp");
+                            String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
+                            if(redireccionar!=null)
+                            {
+                                sesionGlobal.removeAttribute("redireccionar");
+                                response.sendRedirect(redireccionar);
+                                
+                            }
+                            else{
+                                String eliminar=(String) sesionGlobal.getAttribute("eliminarString");
+                                if(eliminar!=null)
+                                {
+                                    if(eliminar.equals("monitor")){
+                                        response.sendRedirect("monitor.jsp");
+                                        sesionGlobal.setAttribute("redireccionar", "monitor.jsp");
+                                    }
+                                    else if(eliminar.equals("aspirante")){
+                                        response.sendRedirect("aspirante.jsp");
+                                        sesionGlobal.setAttribute("redireccionar", "monitor.jsp");
+                                    }
+                                    else if(eliminar.equals("dependencia")){
+                                        response.sendRedirect("dependencia.jsp");
+                                        sesionGlobal.setAttribute("redireccionar", "monitor.jsp");
+                                     }
+                                }
+                                else
+                                    response.sendRedirect("admin.jsp");
+                            }
                             break;
                         case "aspirante":
                             response.sendRedirect("estudiante.jsp");

@@ -121,7 +121,7 @@
                         <form action="ContratacionMonitoresServlet" method="post">
                             <td><input type="submit" value="Eliminar"></td>
                             <input type="hidden" id="identificacion" name="identificacion" value="<%=asp.darIdentificacion() %>">
-                            <input type="hidden" id="accion" name="accion" value="eliminar">
+                            <input type="hidden" id="accion" name="accion" value="eliminarA">
                         </form>
                         <td><a href="#">Seleccionar</a></td>
                     </tr>

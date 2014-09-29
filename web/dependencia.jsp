@@ -99,7 +99,7 @@
                         <form action="ContratacionMonitoresServlet" method="post">
                             <td><input type="submit" value="Eliminar"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
-                            <input type="hidden" id="accion" name="accion" value="eliminarDependencia">
+                            <input type="hidden" id="accion" name="accion" value="eliminarD">
                         </form>
                         <td><a href="#">Modificar</a></td>
                     </tr>
