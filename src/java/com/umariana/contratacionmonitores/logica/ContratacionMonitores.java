@@ -392,7 +392,7 @@ public class ContratacionMonitores {
      * El metodo elimina un aspirante registrado en el sistema
      * @param identificacion != null && != ""
      */
-    public void eliminarAspirante(String identificacion) throws Exception
+    public void eliminarAspirante(String identificacion) throws ExcepcionNoExiste
     {
         Aspirante eliminar = buscarAspirante(identificacion );
             if( eliminar != null )
@@ -402,14 +402,15 @@ public class ContratacionMonitores {
             }
             else
             {
-                throw new Exception("El Estudiante que desea eliminar no existe!!!");
+                throw new ExcepcionNoExiste("El Estudiante que desea eliminar no existe!!!");
             }		
     }
     /**
      * El metodo elimina un monitor registrado en el sistema
      * @param identificacion != null && != ""
+     * @throws ExcepcionNoExiste 
      */
-    public void eliminarMonitor(String identificacion) throws Exception
+    public void eliminarMonitor(String identificacion) throws ExcepcionNoExiste
     {
         Monitor eliminar = buscarMonitor(identificacion );
             if( eliminar != null )
@@ -418,7 +419,7 @@ public class ContratacionMonitores {
             }
             else
             {
-                throw new Exception("El Estudiante que desea eliminar no existe!!!");
+                throw new ExcepcionNoExiste("El Estudiante que desea eliminar no existe!!!");
             }		
     }
     
@@ -497,19 +498,19 @@ public class ContratacionMonitores {
     /**
      * El metodo se encarga de agregar una Dependencia en el sistema
      * <PostCondiciones> Se agrego correctamente la Dependencia en el sistema 
-     * @param nombre != null && != ""e
-     * @param apellido != null && != ""
-     * @param identificacion != null && != ""
-     * @param foto != null
-     * @param semestre > 0 && <=10
-     * @param promedioAcum > 0 && <= 5
+     * @param nId !=null
+     * @param nNombre != null && != ""
+     * @param nDescripcion != null && != ""
+     * @param nHorario != null && != ""
+     * @param cupos > 0
+     * @throws ExcepcionYaExiste 
      */
-    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario, int cupos)throws Exception
+    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario, int cupos) throws ExcepcionYaExiste
     {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
             {
-                throw new Exception("La Dependencia que desea agregar ya existe !!");
+                throw new ExcepcionYaExiste("La Dependencia que desea agregar ya existe !!");
             }
             else
             {
@@ -520,14 +521,14 @@ public class ContratacionMonitores {
     /**
      * Metodo que se encarga de eliminar una dependencia del sistema
      * @param codigo != null && !=""
-     * @throws Exception 
+     * @throws ExcepcionNoExiste 
      */
-    public void eliminarDependencia(String codigo) throws Exception{
+    public void eliminarDependencia(String codigo) throws ExcepcionNoExiste{
         
         Dependencia dependenciaEliminar= buscarDependencia(codigo);
         
         if(dependenciaEliminar==null){
-            //throw new Exception("La Dependencia que desea buscar no existe !!");
+            throw new ExcepcionNoExiste("La Dependencia que desea buscar no existe !!");
         }
         else
             dependencias.remove(dependenciaEliminar);      
@@ -588,7 +589,7 @@ public class ContratacionMonitores {
          return null;
     }
     
-    public void eliminarEstudianteSistema(String identificacion) throws Exception {
+    public void eliminarEstudianteSistema(String identificacion) throws ExcepcionNoExiste {
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null)
             eliminarAspirante(identificacion);

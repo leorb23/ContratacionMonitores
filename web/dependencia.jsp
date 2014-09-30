@@ -13,12 +13,10 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Estudiante"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+<%  
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
-    Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
+    Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarD");
 %>
 <!DOCTYPE html5>
 <html>
@@ -59,6 +57,24 @@
          <section>
             <%if(admin!=null) {%> 
             <div id="contenedor">
+                <%if(eliminarD!= null ){%>
+                <div id="div_eliminar">
+                    <form action="ContratacionMonitoresServlet" method="POST">
+                        <h2>Seguro que desea eliminar la dependencia:</h2>
+                        <p>Id: <%=eliminarD.darId() %></p>
+                        <p>Nombre: <%=eliminarD.darNombre() %></p>
+                        <p>Horario: <%=eliminarD.darHorario() %></p>                
+                        <p>Descripción: <%=eliminarD.darDescripcion() %></p>
+                        
+                        <select id="select_eliminar" name="select_eliminar">
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
+                        </select>
+                        <input type="submit" id="btn_enviar" value="Aceptar">
+                        <input type="hidden" id="accion" name="accion" value="confirmarEliminarD">
+                    </form>
+                </div>
+                <%}%>
                 <%if(mensaje!=null){%>
                      <h4 style="color: black;"><%=mensaje%></h4>
                 <%}%>

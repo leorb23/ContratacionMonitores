@@ -16,6 +16,8 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -123,16 +125,11 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         identificacion=request.getParameter("identificacion");
                         Estudiante estudianteSistema = cm.buscarEstudianteSistema(identificacion);
                         sesionGlobal.setAttribute("eliminar", estudianteSistema);
-                        break;
-                    case "eliminarDependencia":
+                        break;                    
+                    case "eliminarD":
                         String idDependencia=request.getParameter("idDependencia");
                         Dependencia dependencia = cm.buscarDependencia(idDependencia);
-                        sesionGlobal.setAttribute("eliminarD", dependencia);              
-                        break;
-                    case "eliminarD":
-                        identificacion=request.getParameter("identificacion");
-                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
-                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        sesionGlobal.setAttribute("eliminarD", dependencia);
                         sesionGlobal.setAttribute("eliminarString", "dependencia");
                         break;
                     case "eliminarA":
@@ -162,13 +159,28 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                             sesionGlobal.removeAttribute("eliminarString");
                         }
                         break;
+                    case "confirmarEliminarD":
+                        String elimiD=request.getParameter("select_eliminar");
+                        if(elimiD.equals("si"))
+                        {
+                            Dependencia eliminar = (Dependencia) sesionGlobal.getAttribute("eliminarD");
+                            cm.eliminarDependencia(eliminar.darId());
+                            sesionGlobal.removeAttribute("eliminarD");                           
+                            sesionGlobal.removeAttribute("eliminarString");                           
+                        }
+                        else{
+                            sesionGlobal.removeAttribute("eliminarD");
+                            sesionGlobal.removeAttribute("eliminarString");
+                        }
+                        break;
                     case"agregarDependencia":
                         String cod = request.getParameter("txt_codigo");
                         String nom = request.getParameter("txt_nombre");
                         String des = request.getParameter("txt_descripcion");
                         String jor = request.getParameter("slc_jornadaD");                       
-                        int cup = Integer.parseInt(request.getParameter("txt_cupos"));                   
-                        cm.agregarDependencia(cod, nom, des, jor, cup);                       
+                        int cup = Integer.parseInt(request.getParameter("txt_cupos")); 
+                        sesionGlobal.setAttribute("redireccionar", "dependencia.jsp");
+                        cm.agregarDependencia(cod, nom, des, jor, cup);         
                         break;
                         
                 }
@@ -192,11 +204,11 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                                     }
                                     else if(eliminar.equals("aspirante")){
                                         response.sendRedirect("aspirante.jsp");
-                                        sesionGlobal.setAttribute("redireccionar", "monitor.jsp");
+                                        sesionGlobal.setAttribute("redireccionar", "aspirante.jsp");
                                     }
                                     else if(eliminar.equals("dependencia")){
                                         response.sendRedirect("dependencia.jsp");
-                                        sesionGlobal.setAttribute("redireccionar", "monitor.jsp");
+                                        sesionGlobal.setAttribute("redireccionar", "dependencia.jsp");
                                      }
                                 }
                                 else
@@ -222,13 +234,19 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 }
                 else
                     response.sendRedirect("index.jsp");
-            } catch (ExcepcionNoExiste ex) {
-                sesionGlobal.setAttribute("mensaje", ex.getMessage());      
-                response.sendRedirect("index.jsp");
-            } catch (Exception ex) {
-                sesionGlobal.setAttribute("mensaje", ex.getMessage()); 
-                response.sendRedirect("index.jsp");
-            }
+            } catch (ExcepcionNoExiste | ExcepcionYaExiste  ex) {
+                String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
+                if(redireccionar!=null)
+                {
+                    sesionGlobal.removeAttribute("redireccionar");
+                    response.sendRedirect(redireccionar);  
+                }
+                else
+                {
+                    sesionGlobal.setAttribute("mensaje", ex.getMessage());      
+                    response.sendRedirect("index.jsp");
+                }
+            } 
     }
 
     /**
@@ -312,7 +330,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
             }
     }
 
-    private void eliminarEstudiante(String identificacion) throws Exception {
+    private void eliminarEstudiante(String identificacion) throws ExcepcionNoExiste  {
         cm.eliminarEstudianteSistema(identificacion);
     }
 }
