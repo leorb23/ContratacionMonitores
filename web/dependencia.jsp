@@ -77,7 +77,8 @@
                 <%}%>
                 <%if(mensaje!=null){%>
                      <h4 style="color: black;"><%=mensaje%></h4>
-                <%}%>
+                     <%session.removeAttribute("mensaje");
+                }%>
                 <table align="center" border="1">
                     <th  colspan="10"><h3>Lista de Dependencias</h3></th> 
                     <tr style="background: black; color: white;">                   

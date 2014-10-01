@@ -112,6 +112,13 @@ div#div_eliminar{
     margin: 0 auto 0;
     background: #539fe2;
 }
+div#div_mensaje{
+    background: #7fc8f1;
+    font-size: 12px;
+    font-family: cursive;
+    text-align: center;
+    width: 100%; 
+}
 
 footer{
     background: #4688da;

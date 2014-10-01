@@ -107,6 +107,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         String usuario = request.getParameter("txt_usuario");
                         String password = request.getParameter("txt_contrasena");
                         ingresarAdmin(usuario,password);
+                        sesionGlobal.setAttribute("redireccionar", "admin.jsp");
                         break;
                     case "cerrar":
                         cerrarSesion();
@@ -232,13 +233,24 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                             break;  
                     }
                 }
+                else{
+                    String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
+                if(redireccionar!=null)
+                {
+                    sesionGlobal.removeAttribute("redireccionar");                
+                    response.sendRedirect(redireccionar);  
+                }
                 else
+                {               
                     response.sendRedirect("index.jsp");
+                }
+                }
             } catch (ExcepcionNoExiste | ExcepcionYaExiste  ex) {
                 String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
                 if(redireccionar!=null)
                 {
                     sesionGlobal.removeAttribute("redireccionar");
+                    sesionGlobal.setAttribute("mensaje", ex.getMessage());     
                     response.sendRedirect(redireccionar);  
                 }
                 else

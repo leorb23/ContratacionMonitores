@@ -57,7 +57,8 @@
             <div id="contenedor">
                 <%if(mensaje!=null){%>
                      <h4 style="color: black;"><%=mensaje%></h4>
-                <%}%>
+                    <%session.removeAttribute("mensaje");
+                }%>
                 <div>
                     <table border="1">
                         <tr>

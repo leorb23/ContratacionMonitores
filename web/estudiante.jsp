@@ -53,8 +53,11 @@
         <section>
             <div id="contenedor">  
                 <%if(mensaje!=null){%>
-                    <h4><%=mensaje%></h4>
-                <%}%>
+                <div id="div_mensaje">
+                    <label><%=mensaje%></label>
+                </div>
+                    <%session.removeAttribute("mensaje");
+                }%>
                  <%if(aspirante!= null){%>
                         <label>Aspirante : <%=aspirante.darPrimerNombre() %></label><br>
                         <label>Identificado : <%=aspirante.darIdentificacion() %></label><br>

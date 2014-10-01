@@ -57,8 +57,11 @@
          <section>
              <div id="contenedor">
                  <%if(mensaje!=null){%>
-                     <h4 style="color: black;"><%=mensaje%></h4>
-                <%}%>
+                <div id="div_mensaje">
+                    <label><%=mensaje%></label>
+                </div>
+                    <%session.removeAttribute("mensaje");
+                 }%>
                 <%if(eliminar!= null ){%>
                 <div id="div_eliminar">
                     <form action="ContratacionMonitoresServlet" method="POST">
