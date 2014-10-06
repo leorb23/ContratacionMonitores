@@ -16,7 +16,10 @@
 <%  
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
-    Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarD");
+    Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarDependencia");
+    session.removeAttribute("eliminarMonitor");     
+    session.removeAttribute("eliminarAspirante");     
+    session.removeAttribute("eliminarString");
 %>
 <!DOCTYPE html5>
 <html>
@@ -71,7 +74,7 @@
                         <option value="no">No</option>
                         </select>
                         <input type="submit" id="btn_enviar" value="Aceptar">
-                        <input type="hidden" id="accion" name="accion" value="confirmarEliminarD">
+                        <input type="hidden" id="accion" name="accion" value="confirmarEliminar">
                     </form>
                 </div>
                 <%}%>

@@ -18,6 +18,10 @@
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
     Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
+    Aspirante eliminarAspirante=(Aspirante)session.getAttribute("eliminarAspirante");
+    session.removeAttribute("eliminarMonitor");     
+    session.removeAttribute("eliminarDependencia");
+    session.removeAttribute("eliminarString");
 %>
 <!DOCTYPE html5>
 <html>
@@ -63,12 +67,12 @@
                      <h4 style="color: black;"><%=mensaje%></h4>
                     <%session.removeAttribute("mensaje");
                 }%>
-                <%if(eliminar!= null ){%>
+                <%if(eliminarAspirante!= null ){%>
                 <div id="div_eliminar">
                     <form action="ContratacionMonitoresServlet" method="POST">
-                        <h2>Seguro que desea eliminar el registro del estudiante:</h2>
-                        <p>Nombre: <%=eliminar.darPrimerNombre() %> <%=eliminar.darPrimerApellido() %></p>
-                        <p>Identificado: <%=eliminar.darIdentificacion() %></p>
+                        <h2>Seguro que desea eliminar el aspirante:</h2>
+                        <p>Nombre: <%=eliminarAspirante.darPrimerNombre() %> <%=eliminarAspirante.darPrimerApellido() %></p>
+                        <p>Identificado: <%=eliminarAspirante.darIdentificacion() %></p>
                         <select id="select_eliminar" name="select_eliminar">
                         <option value="si">Si</option>
                         <option value="no">No</option>

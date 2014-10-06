@@ -313,12 +313,25 @@ public class ContratacionMonitoresTest {
         cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"103");
         cm.registrarMonitor("primerNombre3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"104");
         
+        Object [] valor= cm.ingreso("101");
+        String nString=(String)valor[0];
+        int n1=Integer.parseInt(nString);
         
-        int n1=cm.ingreso("101");
-        int n2=cm.ingreso("102");
-        int n3=cm.ingreso("104");
-        int n4=cm.ingreso("105");
-        int n5=cm.ingreso("105");
+        valor= cm.ingreso("102");
+        nString=(String)valor[0];
+        int n2=Integer.parseInt(nString);
+        
+        valor= cm.ingreso("103");
+        nString=(String)valor[0];
+        int n3=Integer.parseInt(nString);
+        
+        valor= cm.ingreso("104");
+        nString=(String)valor[0];
+        int n4=Integer.parseInt(nString);
+        
+        valor= cm.ingreso("105");
+        nString=(String)valor[0];
+        int n5=Integer.parseInt(nString);
         
         assertTrue(2==n1);
         assertTrue(2==n2);

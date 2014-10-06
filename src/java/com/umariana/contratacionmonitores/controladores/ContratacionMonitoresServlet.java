@@ -99,8 +99,12 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 String accion = request.getParameter("accion");
                 sesionGlobal=request.getSession(true);
                 switch (accion){
-                    case "ingreso":
+                    case "buscarPorAdmin":
                         String identificacion = request.getParameter("txt_identificacion");
+                        Object [] valores= cm.ingreso(identificacion);                   
+                        break;
+                    case "ingreso":
+                        identificacion = request.getParameter("txt_identificacion");
                         ingreso(identificacion);
                         break;
                     case "admin":
@@ -121,59 +125,49 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         }
                         else
                             cerrarSesion();
-                        break;
-                    case "eliminar":
-                        identificacion=request.getParameter("identificacion");
-                        Estudiante estudianteSistema = cm.buscarEstudianteSistema(identificacion);
-                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
-                        break;                    
+                        break;           
                     case "eliminarD":
                         String idDependencia=request.getParameter("idDependencia");
                         Dependencia dependencia = cm.buscarDependencia(idDependencia);
-                        sesionGlobal.setAttribute("eliminarD", dependencia);
+                        removerAtributos();
+                        sesionGlobal.setAttribute("eliminarDependencia", dependencia);
                         sesionGlobal.setAttribute("eliminarString", "dependencia");
                         break;
                     case "eliminarA":
                         identificacion=request.getParameter("identificacion");
-                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
-                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        Aspirante eliminarAspirante=cm.buscarAspirante(identificacion);
+                        removerAtributos();
+                        sesionGlobal.setAttribute("eliminarAspirante", eliminarAspirante);
                         sesionGlobal.setAttribute("eliminarString", "aspirante");
                         break;
                         
                     case "eliminarM":
                         identificacion=request.getParameter("identificacion");
-                        estudianteSistema = cm.buscarEstudianteSistema(identificacion);
-                        sesionGlobal.setAttribute("eliminar", estudianteSistema);
+                        Monitor eliminarMonitor=cm.buscarMonitor(identificacion);
+                        removerAtributos();
+                        sesionGlobal.setAttribute("eliminarMonitor", eliminarMonitor);
                         sesionGlobal.setAttribute("eliminarString", "monitor");
                         break;   
-                    case "confirmarEliminar":
+                    case "confirmarEliminar":                          
                         String elimi=request.getParameter("select_eliminar");
                         if(elimi.equals("si"))
                         {
-                            Estudiante eliminar = (Estudiante) sesionGlobal.getAttribute("eliminar");
-                            eliminarEstudiante(eliminar.darIdentificacion());
-                            sesionGlobal.removeAttribute("eliminar");                           
-                            sesionGlobal.removeAttribute("eliminarString");                           
+                            Monitor em=(Monitor)sesionGlobal.getAttribute("eliminarMonitor");
+                            Aspirante ea=(Aspirante)sesionGlobal.getAttribute("eliminarAspirante");
+                            Dependencia ed= (Dependencia)sesionGlobal.getAttribute("eliminarDependencia");
+                            
+                            if(em!=null)
+                                cm.eliminarMonitor(em.darIdentificacion());
+                            else if(ea!=null)
+                                cm.eliminarAspirante(ea.darIdentificacion());                           
+                            else if(ed!=null)
+                                cm.eliminarDependencia(ed.darId()); 
+                            removerAtributos();
                         }
-                        else{
-                            sesionGlobal.removeAttribute("eliminar");
-                            sesionGlobal.removeAttribute("eliminarString");
+                        else{                       
+                            removerAtributos();
                         }
-                        break;
-                    case "confirmarEliminarD":
-                        String elimiD=request.getParameter("select_eliminar");
-                        if(elimiD.equals("si"))
-                        {
-                            Dependencia eliminar = (Dependencia) sesionGlobal.getAttribute("eliminarD");
-                            cm.eliminarDependencia(eliminar.darId());
-                            sesionGlobal.removeAttribute("eliminarD");                           
-                            sesionGlobal.removeAttribute("eliminarString");                           
-                        }
-                        else{
-                            sesionGlobal.removeAttribute("eliminarD");
-                            sesionGlobal.removeAttribute("eliminarString");
-                        }
-                        break;
+                        break;                  
                     case"agregarDependencia":
                         String cod = request.getParameter("txt_codigo");
                         String nom = request.getParameter("txt_nombre");
@@ -235,15 +229,15 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 }
                 else{
                     String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
-                if(redireccionar!=null)
-                {
-                    sesionGlobal.removeAttribute("redireccionar");                
-                    response.sendRedirect(redireccionar);  
-                }
-                else
-                {               
-                    response.sendRedirect("index.jsp");
-                }
+                    if(redireccionar!=null)
+                    {
+                        sesionGlobal.removeAttribute("redireccionar");                
+                        response.sendRedirect(redireccionar);  
+                    }
+                    else
+                    {               
+                        response.sendRedirect("index.jsp");
+                    }
                 }
             } catch (ExcepcionNoExiste | ExcepcionYaExiste  ex) {
                 String redireccionar =(String) sesionGlobal.getAttribute("redireccionar");
@@ -271,29 +265,30 @@ public class ContratacionMonitoresServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public void removerAtributos(){
+        sesionGlobal.removeAttribute("eliminarMonitor");      
+        sesionGlobal.removeAttribute("eliminarAspirante");          
+        sesionGlobal.removeAttribute("eliminarDependencia");     
+        sesionGlobal.removeAttribute("eliminarString");
+    }
     
     public void ingreso(String identificacion){
         try {
             cerrarSesion();
-            int n = cm.ingreso(identificacion);
+            Object[] valores = cm.ingreso(identificacion);
+            int n = Integer.parseInt((String) valores[0]);
             if(n==1){
-                Aspirante aspirante = cm.buscarAspirante(identificacion);
-                System.out.println("------------------------------------");
-                System.out.println("El ingreso del ASPIRANTE :");
-                System.out.println(aspirante.toString());
-                System.out.println("------------------------------------");
+                Aspirante aspirante = (Aspirante)valores[1];
                 usuarioActual="aspirante";
-                //sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("aspirante", aspirante);
             } 
             else if(n==2){
-                Monitor monitor = cm.buscarMonitor(identificacion);
+                Monitor monitor = (Monitor)valores[1];
                 usuarioActual="monitor";
-                //sesionGlobal.removeAttribute("mensaje");
                 sesionGlobal.setAttribute("monitor", monitor);
             }
             else if(n==3){
-                Estudiante estudiante = cm.buscarEstudianteUniversidad(identificacion);
+                Estudiante estudiante = (Estudiante)valores[1];
                 usuarioActual="estudiante";
                 sesionGlobal.setAttribute("estudiante", estudiante);  
                 sesionGlobal.removeAttribute("mensaje");
@@ -302,7 +297,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 sesionGlobal.setAttribute("mensaje", "La identificación : +"+identificacion+" no corresponde a ningun estudiante de la Universidad");
             }
             
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException | ExcepcionNoExiste ex) {
+        } catch ( ExcepcionNoExiste ex) {
             sesionGlobal.setAttribute("mensaje", ex.getMessage());         
         }
     }
@@ -317,7 +312,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 usuarioActual="aspirante";
                 
             } catch (ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
-                System.out.println(ex.getMessage());
+                sesionGlobal.setAttribute("mensaje", ex.getMessage());
             }
     }
     public void cerrarSesion(){
@@ -340,9 +335,5 @@ public class ContratacionMonitoresServlet extends HttpServlet {
             } catch (ExcepcionNoExiste ex) {
                 sesionGlobal.setAttribute("mensaje", ex.getMessage());
             }
-    }
-
-    private void eliminarEstudiante(String identificacion) throws ExcepcionNoExiste  {
-        cm.eliminarEstudianteSistema(identificacion);
     }
 }

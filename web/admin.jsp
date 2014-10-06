@@ -118,7 +118,7 @@
                                 <label>Identificacion</label>
                                 <input type="text" id="txt_identificacion" name="txt_identificacion">
                                 <input type="submit" id="btn_enviar" value="Enviar">
-                                <input type="hidden" id="accion" name="accion" value="buscar">
+                                <input type="hidden" id="accion" name="accion" value="buscarPorAdmin">
                             </form>
                         </td>
                     </tr>

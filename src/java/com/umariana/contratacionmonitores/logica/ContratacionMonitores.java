@@ -184,21 +184,52 @@ public class ContratacionMonitores {
      * @throws IllegalAccessException
      * @throws ExcepcionNoExiste lanza la excepcion si la cedula no esta en la base de datos de estudiantes de la univeridad
      */
-    public int ingreso(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionNoExiste{
+    
+    
+    
+    /**
+     * El metodo se encarga de verificar si el estudiante es un aspirante, monitor o no esta registrado 
+     * pasandole como parametro unicamente la identificacion
+     * En la posicion 0 guarda el numero y en la posicion 2 guarda el objeto
+     * @return Object []     1 en caso de que la cedula pertenesca a un estudiante que es aspirante existente en el sistema
+    *                        2 en caso de que la cedula pertenesca a un estudiante que es monitor existente en el sistema
+    *                        3 en caso de que la cedula pertenesca a un estudiante que no este registrado en el sistema de contratacion de monitores
+    *                        4 en caso de que la cedula NO pertenesca a ningun estudiante de la universidad
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ExcepcionNoExiste 
+     */
+    public Object[] ingreso(String identificacion) throws ExcepcionNoExiste   {
         
+        Object [] valores = new Object[2];
+ 
         Aspirante existeAspirante = buscarAspirante(identificacion );
-        if( existeAspirante != null )
-            return 1;
+        if( existeAspirante != null ){
+            valores[0]="1";
+            valores[1]=existeAspirante;
+            return valores;
+        }
           
         Monitor monitorExiste = buscarMonitor(identificacion );
         if( monitorExiste != null )
-            return 2;      
+        {
+            valores[0]="2";
+            valores[1]=monitorExiste;
+            return valores;   
+        }
+               
         
         Estudiante estudiante = buscarEstudianteUniversidad(identificacion);
         if(estudiante!=null)
-            return 3;
-    
-        return 4;
+           {
+            valores[0]="3";
+            valores[1]=estudiante;
+            return valores;   
+        }
+        valores[0]=4;
+        return valores;
     }
     /**
      * El metodo se encarga de pasar un aspirante que paso las pruebas a un monitor con su respectiva dependencia
