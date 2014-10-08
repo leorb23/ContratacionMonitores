@@ -14,7 +14,7 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+<%  //Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
@@ -123,6 +123,35 @@
                         </td>
                     </tr>
                 </table>
+                <%
+                Aspirante aspiBusc=(Aspirante)session.getAttribute("aspiranteBuscado");
+                Monitor monitorBusc=(Monitor) session.getAttribute("monitorBuscado");
+                Estudiante estudianteBusc = (Estudiante)session.getAttribute("estudianteBuscado");
+                if(aspiBusc!=null || monitorBusc!=null || estudianteBusc!=null){%>
+                    <table>
+                    <tr>
+                        <td>Identificación</td>
+                        <td>Codigo</td>
+                        <td>Nombres</td>
+                        <td>Apellidos</td>
+                        <td>Semestre</td>
+                        <td>E.M</td>
+                        <td>Promedio Acum.</td>
+                        <td>Postulaciones</td>
+                        <td>Res. Prueba</td>
+                        <td>Res. Entrevista</td>
+                        <td>Prom. Prueba</td>
+                    </tr>
+                    
+                     <%if(aspiBusc!=null){%>
+
+                    <%}else if(monitorBusc!=null){%>
+
+                    <%}else if(estudianteBusc!=null){%>
+
+                    <%}%>
+                     </table>
+                <%}%>
             </div><br>      
             <%}%> 
         </div>

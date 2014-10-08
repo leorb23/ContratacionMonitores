@@ -16,8 +16,6 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -101,7 +99,20 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                 switch (accion){
                     case "buscarPorAdmin":
                         String identificacion = request.getParameter("txt_identificacion");
-                        Object [] valores= cm.ingreso(identificacion);                   
+                        Object [] valores= cm.ingreso(identificacion);
+                        int n = Integer.parseInt((String) valores[0]);
+                        if(n==1){
+                            Aspirante aspirante = (Aspirante)valores[1];
+                            sesionGlobal.setAttribute("aspiranteBuscado", aspirante);
+                        }
+                        else if(n==2){
+                            Monitor monitor = (Monitor)valores[1];
+                            sesionGlobal.setAttribute("MonitorBuscado", monitor);
+                        }
+                        else if(n==3){
+                            Estudiante estudiante = (Estudiante)valores[1];
+                            sesionGlobal.setAttribute("estudianteBuscado", estudiante);
+                        }                     
                         break;
                     case "ingreso":
                         identificacion = request.getParameter("txt_identificacion");
