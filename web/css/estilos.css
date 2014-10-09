@@ -103,6 +103,7 @@ section{
     width: 960px;
 }
 table{
+    border: 0;
     text-align: center;
     width: 90%;
     background: #cccccc;
@@ -118,6 +119,35 @@ div#div_mensaje{
     font-family: cursive;
     text-align: center;
     width: 100%; 
+}
+
+div#div_datos{
+    width: 95%;
+    margin: 0 auto 0;
+    height: auto;
+    //border: 1px solid #ccc;
+}
+.table_datos_est{
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 2px;
+    text-align: left;
+    margin: 0 auto 0;
+    height: auto;
+    width: 500px;
+    
+}
+.table_datos_est th{
+    font-size:20px;
+    padding: 5px;
+}
+
+.table_datos_est:hover{ 
+    border: 1px solid #b7deff;
+}
+.table_datos_est td{
+    padding: 2px;
+    padding-left: 3px;
 }
 
 footer{

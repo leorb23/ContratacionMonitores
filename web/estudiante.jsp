@@ -59,38 +59,118 @@
                     <%session.removeAttribute("mensaje");
                 }%>
                  <%if(aspirante!= null){%>
-                        <label>Aspirante : <%=aspirante.darPrimerNombre() %></label><br>
-                        <label>Identificado : <%=aspirante.darIdentificacion() %></label><br>
-                        <label>Semestre : <%=aspirante.darSemestreActual() %></label>  <br>
-                        <label>Estado Matricula : <%=aspirante.darEstadoMatricula() %></label>  <br>
-                        <label>Promedio Acumulado : <%=aspirante.darPromedioAcumulado() %></label>  <br>
-                        <label>Postulaciones : 
-                            <%if(aspirante.darPostulaciones().size()>0){%>
-                                <select>
-                                    <%for(Postulacion post: aspirante.darPostulaciones()){%>
-                                        <option value="<%=post.darIdDependencia() %>"><%=post.darIdDependencia() %></option>
-                                    <% }%>
-                                </select>        
-                          <%}else{%>
-                                N/A
-                            <%}%>
-                        </label>    
+                 <div id="div_datos">
+                     <table class="table_datos_est" id="table_datos_est">
+                         <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Aspirante</th>
+                         <tr style="background: #8bbbfd;">
+                             <td>Nombres</td>
+                             <td><%=aspirante.darPrimerNombre() %> <%=aspirante.darSegundoNombre()%></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Apellidos</td>
+                             <td><%=aspirante.darPrimerApellido() %> <%=aspirante.darSegundoApellido() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Identicacion</td>
+                             <td><%=aspirante.darIdentificacion() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Semestre</td>
+                             <td><%=aspirante.darSemestreActual() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Estado Matricula</td>
+                             <td><%=aspirante.darEstadoMatricula() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Promedio Acumulado</td>
+                             <td><%=aspirante.darPromedioAcumulado() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Postulaciones</td>
+                             <td>
+                                 <%if(aspirante.darPostulaciones().size()>0){%>
+                                 <div>
+                                     <ul style="list-style: none;">
+                                 <%for(Postulacion post: aspirante.darPostulaciones()){%>       
+                                     <li>► <%=post.darIdDependencia() %></li>  
+                                 <% }%>
+                                     </ul>  
+                                 </div>    
+                                <%}else{%>
+                                 N/A
+                                <%}%>
+                             </td>
+                         </tr>
+                     </table>                 
+                 </div>         
                     <%}
                     else if(monitor!= null){%>
-                        <label>Monitor :<%=monitor.darPrimerNombre() %> <%=monitor.darPrimerApellido() %></label><br>
-                        <label>Identificado : <%=monitor.darIdentificacion() %></label><br>
-                        <label>Semestre : <%=monitor.darSemestreActual() %></label>  <br>
-                        <label>Estado Matricula : <%=monitor.darEstadoMatricula() %></label>  <br>
-                        <label>Promedio Acumulado : <%=monitor.darPromedioAcumulado() %></label>  <br>
-                        <label>Dependencia: <%=monitor.darDependencia().darNombre() %></label>  <br>  
+                    <div id="div_datos">
+                     <table class="table_datos_est" id="table_datos_est">
+                         <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Monitor</th>
+                         <tr style="background: #8bbbfd;">
+                             <td>Nombres</td>
+                             <td><%=monitor.darPrimerNombre() %> <%=monitor.darSegundoNombre()%></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Apellidos</td>
+                             <td><%=monitor.darPrimerApellido() %> <%=monitor.darSegundoApellido() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Identicacion</td>
+                             <td><%=monitor.darIdentificacion() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Semestre</td>
+                             <td><%=monitor.darSemestreActual() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Estado Matricula</td>
+                             <td><%=monitor.darEstadoMatricula() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Promedio Acumulado</td>
+                             <td><%=monitor.darPromedioAcumulado() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Dependecia</td>
+                             <td><%=monitor.darDependencia().darNombre() %></td>
+                         </tr>
+                     </table>                 
+                    </div>            
                     <%}
                     else if(estudiante!= null){%>  
-                        <label>Estudiante :<%=estudiante.darPrimerNombre() %> <%=estudiante.darPrimerApellido() %></label><br>
-                        <label>Identificado : <%=estudiante.darIdentificacion() %></label><br>
-                        <label>Semestre : <%=estudiante.darSemestreActual() %></label>  <br>
-                        <label>Estado Matricula : <%=estudiante.darEstadoMatricula() %></label>  <br>
-                        <label>Promedio Acumulado : <%=estudiante.darPromedioAcumulado() %></label>  <br>
-                        <%if(estudiante.darSemestreActual()>= 3){
+                    <div id="div_datos">
+                     <table class="table_datos_est" id="table_datos_est">
+                         <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Monitor</th>
+                         <tr style="background: #8bbbfd;">
+                             <td>Nombres</td>
+                             <td><%=estudiante.darPrimerNombre() %> <%=estudiante.darSegundoNombre()%></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Apellidos</td>
+                             <td><%=estudiante.darPrimerApellido() %> <%=estudiante.darSegundoApellido() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Identicacion</td>
+                             <td><%=estudiante.darIdentificacion() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Semestre</td>
+                             <td><%=estudiante.darSemestreActual() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td>Estado Matricula</td>
+                             <td><%=estudiante.darEstadoMatricula() %></td>
+                         </tr>
+                         <tr style="background: #bfdef8;">
+                             <td>Promedio Acumulado</td>
+                             <td><%=estudiante.darPromedioAcumulado() %></td>
+                         </tr>
+                         <tr style="background: #8bbbfd;">
+                             <td></td>
+                             <td><%if(estudiante.darSemestreActual()>= 3){
                             if(estudiante.darPromedioAcumulado()>=3.5){%>
                             <label>Desea registrarse en el Sistema de Contratacion de Monitores ?</label>  
                                 <form action="ContratacionMonitoresServlet" method="POST">
@@ -105,7 +185,10 @@
                             <h4>No puedes postularte como aspirante porque tiene un promedio de notas menor a 3.5</h4>
                         <%}}else{%>
                             <h4>Para registrarte como aspirante debes estar en tercer semestre o superior</h4>
-                        <%}%>    
+                        <%}%>  </td>
+                         </tr>
+                     </table>                 
+                    </div>             
                     <%}
                     else if(admin!=null) {
                         response.sendRedirect("admin.jsp");
