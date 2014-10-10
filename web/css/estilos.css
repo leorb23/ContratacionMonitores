@@ -121,6 +121,12 @@ div#div_mensaje{
     width: 100%; 
 }
 
+div#div_opciones{
+    width: 95%;
+    margin: 0 auto 0;
+    height: auto;
+}
+
 div#div_datos{
     width: 95%;
     margin: 0 auto 0;

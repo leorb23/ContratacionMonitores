@@ -103,7 +103,23 @@
                              </td>
                          </tr>
                      </table>                 
-                 </div>         
+                 </div>   
+                 <div id="div_opciones">
+                     <%if(aspirante.darPostulaciones().size()>0){%>
+                     <div>Postulaciones</div>
+                     <div>
+                         <div>
+                             <ul style="list-style: none;">
+                         <%for(Postulacion post: aspirante.darPostulaciones()){%>       
+                             <li>► <%=post.darIdDependencia() %></li>  
+                         <% }%>
+                             </ul>  
+                         </div>    
+                        <%}else{%>
+                         N/A
+                        <%}%>
+                    </div>
+                 </div>    
                     <%}
                     else if(monitor!= null){%>
                     <div id="div_datos">
@@ -134,16 +150,17 @@
                              <td><%=monitor.darPromedioAcumulado() %></td>
                          </tr>
                          <tr style="background: #8bbbfd;">
-                             <td>Dependecia</td>
+                             <td>Monitoria en</td>
                              <td><%=monitor.darDependencia().darNombre() %></td>
                          </tr>
                      </table>                 
-                    </div>            
+                    </div>
+                         
                     <%}
                     else if(estudiante!= null){%>  
                     <div id="div_datos">
                      <table class="table_datos_est" id="table_datos_est">
-                         <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Monitor</th>
+                         <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Estudiante</th>
                          <tr style="background: #8bbbfd;">
                              <td>Nombres</td>
                              <td><%=estudiante.darPrimerNombre() %> <%=estudiante.darSegundoNombre()%></td>
