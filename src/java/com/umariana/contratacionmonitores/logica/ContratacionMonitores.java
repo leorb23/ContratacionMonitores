@@ -55,10 +55,6 @@ public class ContratacionMonitores {
         
         registrosDePrueba();
         
-       
-        
-        
-        
     }           
     //
     //METODOS
@@ -346,19 +342,19 @@ public class ContratacionMonitores {
      */
     public void modificarAspirante(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String identificacion, File foto, int semestre) throws Exception
     {
-        Aspirante modificar = buscarAspirante(identificacion );
-        if( modificar == null )
+        Aspirante buscado = buscarAspirante(identificacion );
+        if( buscado == null )
         {
-            throw new Exception("El Estudiante que desea modificar no existe");
+            throw new Exception("El Aspirante que desea modificar no existe");
         }
         else
         {
-            modificar.cambiarPrimerNombre(primerNombre);
-            modificar.cambiarSegundoNombre(segundoNombre);
-            modificar.cambiarPrimerApellido(primerApellido);  
-            modificar.cambiarSegundoApellido(segundoApellido);  
-            modificar.cambiarFoto(foto);
-            modificar.cambiarSemestreActual(semestre);                    
+            buscado.cambiarPrimerNombre(primerNombre);
+            buscado.cambiarSegundoNombre(segundoNombre);
+            buscado.cambiarPrimerApellido(primerApellido);  
+            buscado.cambiarSegundoApellido(segundoApellido);  
+            buscado.cambiarFoto(foto);
+            buscado.cambiarSemestreActual(semestre);                    
         }
     }
      /**
@@ -376,20 +372,20 @@ public class ContratacionMonitores {
      */
     public void modificarMonitor(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
     {
-        Monitor modificar = buscarMonitor(identificacion );
-        if( modificar == null )
+        Monitor buscado = buscarMonitor(identificacion );
+        if( buscado == null )
         {
-            throw new Exception("El Estudiante que desea modificar no existe");
+            throw new Exception("El Estudiante monitor que desea modificar no existe");
         }
         else
         {
-            modificar.cambiarPrimerNombre(primerNombre);
-            modificar.cambiarSegundoNombre(segundoNombre);
-            modificar.cambiarPrimerApellido(primerApellido);  
-            modificar.cambiarSegundoApellido(segundoApellido);  
-            modificar.cambiarFoto(foto);
-            modificar.cambiarPromedioAcumulado(promedioAcum);
-            modificar.cambiarSemestreActual(semestre);                    
+            buscado.cambiarPrimerNombre(primerNombre);
+            buscado.cambiarSegundoNombre(segundoNombre);
+            buscado.cambiarPrimerApellido(primerApellido);  
+            buscado.cambiarSegundoApellido(segundoApellido);  
+            buscado.cambiarFoto(foto);
+            buscado.cambiarPromedioAcumulado(promedioAcum);
+            buscado.cambiarSemestreActual(semestre);                    
         }
     }
      /**
@@ -582,15 +578,16 @@ public class ContratacionMonitores {
     }  
 
     public void modificarDependencia(String nId, String nNombre, String nDescripcion, String nHorario) throws ExcepcionNoExiste{
-        Dependencia dependenciaModificar= buscarDependencia(nId);
-        if(dependenciaModificar==null){
-            //throw  new ExcepcionNoExiste("La dependencia que desea");
+        Dependencia buscada = buscarDependencia(nId);
+        if(buscada == null)
+        {
+            //throw new Exception(" La Dependencia que desea modificar no existe");
         }
         else
         {
-            dependenciaModificar.cambiarNombre(nNombre);
-            dependenciaModificar.cambiarDescripcion(nDescripcion);
-            dependenciaModificar.cambiarHorario(nHorario);
+            buscada.cambiarNombre(nNombre);
+            buscada.cambiarDescripcion(nDescripcion);
+            buscada.cambiarHorario(nHorario);
         }
     }
     
