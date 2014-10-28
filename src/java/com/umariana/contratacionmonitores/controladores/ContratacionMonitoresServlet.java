@@ -7,7 +7,6 @@ package com.umariana.contratacionmonitores.controladores;
 
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
-import com.umariana.contratacionmonitores.logica.Administrador;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.ContratacionMonitores;
 import com.umariana.contratacionmonitores.logica.Dependencia;
@@ -16,6 +15,8 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,44 +32,27 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     /**
      * Es la sesion global de toda la aplicacion
      */
-	private static HttpSession sesionGlobal;
-        private static String usuarioActual;
-    
-        public static ContratacionMonitores cm = new ContratacionMonitores();
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        String identificacion = request.getParameter("txt_identificacion");
-        System.out.println("identificacion: "+identificacion);
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ContratacionMonitoresServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1> Contratacion de Monitores </h1>");
-            out.println("<h2> Identificacion Estudiante :"+request.getParameter("txt_identificacion")+"</h2>");
-            out.println("<h2> Identificacion Estudiante :"+request.getParameter("accion")+"</h2>");
-            out.println("<h2> Identificacion Estudiante :"+request.getParameter("select_registrar")+"</h2>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private static HttpSession sesionGlobal;
+    private static String usuarioActual;
+    public static ContratacionMonitores instance = new ContratacionMonitores();
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Retorna la sesion de la aplicacion
+     * @return  HttpSession
+     */
+    public static HttpSession darSession(){
+         return sesionGlobal;
+    }
+    /**
+     * Retorna la comunicacion con el paquete logica
+     * @return  ContratacionMonitores
+     */
+    public static ContratacionMonitores darComunicacionLogica(){
+        return instance;
+    }
+    public static void setearSesion(HttpSession sesionActualizada){
+        sesionGlobal=sesionActualizada;
+    }
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -81,7 +65,6 @@ public class ContratacionMonitoresServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -92,14 +75,16 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      */
     //@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)     throws ServletException, IOException {       
-        
             try {
                 String accion = request.getParameter("accion");
                 sesionGlobal=request.getSession(true);
                 switch (accion){
+                    case"regDep":
+                        
+                        break;
                     case "buscarPorAdmin":
                         String identificacion = request.getParameter("txt_identificacion");
-                        Object [] valores= cm.ingreso(identificacion);
+                        Object [] valores= instance.ingreso(identificacion);
                         int n = Integer.parseInt((String) valores[0]);
                         if(n==1){
                             Aspirante aspirante = (Aspirante)valores[1];
@@ -114,39 +99,42 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                             sesionGlobal.setAttribute("estudianteBuscado", estudiante);
                         }                     
                         break;
-                    case "ingreso":
+                    /*case "ingreso":
                         identificacion = request.getParameter("txt_identificacion");
                         ingreso(identificacion);
-                        break;
-                    case "admin":
+                        break;*/
+                    /*case "entrar":
                         String usuario = request.getParameter("txt_usuario");
                         String password = request.getParameter("txt_contrasena");
                         ingresarAdmin(usuario,password);
                         sesionGlobal.setAttribute("redireccionar", "admin.jsp");
-                        break;
-                    case "cerrar":
+                        break;*/
+                    /*case "cerrar":
                         cerrarSesion();
-                        break;
+                        break;*/
                         
-                    case "reg_estu":
+                    /*case "reg_estu":
+                        Estudiante estudiante = (Estudiante)sesionGlobal.getAttribute("estudianteBuscado");
+                        if(estudiante==null){
+                            estudiante = (Estudiante)sesionGlobal.getAttribute("estudiante");
+                        }
                         String registrar=request.getParameter("select_registrar");
-                        if(registrar.equals("si")){
-                            Estudiante estudiante = (Estudiante)sesionGlobal.getAttribute("estudiante");
+                        if(registrar.equals("si")){               
                             registrarAspirante(estudiante.darIdentificacion());
                         }
                         else
                             cerrarSesion();
-                        break;           
+                        break;        */   
                     case "eliminarD":
-                        String idDependencia=request.getParameter("idDependencia");
-                        Dependencia dependencia = cm.buscarDependencia(idDependencia);
+                        int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
+                        Dependencia dependencia = instance.buscarDependencia(idDependencia);
                         removerAtributos();
                         sesionGlobal.setAttribute("eliminarDependencia", dependencia);
                         sesionGlobal.setAttribute("eliminarString", "dependencia");
                         break;
                     case "eliminarA":
                         identificacion=request.getParameter("identificacion");
-                        Aspirante eliminarAspirante=cm.buscarAspirante(identificacion);
+                        Aspirante eliminarAspirante=instance.buscarAspirante(identificacion);
                         removerAtributos();
                         sesionGlobal.setAttribute("eliminarAspirante", eliminarAspirante);
                         sesionGlobal.setAttribute("eliminarString", "aspirante");
@@ -154,7 +142,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         
                     case "eliminarM":
                         identificacion=request.getParameter("identificacion");
-                        Monitor eliminarMonitor=cm.buscarMonitor(identificacion);
+                        Monitor eliminarMonitor=instance.buscarMonitor(identificacion);
                         removerAtributos();
                         sesionGlobal.setAttribute("eliminarMonitor", eliminarMonitor);
                         sesionGlobal.setAttribute("eliminarString", "monitor");
@@ -168,11 +156,11 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                             Dependencia ed= (Dependencia)sesionGlobal.getAttribute("eliminarDependencia");
                             
                             if(em!=null)
-                                cm.eliminarMonitor(em.darIdentificacion());
+                                instance.eliminarMonitor(em.darIdentificacion());
                             else if(ea!=null)
-                                cm.eliminarAspirante(ea.darIdentificacion());                           
+                                instance.eliminarAspirante(ea.darIdentificacion());                           
                             else if(ed!=null)
-                                cm.eliminarDependencia(ed.darId()); 
+                                instance.eliminarDependencia(ed.darId()); 
                             removerAtributos();
                         }
                         else{                       
@@ -180,13 +168,13 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         }
                         break;                  
                     case"agregarDependencia":
-                        String cod = request.getParameter("txt_codigo");
+                        int cod = Integer.parseInt(request.getParameter("txt_codigo"));
                         String nom = request.getParameter("txt_nombre");
                         String des = request.getParameter("txt_descripcion");
                         String jor = request.getParameter("slc_jornadaD");                       
                         int cup = Integer.parseInt(request.getParameter("txt_cupos")); 
                         sesionGlobal.setAttribute("redireccionar", "dependencia.jsp");
-                        cm.agregarDependencia(cod, nom, des, jor, cup);         
+                        instance.agregarDependencia(cod, nom, des, jor, cup);         
                         break;
                         
                 }
@@ -263,19 +251,10 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                     sesionGlobal.setAttribute("mensaje", ex.getMessage());      
                     response.sendRedirect("index.jsp");
                 }
-            } 
+            } catch (SQLException ex) { 
+            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    //@Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
     public void removerAtributos(){
         sesionGlobal.removeAttribute("eliminarMonitor");      
         sesionGlobal.removeAttribute("eliminarAspirante");          
@@ -283,10 +262,10 @@ public class ContratacionMonitoresServlet extends HttpServlet {
         sesionGlobal.removeAttribute("eliminarString");
     }
     
-    public void ingreso(String identificacion){
+    /*public void ingreso(String identificacion){
         try {
             cerrarSesion();
-            Object[] valores = cm.ingreso(identificacion);
+            Object[] valores = instance.ingreso(identificacion);
             int n = Integer.parseInt((String) valores[0]);
             if(n==1){
                 Aspirante aspirante = (Aspirante)valores[1];
@@ -311,13 +290,13 @@ public class ContratacionMonitoresServlet extends HttpServlet {
         } catch ( ExcepcionNoExiste ex) {
             sesionGlobal.setAttribute("mensaje", ex.getMessage());         
         }
-    }
+    }*/
     
     
-    public void registrarAspirante(String identificacion){
+    /*public void registrarAspirante(String identificacion){
             try {
                 cerrarSesion();
-                Aspirante aspirante =cm.registrarAspirante2(identificacion);
+                Aspirante aspirante =instance.registrarAspirante2(identificacion);
                 sesionGlobal.setAttribute("mensaje","Se registro Correctamente el estudiante con identificacion : "+aspirante.darIdentificacion());
                 sesionGlobal.setAttribute("aspirante", aspirante);
                 usuarioActual="aspirante";
@@ -325,26 +304,26 @@ public class ContratacionMonitoresServlet extends HttpServlet {
             } catch (ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
                 sesionGlobal.setAttribute("mensaje", ex.getMessage());
             }
-    }
+    }*/
     public void cerrarSesion(){
         sesionGlobal.removeAttribute(usuarioActual);
         sesionGlobal.removeAttribute("eliminar");
         sesionGlobal.removeAttribute("mensaje");
-        
+        sesionGlobal.removeAttribute("aspiranteBuscado");
+        sesionGlobal.removeAttribute("MonitorBuscado");
+        sesionGlobal.removeAttribute("estudianteBuscado");
     }
     
-    public HttpSession darSession(){
-        return sesionGlobal;
-    }
+    
 
-    private void ingresarAdmin(String usuario, String password) {
+    /*private void ingresarAdmin(String usuario, String password) {
             try {
-                Administrador admin= cm.ingresoAdmin(usuario,password);
+                Administrador admin= instance.ingresoAdmin(usuario,password);
                 cerrarSesion();
                 usuarioActual="admin";    
                 sesionGlobal.setAttribute("admin", admin);
             } catch (ExcepcionNoExiste ex) {
                 sesionGlobal.setAttribute("mensaje", ex.getMessage());
             }
-    }
+    }*/
 }

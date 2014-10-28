@@ -1,6 +1,7 @@
 package com.umariana.contratacionmonitores.logica;
 
-import java.io.File;
+import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
+import java.util.List;
 
 public class Dependencia 
 {
@@ -11,7 +12,7 @@ public class Dependencia
         /**
 	 * Es el monitor 
 	 */
-        private String id;
+        private int id;
          /**
 	 * Es la dependencia
 	 */
@@ -32,6 +33,10 @@ public class Dependencia
          * Son los cupos que tiene la dependencia
          */
         private int cupos;
+        /**
+         * 
+         */
+        private List<Jornada> jornadas;
 	
     //
     //CONSTRUCTOR
@@ -39,7 +44,7 @@ public class Dependencia
     /**
     * Es el constructor de la clase Monitor
     */
-    public Dependencia( String nId, String nNombre, String nDescripcion, String nHorario, int cupos)
+    public Dependencia( int nId, String nNombre, String nDescripcion, String nHorario, int cupos)
     {
         id = nId;
         nombre = nNombre;
@@ -47,12 +52,20 @@ public class Dependencia
         horario = nHorario;
         this.cupos = cupos;
     }
+    
+    public Dependencia(String nombre,String descripcion){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    public Dependencia(){
+        
+    }
 
-    public String darId() {
+    public int darId() {
         return id;
     }
 
-    public void cambiarId(String id) {
+    public void cambiarId(int id) {
         this.id = id;
     }
 
@@ -78,13 +91,6 @@ public class Dependencia
 
     public void cambiarHorario(String horario) {
         this.horario = horario;
-    }
-    /**
-     * Metodo que retorna la informacion de la dependencia
-     * @return String 
-     */
-    public String toString(){
-        return id+" - "+nombre+" - "+" - "+ descripcion+" - "+horario;
     }
 
     /**
@@ -115,6 +121,26 @@ public class Dependencia
     public void cambiarCupos(int cupos) {
         this.cupos = cupos;
     }
+    /**
+     * 
+     * @return 
+     */
+    public List<Jornada> darJornadas() {
+        return jornadas;
+    }
+    /**
+     * 
+     * @param jornadas 
+     */
+    public void cambiarJornadas(List<Jornada> jornadas) {
+        this.jornadas = jornadas;
+    }
 
+    @Override
+    public String toString() {
+        return "Dependencia{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", jornadas=" + jornadas + '}';
+    }
+    
+    
     
 }

@@ -4,6 +4,14 @@
     Author     : Cocosoft
 --%>
 
+<%
+Object instance=ContratacionMonitoresServlet.darComunicacionLogica();
+if(instance==null){
+    ContratacionMonitoresServlet cm = new ContratacionMonitoresServlet();
+}
+%>
+
+
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Postulacion"%>
 <%@page import="java.util.ArrayList"%>
@@ -29,29 +37,7 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
-            <div id="cabecera">
-                <div>
-                    <a href="index.jsp"><img src="img/logo.png"></a>
-                </div>
-                <div>
-                    <h1>Contratacion de Monitores</h1>
-                </div>
-            </div>
-            <div id="barraNavegacion">
-                <nav id="barraNavPrincipal">
-                    <ul>
-                        <li><a href="index.jsp" style="background:#56a2ff; height: 32px;">Inicio</a></li>
-                        <li><a href="pruebas.jsp">Pruebas</a></li> 
-                        <%if(admin==null){%>
-                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
-                        <li><a href="estudiante.jsp">Estudiantes</a></li>
-                        <%}%>
-                        <li><a href="admin.jsp"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
-                    </ul>
-                </nav>
-            </div>     
-        </header>   
+        <jsp:include page="header.jsp" />
         <% if(aspirante==null && monitor==null && estudiante==null && admin==null){%>
         <section>
             <div id="contenedor">

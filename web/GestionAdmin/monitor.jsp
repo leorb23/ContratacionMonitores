@@ -25,14 +25,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
+        <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
+        <jsp:include page="../GestionAdmin/header.jsp" />
+<!--        <header>
             <div id="cabecera">
                 <div>
-                    <a href="index.jsp"><img src="img/logo.png"></a>
+                    <a href="../index.jsp"><img src="../img/logo.png"></a>
                 </div>
                 <div>
                     <h1>Contratacion de Monitores</h1>
@@ -41,8 +42,8 @@
             <div id="barraNavegacion">
                 <nav id="barraNavPrincipal">
                     <ul>
-                        <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="#">Pruebas</a></li> 
+                        <li><a href="../index.jsp" >Inicio</a></li>
+                        <li><a href="../pruebas.jsp">Pruebas</a></li> 
                         <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
@@ -56,7 +57,7 @@
                     </ul>
                 </nav>
             </div>          
-        </header>
+        </header>-->
         <%if(admin!=null) {%> 
          <section>
              <div id="contenedor">
@@ -94,7 +95,7 @@
                     <td>Dependencia</td>
                 </tr>
                 <%
-                ArrayList<Monitor> monitores = ContratacionMonitoresServlet.cm.darMonitores();
+                ArrayList<Monitor> monitores = ContratacionMonitoresServlet.darComunicacionLogica().darMonitores();
                 for(Monitor mon: monitores){%>
                    <tr>
                     <td><%=mon.darIdentificacion() %></td>

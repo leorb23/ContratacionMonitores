@@ -86,6 +86,10 @@ public class Estudiante {
         this.identificacion = identificacion;
 
     }
+
+    public Estudiante() {
+        
+    }
     /**
      * Metodo que retorna el primer nombre del monitor
      * @return primerNombre

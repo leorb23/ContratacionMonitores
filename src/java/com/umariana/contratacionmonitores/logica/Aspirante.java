@@ -31,6 +31,10 @@ public class Aspirante extends Estudiante{
         postulaciones = new ArrayList<Postulacion>();
     }  
 
+    public Aspirante() {
+        
+    }
+
     /**
      * 
      * @return 
@@ -52,7 +56,7 @@ public class Aspirante extends Estudiante{
      * @param eliminarPostulacion
      * @throws ExcepcionNoExiste 
      */
-    public void quitarPostulacion(String idDependencia) throws ExcepcionNoExiste
+    public void quitarPostulacion(int idDependencia) throws ExcepcionNoExiste
     {    
         if(buscarPostulacion(idDependencia)!=null)
             postulaciones.remove(idDependencia);
@@ -66,7 +70,7 @@ public class Aspirante extends Estudiante{
      * @param identificaiconAspirante
      * @throws ExcepcionYaExiste 
      */
-    public void agregarPostulacion(String idDependencia, Date fechaPostulacion, String identificaiconAspirante) throws ExcepcionYaExiste
+    public void agregarPostulacion(int idDependencia, Date fechaPostulacion, String identificaiconAspirante) throws ExcepcionYaExiste
     {
         if(buscarPostulacion(idDependencia)==null){
             Postulacion nuevaPostulacion= new Postulacion(idDependencia, fechaPostulacion, identificaiconAspirante);
@@ -77,13 +81,13 @@ public class Aspirante extends Estudiante{
     }
     /**
      * 
-     * @param idPostulacion
+     * @param idDependencia
      * @return 
      */
-    public Postulacion buscarPostulacion(String idDependencia){
+    public Postulacion buscarPostulacion(int idDependencia){
         
         for(Postulacion buscarPostulacion: postulaciones ){
-            if(buscarPostulacion.darIdDependencia().equals(idDependencia))
+            if(buscarPostulacion.darIdDependencia()==idDependencia)
                 return buscarPostulacion;
         }
         return null;

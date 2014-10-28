@@ -39,7 +39,4 @@ public class Administrador {
     public void cambiarContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    
-    
-    
 }

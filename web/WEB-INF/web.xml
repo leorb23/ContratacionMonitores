@@ -9,7 +9,7 @@
     </servlet>
     <servlet>
         <servlet-name>SesionServlet</servlet-name>
-        <servlet-class>com.umariana.contratacionmonitores.controladores.SesionServlet</servlet-class>
+        <servlet-class>com.umariana.contratacionmonitores.controladores.GestionSesiones</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewServlet</servlet-name>

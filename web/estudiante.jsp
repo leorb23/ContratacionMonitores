@@ -29,7 +29,8 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
+        <jsp:include page="header.jsp" />
+<!--        <header>
             <div id="cabecera">
                 <div>
                     <a href="index.jsp"><img src="img/logo.png"></a>
@@ -45,11 +46,13 @@
                         <li><a href="pruebas.jsp">Pruebas</a></li> 
                         <li><a href="dependenciaView.jsp">Dependencias</a></li>
                         <li><a href="estudiante.jsp" style="background:#56a2ff;height: 32px;">Estudiantes</a></li>
-                        <li><a href="admin.jsp">Entrar</a></li>
+                        <%if(estudiante==null && monitor==null && aspirante==null) {%>
+                        <li><a href="GestionAdmin/admin.jsp">Entrar</a></li>
+                        <%}%>
                     </ul>
                 </nav>
             </div>     
-        </header>
+        </header>-->
         <section>
             <div id="contenedor">  
                 <%if(mensaje!=null){%>
@@ -190,7 +193,7 @@
                              <td><%if(estudiante.darSemestreActual()>= 3){
                             if(estudiante.darPromedioAcumulado()>=3.5){%>
                             <label>Desea registrarse en el Sistema de Contratacion de Monitores ?</label>  
-                                <form action="ContratacionMonitoresServlet" method="POST">
+                                <form action="GestionSesionDeEstudiantes" method="POST">
                                     <select id="select_registrar" name="select_registrar">
                                         <option value="si">Si</option>
                                         <option value="no">No</option>
@@ -216,7 +219,7 @@
                         <tr>
                             <td>
                                 <label>Ingreso Para Estudiantes</label>
-                                <form action="ContratacionMonitoresServlet" method="POST">
+                                <form action="GestionSesionDeEstudiantes" method="POST">
                                     <label>Identificacion</label>
                                     <input type="text" id="txt_identificacion" name="txt_identificacion">
                                     <input type="submit" id="btn_enviar" value="Enviar">
@@ -227,7 +230,7 @@
                     </table>
                 </div>      
                <%}else { %>
-                <form action="ContratacionMonitoresServlet" method="POST">
+                <form action="GestionSesionDeEstudiantes" method="POST">
                     <input type="submit"  value="Cerrar Sesion">
                     <input type="hidden" id="accion" name="accion" value="cerrar">
                 </form>

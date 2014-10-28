@@ -15,7 +15,7 @@ public class Postulacion {
     /**
      * Es el identificador de la dependencia 
      */
-    private String idDependencia;
+    private int idDependencia;
     /**
      * Es la identificacion del aspirante al que pertenece la postulacion
      */
@@ -30,7 +30,7 @@ public class Postulacion {
      * @param idDependencia != null && !=""
      * @param identificacionEstudiante != null && !=""
      */
-    public Postulacion(String idDependencia, Date fechaPostulacion, String identificacionEstudiante) {
+    public Postulacion(int idDependencia, Date fechaPostulacion, String identificacionEstudiante) {
         this.fechaPostulado = fechaPostulacion;
         this.idDependencia = idDependencia;
         this.identificacionEstudiante = identificacionEstudiante;
@@ -53,14 +53,14 @@ public class Postulacion {
      * 
      * @return 
      */
-    public String darIdDependencia() {
+    public int darIdDependencia() {
         return idDependencia;
     }
     /**
      * 
      * @param idDependencia 
      */
-    public void cambiarIdDependencia(String idDependencia) {
+    public void cambiarIdDependencia(int idDependencia) {
         this.idDependencia = idDependencia;
     }
     /**

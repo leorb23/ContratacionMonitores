@@ -27,7 +27,8 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
+       <jsp:include page="header.jsp" />
+<!--        <header>
             <div id="cabecera">
                 <div>
                     <a href="index.jsp"><img src="img/logo.png"></a>
@@ -43,11 +44,11 @@
                         <li><a href="pruebas.jsp">Pruebas</a></li> 
                         <li><a href="dependenciaView.jsp" style="background:#56a2ff; height: 32px;">Dependencias</a></li>
                         <li><a href="estudiante.jsp">Estudiantes</a></li>
-                        <li><a href="admin.jsp">Entrar</a></li>
+                        <li><a href="GestionAdmin/admin.jsp">Entrar</a></li>
                     </ul>
                 </nav>
             </div>     
-        </header>      
+        </header>      -->
         <section>
             <div id="contenedor">
                 <table align="center" border="1">
@@ -59,7 +60,7 @@
                         <td>Horario</td>
                         <td>Cupos</td>
                     </tr>
-                    <%ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.cm.darDependencias();
+                    <%ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
                     for(Dependencia dep: dependencias){%>
                        <tr>
                         <td><%=dep.darId()%></td>

@@ -1,6 +1,7 @@
 package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
+import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import java.io.File;
@@ -43,17 +44,21 @@ public class ContratacionMonitores {
     /**
      * Es el constructor de la clase Principal
      */
-    public ContratacionMonitores() 
+    public ContratacionMonitores()
     {             
         
         cmDAO = new ContratacionMonitoresDAO();
         aspirantes   =  cmDAO.darAspirantesRegistrados();
         resultados   =  cmDAO.darResultadosRegistrados();
         monitores    =  cmDAO.darMonitoresRegistrados();
-        dependencias =  cmDAO.darDependenciasRegistrados();   
+       // dependencias =  cmDAO.darDependenciasRegistrados();   
         
         
         registrosDePrueba();
+        
+       
+        
+        
         
     }           
     //
@@ -75,19 +80,19 @@ public class ContratacionMonitores {
             /*registrarMonitor("monitor1","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"105");
             registrarMonitor("monitor2","segundoNombre2", "primerApellido2","segundoApellido2", 2, "estadoMatricula2", null,2.0,2,"106");
             registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
-            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");    */                      
+            registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");*/                      
             
-            agregarDependencia("Cod1", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
-            agregarDependencia("Cod2", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
-            agregarDependencia("Cod3", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
-            agregarDependencia("Cod4", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
+            agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             
-            agregarPostulacionAspirante("101", "Cod1");
-            agregarPostulacionAspirante("101", "Cod2");
-            agregarPostulacionAspirante("102", "Cod2");
+            agregarPostulacionAspirante("101", 1);
+            agregarPostulacionAspirante("101", 2);
+            agregarPostulacionAspirante("102", 1);
             
-            pasarAspiranteAMonitor("105", "Cod1");
-            pasarAspiranteAMonitor("106", "Cod2");
+            pasarAspiranteAMonitor("105", 1);
+            pasarAspiranteAMonitor("106", 1);
       
             
         } catch (Exception ex) {
@@ -101,35 +106,19 @@ public class ContratacionMonitores {
      */
     public ArrayList<Monitor> darMonitores() 
     {
+        monitores=cmDAO.darMonitoresRegistrados();
         return monitores;
     }
-
-    /**
-     * Cambia la lista de monitores por la nueva lista
-     * @param monitores ArrayList<Monitor>
-     */
-    public void cambiarMonitores(ArrayList<Monitor> monitores) 
-    {
-        this.monitores = monitores;
-    }
-
     /**
      * Retorna la lista de dependencias
      * @return dependencias
      */
-    public ArrayList<Dependencia> darDependencias() 
+    public ArrayList<Dependencia> darDependencias() throws SQLException, ConnectionException 
     {
+        dependencias=cmDAO.darDependenciasRegistrados();
         return dependencias;
     }
 
-    /**
-     * Cambia la lista de dependencias por la nueva lista
-     * @param dependencias ArrayList<Dependencia>
-     */
-    public void cambiarDependencias(ArrayList<Dependencia> dependencias) 
-    {
-        this.dependencias = dependencias;
-    }
 
     /**
      * Retorna la lista de resultados
@@ -155,6 +144,7 @@ public class ContratacionMonitores {
      */
     public ArrayList<Aspirante> darAspirantes() 
     {
+        aspirantes= cmDAO.darAspirantesRegistrados();
         return aspirantes;
     }
 
@@ -197,7 +187,7 @@ public class ContratacionMonitores {
      * @throws IllegalAccessException
      * @throws ExcepcionNoExiste 
      */
-    public Object[] ingreso(String identificacion) throws ExcepcionNoExiste   {
+    public Object[] ingreso(String identificacion) throws ExcepcionNoExiste, SQLException   {
         
         Object [] valores = new Object[2];
  
@@ -235,7 +225,7 @@ public class ContratacionMonitores {
      * @throws ExcepcionYaExiste Lanza la excepcion en caso de que el estudiante ya esta registrado como monitor
      * @throws Exception 
      */
-    public void pasarAspiranteAMonitor(String identificacion , String codDependencia) throws ExcepcionNoExiste, ExcepcionYaExiste, Exception{        
+    public void pasarAspiranteAMonitor(String identificacion , int codDependencia) throws ExcepcionNoExiste, ExcepcionYaExiste, Exception{        
         Aspirante aspirante= buscarAspirante(identificacion);
         if(aspirante==null)
             throw  new ExcepcionNoExiste("El aspirante no esta registrado en el sistema");
@@ -254,10 +244,10 @@ public class ContratacionMonitores {
                                          aspirante.darPrimerApellido(), aspirante.darSegundoApellido(),
                                          aspirante.darCodigo(), aspirante.darEstadoMatricula(), 
                                          aspirante.darFoto() ,aspirante.darPromedioAcumulado(), 
-                                         aspirante.darSemestreActual(), identificacion, dependencia);                   
+                                         aspirante.darSemestreActual(), identificacion, dependencia, 0);                   
                     eliminarAspirante(identificacion);                  
                     monitores.add(monitor);
-                    cmDAO.registrarMonitorEnBD();
+                    //cmDAO.registrarMonitorEnBD();
 
                 }
             }
@@ -342,19 +332,19 @@ public class ContratacionMonitores {
      */
     public void modificarAspirante(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String identificacion, File foto, int semestre) throws Exception
     {
-        Aspirante buscado = buscarAspirante(identificacion );
-        if( buscado == null )
+        Aspirante modificar = buscarAspirante(identificacion );
+        if( modificar == null )
         {
-            throw new Exception("El Aspirante que desea modificar no existe");
+            throw new Exception("El Estudiante que desea modificar no existe");
         }
         else
         {
-            buscado.cambiarPrimerNombre(primerNombre);
-            buscado.cambiarSegundoNombre(segundoNombre);
-            buscado.cambiarPrimerApellido(primerApellido);  
-            buscado.cambiarSegundoApellido(segundoApellido);  
-            buscado.cambiarFoto(foto);
-            buscado.cambiarSemestreActual(semestre);                    
+            modificar.cambiarPrimerNombre(primerNombre);
+            modificar.cambiarSegundoNombre(segundoNombre);
+            modificar.cambiarPrimerApellido(primerApellido);  
+            modificar.cambiarSegundoApellido(segundoApellido);  
+            modificar.cambiarFoto(foto);
+            modificar.cambiarSemestreActual(semestre);                    
         }
     }
      /**
@@ -372,20 +362,20 @@ public class ContratacionMonitores {
      */
     public void modificarMonitor(String primerNombre,String segundoNombre , String primerApellido, String segundoApellido, String identificacion, File foto, int semestre, double promedioAcum  ) throws Exception
     {
-        Monitor buscado = buscarMonitor(identificacion );
-        if( buscado == null )
+        Monitor modificar = buscarMonitor(identificacion );
+        if( modificar == null )
         {
-            throw new Exception("El Estudiante monitor que desea modificar no existe");
+            throw new Exception("El Estudiante que desea modificar no existe");
         }
         else
         {
-            buscado.cambiarPrimerNombre(primerNombre);
-            buscado.cambiarSegundoNombre(segundoNombre);
-            buscado.cambiarPrimerApellido(primerApellido);  
-            buscado.cambiarSegundoApellido(segundoApellido);  
-            buscado.cambiarFoto(foto);
-            buscado.cambiarPromedioAcumulado(promedioAcum);
-            buscado.cambiarSemestreActual(semestre);                    
+            modificar.cambiarPrimerNombre(primerNombre);
+            modificar.cambiarSegundoNombre(segundoNombre);
+            modificar.cambiarPrimerApellido(primerApellido);  
+            modificar.cambiarSegundoApellido(segundoApellido);  
+            modificar.cambiarFoto(foto);
+            modificar.cambiarPromedioAcumulado(promedioAcum);
+            modificar.cambiarSemestreActual(semestre);                    
         }
     }
      /**
@@ -411,7 +401,7 @@ public class ContratacionMonitores {
                 //throw new Exception("El Estudiante que desea registrar ya existe !!");
             }
             else{      
-                nuevo= new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion, null);
+                nuevo= new Monitor(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion, null, 0);
                 monitores.add( nuevo );
             }
     }
@@ -419,13 +409,13 @@ public class ContratacionMonitores {
      * El metodo elimina un aspirante registrado en el sistema
      * @param identificacion != null && != ""
      */
-    public void eliminarAspirante(String identificacion) throws ExcepcionNoExiste
+    public void eliminarAspirante(String identificacion) throws ExcepcionNoExiste, SQLException
     {
         Aspirante eliminar = buscarAspirante(identificacion );
             if( eliminar != null )
             {                   
                 aspirantes.remove(eliminar);
-                cmDAO.eliminarAspiranteEnBD();
+                cmDAO.eliminarAspiranteEnBD(identificacion);
             }
             else
             {
@@ -476,7 +466,7 @@ public class ContratacionMonitores {
      * @throws ExcepcionYaExiste Lanza la excepcion si la postulacion que desea quitar no existe
      * @throws ExcepcionNoExiste Lanza la excepcion si si el aspirante no existe
      */
-    public void agregarPostulacionAspirante(String identificacion, String idDependencia) throws ExcepcionYaExiste, ExcepcionNoExiste{
+    public void agregarPostulacionAspirante(String identificacion, int idDependencia) throws ExcepcionYaExiste, ExcepcionNoExiste{
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null){ 
             Dependencia buscada= buscarDependencia(idDependencia);
@@ -493,7 +483,7 @@ public class ContratacionMonitores {
      * @param idDependencia
      * @throws ExcepcionNoExiste 
      */
-    public void quitarPostualacionAspirante(String identificacion, String idDependencia) throws ExcepcionNoExiste{
+    public void quitarPostualacionAspirante(String identificacion, int idDependencia) throws ExcepcionNoExiste{
         Aspirante aspirante= buscarAspirante(identificacion);
         if(aspirante!=null){    
             Dependencia buscada= buscarDependencia(idDependencia);
@@ -532,7 +522,7 @@ public class ContratacionMonitores {
      * @param cupos > 0
      * @throws ExcepcionYaExiste 
      */
-    public void agregarDependencia(String nId, String nNombre, String nDescripcion, String nHorario, int cupos) throws ExcepcionYaExiste
+    public void agregarDependencia(int nId, String nNombre, String nDescripcion, String nHorario, int cupos) throws ExcepcionYaExiste
     {
             Dependencia buscarDep = buscarDependencia(nId);
             if( buscarDep != null )
@@ -550,7 +540,7 @@ public class ContratacionMonitores {
      * @param codigo != null && !=""
      * @throws ExcepcionNoExiste 
      */
-    public void eliminarDependencia(String codigo) throws ExcepcionNoExiste{
+    public void eliminarDependencia(int codigo) throws ExcepcionNoExiste{
         
         Dependencia dependenciaEliminar= buscarDependencia(codigo);
         
@@ -567,27 +557,26 @@ public class ContratacionMonitores {
     * @param nId != null && != ""
     * @return Dependencia 
     */
-    public Dependencia buscarDependencia(String nId)
+    public Dependencia buscarDependencia(int nId)
     {       
         for(Dependencia dependenciaBuscada: dependencias ){
-            if(dependenciaBuscada.darId().equals(nId)){
+            if(dependenciaBuscada.darId()==nId){
                 return dependenciaBuscada;
             }
         }     
         return null;
     }  
 
-    public void modificarDependencia(String nId, String nNombre, String nDescripcion, String nHorario) throws ExcepcionNoExiste{
-        Dependencia buscada = buscarDependencia(nId);
-        if(buscada == null)
-        {
-            //throw new Exception(" La Dependencia que desea modificar no existe");
+    public void modificarDependencia(int nId, String nNombre, String nDescripcion, String nHorario) throws ExcepcionNoExiste{
+        Dependencia dependenciaModificar= buscarDependencia(nId);
+        if(dependenciaModificar==null){
+            //throw  new ExcepcionNoExiste("La dependencia que desea");
         }
         else
         {
-            buscada.cambiarNombre(nNombre);
-            buscada.cambiarDescripcion(nDescripcion);
-            buscada.cambiarHorario(nHorario);
+            dependenciaModificar.cambiarNombre(nNombre);
+            dependenciaModificar.cambiarDescripcion(nDescripcion);
+            dependenciaModificar.cambiarHorario(nHorario);
         }
     }
     
@@ -606,18 +595,15 @@ public class ContratacionMonitores {
     
     
     
-    public Estudiante buscarEstudianteUniversidad(String identificacion) throws ExcepcionNoExiste {
-        
-         Estudiante estudiante = null;
-         
-         estudiante= cmDAO.buscarEstudiante(identificacion);
+    public Estudiante buscarEstudianteUniversidad(String identificacion) throws ExcepcionNoExiste, SQLException {           
+         Estudiante estudiante= cmDAO.buscarEstudiante(identificacion);
          if(estudiante!=null)
-             return estudiante;
-         
-         return null;
+            return  estudiante;   
+        else
+            throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun estudiante de la Universidad");
     }
     
-    public void eliminarEstudianteSistema(String identificacion) throws ExcepcionNoExiste {
+    public void eliminarEstudianteSistema(String identificacion) throws ExcepcionNoExiste, SQLException {
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null)
             eliminarAspirante(identificacion);
@@ -645,9 +631,9 @@ public class ContratacionMonitores {
             System.out.println(a2.toString());
             
             //Pruebas para Monitor
-            Monitor m1 = new Monitor("primerNombreM1","segundoNombreM1", "primerApellidoM1","segundoApellidoM1", 1, "estadoMatriculaM1", null,1.0,1,"101", null);
+            Monitor m1 = new Monitor("primerNombreM1","segundoNombreM1", "primerApellidoM1","segundoApellidoM1", 1, "estadoMatriculaM1", null,1.0,1,"101", null, 0);
             System.out.println(m1.toString());
-            Monitor m2 = new Monitor("primerNombreM2","segundoNombreM2", "primerApellidoM2","segundoApellidoM2", 2, "estadoMatriculaM2", null,1.0,1,"102", null);
+            Monitor m2 = new Monitor("primerNombreM2","segundoNombreM2", "primerApellidoM2","segundoApellidoM2", 2, "estadoMatriculaM2", null,1.0,1,"102", null, 0);
             System.out.println(m2.toString());
 
             cm.registrarAspirante("primerNombre","segundoNombre", "primerApellido","segundoApellido", 1, "estadoMatricula", null,1.0,1,"101");
@@ -658,10 +644,10 @@ public class ContratacionMonitores {
             
 
             //Pruebas para Dependencia
-            cm.agregarDependencia("Cod1 ", "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
-            cm.agregarDependencia("Cod2 ", "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
-            cm.agregarDependencia("Cod3 ", "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
-            cm.agregarDependencia("Cod4 ", "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            cm.agregarDependencia(2, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+            cm.agregarDependencia(3, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+            cm.agregarDependencia(4, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+            cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
             for (Dependencia d : cm.darDependencias()) {                
                 System.out.println("Dependencia: "+d.toString());
             }

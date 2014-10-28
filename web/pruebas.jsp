@@ -29,7 +29,8 @@
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
+        <jsp:include page="header.jsp" />
+<!--        <header>
             <div id="cabecera">
                 <div>
                     <a href="index.jsp"><img src="img/logo.png"></a>
@@ -47,11 +48,11 @@
                         <li><a href="dependenciaView.jsp">Dependencias</a></li>
                         <li><a href="estudiante.jsp">Estudiantes</a></li>
                         <%}%>
-                        <li><a href="admin.jsp"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
+                        <li><a href="GestionAdmin/admin.jsp"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
             </div>     
-        </header> 
+        </header> -->
         <section>
             <div id="contenedor">
                 Pruebas

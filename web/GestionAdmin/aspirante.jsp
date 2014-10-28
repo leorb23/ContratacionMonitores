@@ -27,14 +27,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
+        <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <header>
+        <jsp:include page="../GestionAdmin/header.jsp" />
+<!--        <header>
             <div id="cabecera">
                 <div>
-                    <a href="index.jsp"><img src="img/logo.png"></a>
+                    <a href="../index.jsp"><img src="../img/logo.png"></a>
                 </div>
                 <div>
                     <h1>Contratacion de Monitores</h1>
@@ -43,8 +44,8 @@
             <div id="barraNavegacion">
                 <nav id="barraNavPrincipal">
                     <ul>
-                        <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="pruebas.jsp">Pruebas</a></li> 
+                        <li><a href="../index.jsp" >Inicio</a></li>
+                        <li><a href="../pruebas.jsp">Pruebas</a></li> 
                         <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
                     </ul>
                 </nav>
@@ -58,7 +59,7 @@
                     </ul>
                 </nav>
             </div>          
-        </header>   
+        </header>   -->
         <%if(admin!=null) {%> 
          <section>
             <div id="contenedor">
@@ -82,7 +83,7 @@
                     </form>
                 </div>
                 <%}%>      
-               <%ArrayList<Aspirante> aspirantes = ContratacionMonitoresServlet.cm.darAspirantes(); %>
+               <%ArrayList<Aspirante> aspirantes = ContratacionMonitoresServlet.darComunicacionLogica().darAspirantes(); %>
                 <table align="center" border="1">
                     <th  colspan="13"><h3>Lista de Aspirantes</h3></th>  
                     <tr style="background: black; color: white;">     
