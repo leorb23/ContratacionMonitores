@@ -3,8 +3,8 @@ function venRegDep() {
           $('#divRegDep').load('../util/formularios.jsp?var=regDep');
     });	
     $("#divRegDep").dialog({
-        width : 300,
-        height : 260,
+        width : 250,
+        height : 280,
         show : "fold",
         //hide : "explode",
         resizable : "false",

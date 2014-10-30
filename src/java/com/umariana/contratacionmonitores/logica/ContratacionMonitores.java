@@ -51,8 +51,8 @@ public class ContratacionMonitores {
         aspirantes   =  cmDAO.darAspirantesRegistrados();
         resultados   =  cmDAO.darResultadosRegistrados();
         monitores    =  cmDAO.darMonitoresRegistrados();
-       // dependencias =  cmDAO.darDependenciasRegistrados();   
-        
+        dependencias =  new ArrayList();   
+       
         
         registrosDePrueba();
         
@@ -82,10 +82,10 @@ public class ContratacionMonitores {
             registrarMonitor("monitor3","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"107");
             registrarMonitor("monitor4","segundoNombre3", "primerApellido3","segundoApellido3", 3, "estadoMatricula3", null,3.0,3,"108");*/                      
             
-            agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
-            agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
-            agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
-            agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");        
+            agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2");
+            agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3");
+            agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4");
             
             agregarPostulacionAspirante("101", 1);
             agregarPostulacionAspirante("101", 2);
@@ -109,10 +109,12 @@ public class ContratacionMonitores {
         monitores=cmDAO.darMonitoresRegistrados();
         return monitores;
     }
-    /**
-     * Retorna la lista de dependencias
-     * @return dependencias
-     */
+   /**
+    * Retorna la lista de dependencias
+    * @return dependencias
+    * @throws SQLException
+    * @throws ConnectionException 
+    */
     public ArrayList<Dependencia> darDependencias() throws SQLException, ConnectionException 
     {
         dependencias=cmDAO.darDependenciasRegistrados();
@@ -512,27 +514,28 @@ public class ContratacionMonitores {
         return null;
     }    
 
-    /**
-     * El metodo se encarga de agregar una Dependencia en el sistema
-     * <PostCondiciones> Se agrego correctamente la Dependencia en el sistema 
-     * @param nId !=null
-     * @param nNombre != null && != ""
-     * @param nDescripcion != null && != ""
-     * @param nHorario != null && != ""
-     * @param cupos > 0
-     * @throws ExcepcionYaExiste 
-     */
-    public void agregarDependencia(int nId, String nNombre, String nDescripcion, String nHorario, int cupos) throws ExcepcionYaExiste
+   /**
+    * El metodo se encarga de agregar una Dependencia en el sistema
+    * <PostCondiciones> Se agrego correctamente la Dependencia en el sistema 
+    * @param nId !=null
+    * @param nNombre != null && != ""
+    * @param nDescripcion != null && != ""
+    * @throws ExcepcionYaExiste
+    * @throws SQLException
+    * @throws ConnectionException 
+    */
+    public void agregarDependencia(int nId, String nNombre, String nDescripcion) throws ExcepcionYaExiste, SQLException, ConnectionException
     {
-            Dependencia buscarDep = buscarDependencia(nId);
+            Dependencia buscarDep = buscarDependenciaNombre(nNombre);
             if( buscarDep != null )
             {
                 throw new ExcepcionYaExiste("La Dependencia que desea agregar ya existe !!");
             }
             else
             {
-                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, nHorario, cupos);
-                dependencias.add( nuevaDependencia );
+                Dependencia nuevaDependencia = new Dependencia( nId, nNombre, nDescripcion, null, 0);
+                cmDAO.registrarDependenciaEnBD(nuevaDependencia);
+                darDependencias();
             }
     }
     /**
@@ -558,9 +561,24 @@ public class ContratacionMonitores {
     * @return Dependencia 
     */
     public Dependencia buscarDependencia(int nId)
-    {       
+    {       //Cambiar por parametro nombre
         for(Dependencia dependenciaBuscada: dependencias ){
             if(dependenciaBuscada.darId()==nId){
+                return dependenciaBuscada;
+            }
+        }     
+        return null;
+    }  
+    /**
+    * Metodo que se encarga de buscar una dependencia segun su nombre si la encuentra la retorna 
+    * en caso contrario retorna null
+    * @param nombre != null && != ""
+    * @return Dependencia 
+    */
+    public Dependencia buscarDependenciaNombre(String nombre)
+    {   
+        for(Dependencia dependenciaBuscada: dependencias ){
+            if(dependenciaBuscada.darNombre().equalsIgnoreCase(nombre)){
                 return dependenciaBuscada;
             }
         }     
@@ -644,10 +662,10 @@ public class ContratacionMonitores {
             
 
             //Pruebas para Dependencia
-            cm.agregarDependencia(2, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
-            cm.agregarDependencia(3, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
-            cm.agregarDependencia(4, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
-            cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+            cm.agregarDependencia(2, "Dependencia 1", "Esta es la Dependencia 1");
+            cm.agregarDependencia(3, "Dependencia 2", "Esta es la Dependencia 2");
+            cm.agregarDependencia(4, "Dependencia 3", "Esta es la Dependencia 3");
+            cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4");
             for (Dependencia d : cm.darDependencias()) {                
                 System.out.println("Dependencia: "+d.toString());
             }
@@ -660,6 +678,10 @@ public class ContratacionMonitores {
 
     public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
         return cmDAO.buscarAdministrador(usuario,password);
+    }
+
+    public void conectar() throws ConnectionException {
+        cmDAO.conectarBdSistema();
     }
 
  

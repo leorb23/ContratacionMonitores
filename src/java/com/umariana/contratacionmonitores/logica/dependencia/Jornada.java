@@ -1,6 +1,6 @@
 package com.umariana.contratacionmonitores.logica.dependencia;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,7 +9,7 @@ import java.util.List;
 public class Jornada {
     private String jornada;
     private int idDependencia;
-    private List<Horario> horarios;
+    private ArrayList<Horario> horarios;
     private int id;
 
     public Jornada(String jornada, int idDependencia, int id) {
@@ -38,11 +38,11 @@ public class Jornada {
         this.idDependencia = idDependencia;
     }
 
-    public List<Horario> getHorarios() {
+    public ArrayList<Horario> getHorarios() {
         return horarios;
     }
 
-    public void setHorarios(List<Horario> horarios) {
+    public void setHorarios(ArrayList<Horario> horarios) {
         this.horarios = horarios;
     }
 

@@ -6,6 +6,8 @@
 
 <%
 Object instance=ContratacionMonitoresServlet.darComunicacionLogica();
+ContratacionMonitoresServlet.conectarBD();
+
 if(instance==null){
     ContratacionMonitoresServlet cm = new ContratacionMonitoresServlet();
 }

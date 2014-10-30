@@ -156,6 +156,27 @@ div#div_datos{
     padding-left: 3px;
 }
 
+/*FORMULARIO REGISTRAR DEPENDENCIA*/
+
+form#formRegDep textArea{
+    width: 200px;
+    height: 80px;
+    resize: none;
+}
+
+form#formRegDep input#btnregDep {
+    width: 200px;
+    background: #64c7ff; 
+    border: 0;
+}
+form#formRegDep input#btnregDep:hover {
+    background: #2d9cd9;
+    color: white;
+}
+
+
+
+
 footer{
     background: #4688da;
     height: 20px;

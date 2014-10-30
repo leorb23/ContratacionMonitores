@@ -5,6 +5,7 @@
  */
 package com.umariana.contratacionmonitores.controladores;
 
+import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
@@ -13,7 +14,6 @@ import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +34,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
      */
     private static HttpSession sesionGlobal;
     private static String usuarioActual;
-    public static ContratacionMonitores instance = new ContratacionMonitores();
+    public  static ContratacionMonitores instance = new ContratacionMonitores();
 
     /**
      * Retorna la sesion de la aplicacion
@@ -174,7 +174,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                         String jor = request.getParameter("slc_jornadaD");                       
                         int cup = Integer.parseInt(request.getParameter("txt_cupos")); 
                         sesionGlobal.setAttribute("redireccionar", "dependencia.jsp");
-                        instance.agregarDependencia(cod, nom, des, jor, cup);         
+                        instance.agregarDependencia(cod, nom, des);         
                         break;
                         
                 }
@@ -251,7 +251,7 @@ public class ContratacionMonitoresServlet extends HttpServlet {
                     sesionGlobal.setAttribute("mensaje", ex.getMessage());      
                     response.sendRedirect("index.jsp");
                 }
-            } catch (SQLException ex) { 
+            } catch (SQLException | ConnectionException ex) {
             Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
@@ -312,6 +312,14 @@ public class ContratacionMonitoresServlet extends HttpServlet {
         sesionGlobal.removeAttribute("aspiranteBuscado");
         sesionGlobal.removeAttribute("MonitorBuscado");
         sesionGlobal.removeAttribute("estudianteBuscado");
+    }
+    
+    public static void conectarBD(){
+        try {
+            instance.conectar();
+        } catch (ConnectionException ex) {
+            Logger.getLogger(ContratacionMonitoresServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

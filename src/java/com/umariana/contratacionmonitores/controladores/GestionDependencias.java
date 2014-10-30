@@ -7,8 +7,10 @@
 package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
+import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -54,19 +56,19 @@ public class GestionDependencias extends HttpServlet {
         sesion= request.getSession(true);
         String accion = request.getParameter("accion");
         try {
-        switch (accion){
-            case"regDep":
-                String nom = request.getParameter("txt_nombre");
-                String des = request.getParameter("txt_descripcion");
-                instance.agregarDependencia(0, nom, des, nom, 0);
-                break;
-        } 
-                
+            switch (accion){
+                case"regDep":
+                    String nom = request.getParameter("txt_nombre");
+                    String des = request.getParameter("txt_descripcion");
+                    instance.agregarDependencia(0, nom,des);
+                    response.sendRedirect("GestionAdmin/dependencia.jsp");
+                    break;
+            }         
         }
-        catch (ExcepcionYaExiste ex) {
+        catch (ExcepcionYaExiste | SQLException | ConnectionException ex) {
             Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
-        response.sendRedirect("estudiante.jsp");
+        //response.sendRedirect("estudiante.jsp");
     }
 }

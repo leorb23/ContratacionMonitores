@@ -53,10 +53,11 @@ public class ContratacionMonitoresDAO {
     private AdministradorDAO adminDAO;
     private JornadaDAO jornadaDAO;
     private HorarioDAO horarioDAO;
+    
+    public boolean conectado;
 
     
     public ContratacionMonitoresDAO() {      
-        //conectarBdSistema(); 
         aspiranteDAO = new AspiranteDAO();
         monitorDAO = new MonitorDAO();
         resultadoDAO = new ResultadoDAO();
@@ -64,8 +65,8 @@ public class ContratacionMonitoresDAO {
         adminDAO = new AdministradorDAO();
         estudianteUDAO = new EstudianteUniversidadDAO();  
         jornadaDAO = new  JornadaDAO();
-        horarioDAO = new HorarioDAO();
-   
+        horarioDAO = new HorarioDAO();  
+        conectado=false;
     }
     /**
      * Metodo que se encarga de realizar la conexion con la Base de Datos
@@ -82,7 +83,7 @@ public class ContratacionMonitoresDAO {
             String bd="ContratacionMonitores";
             String usuario="postgres";
             String password="123";
-            String servidor="192.168.0.20";//"192.168.0.13";//192.168.0.11
+            String servidor="localhost";//"192.168.0.13";//192.168.0.11
             int puerto=5432;
             //stBdSistema = null ;
             
@@ -94,7 +95,7 @@ public class ContratacionMonitoresDAO {
             
             System.out.println("Conectado con la base de datos del sistema contratacion de monitores...");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            throw new ConnectionException("Error en la conexion");
+            throw new ConnectionException("Error en la conexion "+ex);
         } 
     }
     /**
@@ -111,7 +112,7 @@ public class ContratacionMonitoresDAO {
         String bd="EstudiantesUniversidad";
         String usuario="postgres";
         String password="123";
-        String servidor="192.168.0.20";//"192.168.0.13";//192.168.0.11
+        String servidor="localhost";//"192.168.0.13";//192.168.0.11
         int puerto=5432;   
         
         Class.forName(driver).newInstance();
@@ -221,18 +222,42 @@ public class ContratacionMonitoresDAO {
     public void eliminarResultadoEnBD(){
         
     }
-    public void registrarDependenciaEnBD(Dependencia dependencia) throws  SQLException, ExcepcionYaExiste{
+    public boolean existeDependencia(String nombre) throws SQLException{
+        return dependenciaDAO.existeDependencia(nombre);
+    }
+    public ArrayList<Jornada> darJornadasDependencia(int idDependencia) throws SQLException{
+        ArrayList<Jornada> jornadas= jornadaDAO.listarJornadas(idDependencia);
+        for(Jornada j :jornadas){
+                ArrayList<Horario> horarios= darHorariosJornada(j.getId());
+                j.setHorarios(horarios);
+            }     
+        return jornadas;
+    }
+    
+    public ArrayList<Horario> darHorariosJornada(int idJornada) throws SQLException{
+        return horarioDAO.listarHorarios(idJornada);
+    }
+    
+    
+    public Dependencia buscarDependencia(String nombre) throws SQLException{
+        Dependencia buscada= dependenciaDAO.buscarDependencia(nombre);
+        if(buscada!=null){
+            buscada.cambiarJornadas(darJornadasDependencia(buscada.darId()));       
+        }
+        return buscada;
+    }
+    public void registrarDependenciaEnBD(Dependencia dependencia) throws  SQLException, ExcepcionYaExiste, ConnectionException{
         if(!dependenciaDAO.existeDependencia(dependencia.darNombre())){
             int idDependencia=dependenciaDAO.resgistrarDependenciaEnBD(dependencia);
             dependencia.cambiarId(idDependencia);
-            for(Jornada jornada:dependencia.darJornadas()){
+            /*for(Jornada jornada:dependencia.darJornadas()){
                 jornada.setIdDependencia(idDependencia);
                 int idJornada=jornadaDAO.resgistrarJornadaEnBD(jornada);
                 for(Horario horario:jornada.getHorarios()){
                     horario.setIdJornada(idJornada);
                     horarioDAO.resgistrarHorarioEnBD(horario);              
                 }     
-            }  
+            }  */
         }
         else
             throw  new ExcepcionYaExiste("La dependencia ( "+dependencia.darNombre()+" ) que desea agregar ya existe !!");
@@ -285,19 +310,20 @@ public class ContratacionMonitoresDAO {
     /**
      * Metodo que retorna la lista de Dependenciaa que estan registradas en la base de datos del sistema
      * @return ArrayList<Dependencia>
+     * @throws java.sql.SQLException
+     * @throws com.umariana.contratacionmonitores.excepciones.ConnectionException
      */
     public ArrayList<Dependencia> darDependenciasRegistrados() throws SQLException, ConnectionException{
-        conectarBdSistema();
         ArrayList<Dependencia> dependencias = dependenciaDAO.listarDependencias();  
         for(Dependencia d:dependencias){
-            ArrayList<Jornada> jornadas= jornadaDAO.listarJornadas(d.darId());
-            for(Jornada j :jornadas){
-                ArrayList<Horario> horarios= horarioDAO.listarHorarios(j.getId());
-                j.setHorarios(horarios);
-            }          
-            d.cambiarJornadas(jornadas);
+            d.cambiarJornadas(darJornadasDependencia(d.darId()));
+//            ArrayList<Jornada> jornadas= jornadaDAO.listarJornadas(d.darId());
+//            for(Jornada j :jornadas){
+//                ArrayList<Horario> horarios= horarioDAO.listarHorarios(j.getId());
+//                j.setHorarios(horarios);
+//            }          
+//            d.cambiarJornadas(jornadas);
         }
-        desconectarBdContratacionMonitores();
         return dependencias;
     }
 

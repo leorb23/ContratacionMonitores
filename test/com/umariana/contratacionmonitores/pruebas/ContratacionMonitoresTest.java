@@ -216,16 +216,16 @@ public class ContratacionMonitoresTest {
     public void testAgregarDependencia() throws Exception {
         System.out.println("agregarDependencia");
         
-        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2");
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3");
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+        cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4");
         assertTrue(cm.darDependencias().size()== 4);
         
-        cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 1);
+        cm.agregarDependencia(5, "Dependencia 4", "Esta es la Dependencia 4");
         assertTrue(cm.darDependencias().size()== 4);
 
     }
@@ -237,13 +237,13 @@ public class ContratacionMonitoresTest {
     public void testBuscarDependencia() throws Exception {
         System.out.println("buscarDependencia");
         
-        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
+        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");
         assertTrue(cm.darDependencias().size()== 1);
-        cm.agregarDependencia(4, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+        cm.agregarDependencia(4, "Dependencia 2", "Esta es la Dependencia 2");
         assertTrue(cm.darDependencias().size()== 2);
-        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);
+        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3");
         assertTrue(cm.darDependencias().size()== 3);
-        cm.agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+        cm.agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4");
         assertTrue(cm.darDependencias().size()== 4);
         
         Dependencia dependenciaBuscada = cm.buscarDependencia(1);
@@ -263,10 +263,10 @@ public class ContratacionMonitoresTest {
     public void testEliminarDependencia() throws Exception {
         System.out.println("EliminarDependencia");
         
-        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
-        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);      
-        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3", "Tarde", 3);       
-        cm.agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4", "Mañana", 2);
+        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");        
+        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2");      
+        cm.agregarDependencia(3, "Dependencia 3", "Esta es la Dependencia 3");       
+        cm.agregarDependencia(4, "Dependencia 4", "Esta es la Dependencia 4");
         
         cm.eliminarDependencia(1);
         Dependencia dependenciaEliminada= cm.buscarDependencia(1);
@@ -290,8 +290,8 @@ public class ContratacionMonitoresTest {
     public void testModificarDependencia() throws Exception {
         System.out.println("ModificarDependencia");
         
-        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);        
-        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4); 
+        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");        
+        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2"); 
         System.out.println(cm.buscarDependencia(1).toString());
         
         cm.modificarDependencia(1 ,"Dependencia 1 Modificado", "Esta es la Dependencia 1 Modificado", "TardeModificado");   
@@ -352,8 +352,8 @@ public class ContratacionMonitoresTest {
         cm.ingreso("104");
         cm.ingreso("105");
         
-        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1", "Tarde", 5);
-        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2", "Mañana", 4);
+        cm.agregarDependencia(1, "Dependencia 1", "Esta es la Dependencia 1");
+        cm.agregarDependencia(2, "Dependencia 2", "Esta es la Dependencia 2");
         
         cm.pasarAspiranteAMonitor("103", 1);
         cm.pasarAspiranteAMonitor("104", 2);     
