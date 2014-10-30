@@ -163,6 +163,9 @@ form#formRegDep textArea{
     height: 80px;
     resize: none;
 }
+form#formRegDep input#txt_nombre {
+    width: 200px;
+}
 
 form#formRegDep input#btnregDep {
     width: 200px;

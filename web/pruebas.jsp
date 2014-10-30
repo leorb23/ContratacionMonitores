@@ -14,7 +14,10 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+<%  
+    session.setAttribute("ubicacionPage", "pruebas.jsp");
+    
+    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");

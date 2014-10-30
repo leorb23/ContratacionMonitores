@@ -9,6 +9,7 @@ package com.umariana.contratacionmonitores.controladores;
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
+import com.umariana.contratacionmonitores.logica.Dependencia;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -55,20 +56,21 @@ public class GestionDependencias extends HttpServlet {
         sesion=ContratacionMonitoresServlet.darSession();
         sesion= request.getSession(true);
         String accion = request.getParameter("accion");
-        try {
-            switch (accion){
-                case"regDep":
-                    String nom = request.getParameter("txt_nombre");
-                    String des = request.getParameter("txt_descripcion");
-                    instance.agregarDependencia(0, nom,des);
-                    response.sendRedirect("GestionAdmin/dependencia.jsp");
-                    break;
-            }         
-        }
-        catch (ExcepcionYaExiste | SQLException | ConnectionException ex) {
-            Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
+        switch (accion){
+            case"regDep":
+                String nom = request.getParameter("txt_nombre");
+                String des = request.getParameter("txt_descripcion");
+                //instance.agregarDependencia(0, nom,des);
+                Dependencia dependencia = new Dependencia();
+                dependencia.cambiarId(1);
+                dependencia.cambiarNombre("nuevaContinua");
+                dependencia.cambiarDescripcion("descripcionNueva");
+                sesion.setAttribute("continuarRegDep", dependencia);
+                dependencia=null;
+                response.sendRedirect("dependencia.jsp");
+                break;
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
-        //response.sendRedirect("estudiante.jsp");
+        //response.sendRedirect("dependencia.jsp");
     }
 }

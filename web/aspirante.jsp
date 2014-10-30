@@ -12,7 +12,10 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Estudiante"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+<%  
+    session.setAttribute("ubicacionPage", "aspirante.jsp");
+    
+    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
@@ -27,11 +30,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <jsp:include page="../GestionAdmin/header.jsp" />
+        <jsp:include page="header.jsp" />
 <!--        <header>
             <div id="cabecera">
                 <div>

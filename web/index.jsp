@@ -3,10 +3,9 @@
     Created on : 11/09/2014, 09:20:24 PM
     Author     : Cocosoft
 --%>
-
 <%
 Object instance=ContratacionMonitoresServlet.darComunicacionLogica();
-ContratacionMonitoresServlet.conectarBD();
+//ContratacionMonitoresServlet.conectarBD();
 
 if(instance==null){
     ContratacionMonitoresServlet cm = new ContratacionMonitoresServlet();
@@ -24,7 +23,9 @@ if(instance==null){
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%  Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+<%  
+    session.setAttribute("ubicacionPage", "index.jsp");
+    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");

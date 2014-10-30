@@ -51,7 +51,7 @@ public class GestionAdministrador extends HttpServlet {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
-        response.sendRedirect("GestionAdmin/admin.jsp");
+        response.sendRedirect("admin.jsp");
         
     }
 }

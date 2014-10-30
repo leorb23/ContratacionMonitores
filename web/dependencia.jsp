@@ -14,6 +14,9 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%  
+    
+    session.setAttribute("ubicacionPage", "dependencia.jsp");
+    
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
     Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarDependencia");
@@ -25,18 +28,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
 <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">-->
 <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
-       <link rel="stylesheet" href="../js/tm3/jquery-ui.css">
-        <script src="../js/jquery-1.11.0.js"></script>
-        <script src="../js/tm3/jquery-ui.js"></script>
-        <script src="../js/modales.js" type="text/javascript"></script>
-        <title>Contratacion Monitores</title>
+        <link rel="stylesheet" href="js/tm3/jquery-ui.css">
+        <script src="js/jquery-1.11.0.js"></script>
+        <script src="js/tm3/jquery-ui.js"></script>
+        <script src="js/modales.js" type="text/javascript"></script>
+        <title>Contratacion Monitores</title>    
     </head>
     <body>
-        <jsp:include page="../GestionAdmin/header.jsp" />     
+        <jsp:include page="header.jsp" />     
          <section>
             <%if(admin!=null){%> 
             <div id="contenedor">
@@ -93,7 +96,7 @@
                         </form>-->
                     </tr>
                     <%
-                    ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
+                    ArrayList<Dependencia> dependencias = new ArrayList();//ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
                     for(Dependencia dep: dependencias){%>
                        <tr>
                         <td><%=dep.darId()%></td>
@@ -112,5 +115,33 @@
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
+         
+       <%
+    Dependencia dependencia = new Dependencia();
+    dependencia.cambiarId(1);
+    dependencia.cambiarNombre("nuevaContinua");
+    dependencia.cambiarDescripcion("descripcionNueva");
+    session.setAttribute("continuarRegDep", dependencia);
+    dependencia=null;
+    Dependencia d=(Dependencia)session.getAttribute("continuarRegDep");
+    //d=null;
+   if(d!=null){%>
+       <script>           
+            //venRegDep();
+            venContRegDep();
+
+////                $(document).ready(function(){
+//                        $('#divRegDep').load('util/formularios.jsp?var=contRegDep');
+//                  });	
+//                  $("#divRegDep").dialog({
+//                      width : 400,
+//                      height : 200,
+//                      show : "fold",
+//                      hide : "explode",
+//                      resizable : "false",
+//                     position : "center",
+//                      modal : "true"                     });
+     </script>
+   <%}%>
     </body>
 </html>

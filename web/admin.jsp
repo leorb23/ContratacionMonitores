@@ -17,6 +17,7 @@
 <%  //Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+    session.setAttribute("ubicacionPage", "admin.jsp");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
     Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
@@ -25,11 +26,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
         <title>Contratacion Monitores</title>
     </head>
     <body>
-        <jsp:include page="../GestionAdmin/header.jsp" />
+        <jsp:include page="header.jsp" />
 <!--        <header>
             <div id="cabecera">
                 <div>
@@ -77,7 +78,7 @@
                         <tr>
                             <td>
                                 <label>Ingreso Para Administrador</label>
-                                <form action="../GestionAdministrador" method="POST">
+                                <form action="GestionAdministrador" method="POST">
                                     <label>Usuario</label>
                                     <input type="text" id="txt_usuario" name="txt_usuario" required>
                                     <label>Contraseña</label>
@@ -91,7 +92,7 @@
                 </div>  
             <%}else if(admin!=null) {%>           
             <label>Administrador : <%=admin.darNombre() %></label><br>  
-            <form action="../GestionAdministrador" method="POST">
+            <form action="GestionAdministrador" method="POST">
                 <input type="submit"  value="Cerrar Sesion">
                 <input type="hidden" id="accion" name="accion" value="cerrar">
             </form><br>   
