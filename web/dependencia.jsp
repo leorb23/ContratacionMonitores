@@ -23,6 +23,7 @@
     session.removeAttribute("eliminarMonitor");     
     session.removeAttribute("eliminarAspirante");     
     session.removeAttribute("eliminarString");
+
 %>
 <!DOCTYPE html5>
 <html>
@@ -63,11 +64,15 @@
                 <%}%>
                 <%if(mensaje!=null){%>
                      <h4 style="color: black;"><%=mensaje%></h4>
-                     <%session.removeAttribute("mensaje");
+                     <%//session.removeAttribute("mensaje");
                 }%>
                 
                 <a id="regDep" href="javascript:venRegDep();">Nueva</a>
                 <div id="divRegDep" name="divRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
+			  
+		</div>
+                
+                <div id="divConRegDep" name="divConRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
 			  
 		</div>
                 <table align="center" border="1">
@@ -111,37 +116,29 @@
                     </tr>
                    <%}%>
                 </table>  
-                <a id="regDep" href="javascript:venRegDep();">Nueva</a>
+                <a id="regDep" href="javascript:venvenContRegDep();">Nueva</a>
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
          
        <%
-    Dependencia dependencia = new Dependencia();
-    dependencia.cambiarId(1);
-    dependencia.cambiarNombre("nuevaContinua");
-    dependencia.cambiarDescripcion("descripcionNueva");
-    session.setAttribute("continuarRegDep", dependencia);
-    dependencia=null;
+    Dependencia existeD=(Dependencia)session.getAttribute("depExiste");        
+     
     Dependencia d=(Dependencia)session.getAttribute("continuarRegDep");
     //d=null;
+    if(existeD!=null){%>
+        <script> 
+            venRegDep();
+        </script>
+    <%
+        //session.removeAttribute("depExiste");
+    }
    if(d!=null){%>
        <script>           
-            //venRegDep();
             venContRegDep();
-
-////                $(document).ready(function(){
-//                        $('#divRegDep').load('util/formularios.jsp?var=contRegDep');
-//                  });	
-//                  $("#divRegDep").dialog({
-//                      width : 400,
-//                      height : 200,
-//                      show : "fold",
-//                      hide : "explode",
-//                      resizable : "false",
-//                     position : "center",
-//                      modal : "true"                     });
      </script>
-   <%}%>
+   <%
+        //session.removeAttribute("continuarRegDep");
+   }%>
     </body>
 </html>
