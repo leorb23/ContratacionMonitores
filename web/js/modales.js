@@ -8,19 +8,19 @@ function venRegDep() {
         height : 320,
         //autOpen:false,
         //show : "fold",
-        show:{
-            effect :"fold",
-            duration:100
-        },
-        hide:{
-            effect :"fold",
-            duration:100
-        },
+//        show:{
+//            //effect :"fold",
+//            duration:0
+//        },
+//        hide:{
+//            //effect :"fold",
+//            duration:0
+//        },
         
         //hide : "pulsate",
         resizable : "false",
        // position : "center",
-       // modal : "true"
+        modal : "true"
 //    buttons : {
 //        "Entrar" : function() {
 //            
@@ -43,15 +43,25 @@ function venRegDep() {
 
 function venContRegDep() {
     $(document).ready(function(){
-          $('#divConRegDep').load('util/formularios.jsp?var=contRegDep');
+          $('#divRegDep').load('util/formularios.jsp?var=contRegDep');
     });	
-    $("#divConRegDep").dialog({
-        width : 250,
-        height : 300,
-        show : "fold",
-        hide : "pulsate",
+    $("#divRegDep").dialog({
+        width : 500,
+        height : 600,
+//        show:{
+//            //effect :"fold",
+//            duration:1
+//        },
+//        hide:{
+//            //effect :"fold",
+//            duration:1
+//        },
         resizable : "false",
         modal : "true"
     });
+}
+
+function hiddenThis($ventana){
+    $($ventana).dialog("close");
 }
 

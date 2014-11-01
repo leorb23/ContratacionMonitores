@@ -70,8 +70,7 @@
                 <a id="regDep" href="javascript:venRegDep();">Nueva</a>
                 <div id="divRegDep" name="divRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
 			  
-		</div>
-                
+		</div>    
                 <div id="divConRegDep" name="divConRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
 			  
 		</div>
@@ -116,7 +115,7 @@
                     </tr>
                    <%}%>
                 </table>  
-                <a id="regDep" href="javascript:venvenContRegDep();">Nueva</a>
+                <a id="regDep" href="javascript:venRegDep();">Nueva</a>
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
@@ -124,7 +123,7 @@
        <%
     Dependencia existeD=(Dependencia)session.getAttribute("depExiste");        
      
-    Dependencia d=(Dependencia)session.getAttribute("continuarRegDep");
+    Dependencia conRegDep=(Dependencia)session.getAttribute("continuarRegDep");
     //d=null;
     if(existeD!=null){%>
         <script> 
@@ -133,7 +132,7 @@
     <%
         //session.removeAttribute("depExiste");
     }
-   if(d!=null){%>
+   if(conRegDep!=null){%>
        <script>           
             venContRegDep();
      </script>

@@ -67,11 +67,12 @@ public class GestionDependencias extends HttpServlet {
                 dependencia.cambiarDescripcion(des);
                 if("existe".equalsIgnoreCase(nom)){
                     sesion.setAttribute("depExiste", dependencia);
-                    sesion.setAttribute("mensaje", "La dependencia con nombre "+dependencia.darNombre()+" ya existe");
+                    sesion.setAttribute("mensaje", "La dependencia ya existe.");
+                    sesion.removeAttribute("continuarRegDep");
+
                 }
                 else
                     sesion.setAttribute("continuarRegDep", dependencia);
-                dependencia=null;
                 response.sendRedirect("dependencia.jsp");
                 break;
         }

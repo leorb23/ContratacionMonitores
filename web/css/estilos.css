@@ -158,6 +158,12 @@ div#div_datos{
 
 /*FORMULARIO REGISTRAR DEPENDENCIA*/
 
+form#formRegDep h4{
+    color:white; 
+    font-size: 13px;
+}
+
+
 form#formRegDep textArea{
     width: 200px;
     height: 80px;
