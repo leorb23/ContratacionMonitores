@@ -35,8 +35,7 @@ if(instance==null){
 <!DOCTYPE html5>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
+        <jsp:include page="head.jsp" />
         <title>Contratacion Monitores</title>
     </head>
     <body>

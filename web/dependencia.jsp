@@ -28,17 +28,9 @@
 %>
 <!DOCTYPE html5>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
-<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">-->
-<!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
-        <link rel="stylesheet" href="js/tm3/jquery-ui.css">
-        <script src="js/jquery-1.11.0.js"></script>
-        <script src="js/tm3/jquery-ui.js"></script>
-        <script src="js/modales.js" type="text/javascript"></script>
-        <title>Contratacion Monitores</title>    
+    <head>      
+        <jsp:include page="head.jsp" />
+        <title>Dependencias</title>
     </head>
     <body>
         <jsp:include page="header.jsp" />     
@@ -84,12 +76,12 @@
                     <th  colspan="8">Lista de Dependencias</th> 
                     <tr id="tr_rows" style="background: black; color: white;">                   
                         <td>Nombre</td>
-                        <td style="width: 150px; height: auto;">Descripcion</td>
+                        <td>Descripcion</td>
                         <td>Cupos Tot.</td>
                         <td>Jornada</td>
                         <td>Horario</td>
                         <td>Cupos Disp.</td>
-                        <td colspan="2">Opciones</td>
+                        <td colspan="2"></td>
                     </tr>
                     <%
                     ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
@@ -97,7 +89,7 @@
                     for(Dependencia dep: dependencias){%>
                     <tr <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
                         <td style="text-align: left;"><%=dep.darNombre()%></td>
-                        <td style="text-align: left; width: 200px; height: auto;"><%=dep.darDescripcion()%></td>
+                        <td style="text-align: left;"><%=dep.darDescripcion()%></td>
                         <td>0</td>
                         <td>
                             <select id="slc_jornada" name="slc_jornada">
@@ -114,10 +106,14 @@
                         <td>0</td>
                         <form action="ContratacionMonitoresServlet" method="post">
                             <td><input id="btn_eliminar" type="image" src="img/icon_delete.png"></td>
-                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
+                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>" >
                             <input type="hidden" id="accion" name="accion" value="eliminarD">
                         </form>
-                        <td><a href="#">Modificar</a></td>
+                        <form action="ContratacionMonitoresServlet" method="post">
+                            <td><input id="btn_eliminar" type="image" src="img/icon_update.png"></td>
+                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
+                            <input type="hidden" id="accion" name="accion" value="actualizarD">
+                        </form>
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
