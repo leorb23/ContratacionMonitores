@@ -5,7 +5,7 @@
 --%>
 <%
 Object instance=ContratacionMonitoresServlet.darComunicacionLogica();
-//ContratacionMonitoresServlet.conectarBD();
+ContratacionMonitoresServlet.conectarBD();
 
 if(instance==null){
     ContratacionMonitoresServlet cm = new ContratacionMonitoresServlet();

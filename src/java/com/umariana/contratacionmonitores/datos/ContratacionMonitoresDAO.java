@@ -82,7 +82,7 @@ public class ContratacionMonitoresDAO {
             String conectionString="jdbc:postgresql";
             String bd="ContratacionMonitores";
             String usuario="postgres";
-            String password="123";
+            String password="postgres";
             String servidor="localhost";//"192.168.0.13";//192.168.0.11
             int puerto=5432;
             //stBdSistema = null ;

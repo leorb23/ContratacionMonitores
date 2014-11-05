@@ -46,7 +46,7 @@ if(var!=null)
                      <h4><%=mensaje%></h4>
                     <%session.removeAttribute("mensaje");
              }%>
-             <h4>Nombre Dep:<%if(nuevaD!=null){ %><%=nuevaD.darNombre() %><%}%></h4>
+             Nombre Dep:<%if(nuevaD!=null){ %><%=nuevaD.darNombre() %><%}%>
             <input id="accion" name="accion" type="hidden" value="regDep"/>
             <label>Nombre</label>
             <input type="text" name="txt_nombre" id="txt_nombre"  maxlength="25" required>

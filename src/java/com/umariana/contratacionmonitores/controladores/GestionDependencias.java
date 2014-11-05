@@ -7,13 +7,8 @@
 package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
-import com.umariana.contratacionmonitores.excepciones.ConnectionException;
-import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -79,4 +74,4 @@ public class GestionDependencias extends HttpServlet {
         ContratacionMonitoresServlet.setearSesion(sesion);
         //response.sendRedirect("dependencia.jsp");
     }
-}
+} 

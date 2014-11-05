@@ -4,6 +4,7 @@
     Author     : SERVIDOR
 --%>
 
+<%@page import="com.umariana.contratacionmonitores.logica.dependencia.Jornada"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <%@page import="com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet"%>
@@ -67,77 +68,83 @@
                      <%//session.removeAttribute("mensaje");
                 }%>
                 
-                <a id="regDep" href="javascript:venRegDep();">Nueva</a>
-                <div id="divRegDep" name="divRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
-			  
-		</div>    
-                <div id="divConRegDep" name="divConRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
-			  
-		</div>
-                <table align="center" border="1">
-                    <th  colspan="8"><h3>Lista de Dependencias</h3></th> 
-                    <tr style="background: black; color: white;">                   
-                        <td>Codigo</td>
-                        <td>Nombre</td>
-                        <td>Descripcion</td>
-                        <td>Horario</td>
-                        <td>Cupos</td>
+                
+                <table>
+                    <tr id="tr_link_new_dep">
+                        <td>
+                             <a id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a>
+                            <div id="divRegDep" name="divRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
+
+                            </div>    
+                            <div id="divConRegDep" name="divConRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
+
+                            </div>
+                        </td>
                     </tr>
-                    <tr>
-<!--                        <form action="ContratacionMonitoresServlet" method="POST">
-                            <td> <input type="text" id="txt_codigo" name="txt_codigo" placeholder="Codigo" required></td>
-                            <td><input type="text" id="txt_nombre" name="txt_nombre" placeholder="Nombre" required></td>
-                            <td><input type="text" id="txt_descripcion" name="txt_descripcion" placeholder="Descripcion" required></td>
-                            <td><select id="slc_jornadaD" name="slc_jornadaD">
-                                    <option value="mañana">Mañana</option>
-                                    <option value="tarde">Tarde</option>
-                                    <option value="diurno">Diurno</option>
-                                </select></td>
-                            <td><input type="number" id="txt_cupos" name="txt_cupos" placeholder="No de Cupos" required></td>
-                            <td><input type="submit" id="btn_enviar" value="Agregar">
-                                <input type="hidden" id="accion" name="accion" value="agregarDependencia">
-                            </td>                   
-                        </form>-->
+                    <th  colspan="8">Lista de Dependencias</th> 
+                    <tr id="tr_rows" style="background: black; color: white;">                   
+                        <td>Nombre</td>
+                        <td style="width: 150px; height: auto;">Descripcion</td>
+                        <td>Cupos Tot.</td>
+                        <td>Jornada</td>
+                        <td>Horario</td>
+                        <td>Cupos Disp.</td>
+                        <td colspan="2">Opciones</td>
                     </tr>
                     <%
-                    ArrayList<Dependencia> dependencias = new ArrayList();//ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
+                    ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
+                    int color=0;
                     for(Dependencia dep: dependencias){%>
-                       <tr>
-                        <td><%=dep.darId()%></td>
-                        <td><%=dep.darNombre()%></td>
-                        <td><%=dep.darDescripcion()%></td>
+                    <tr <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
+                        <td style="text-align: left;"><%=dep.darNombre()%></td>
+                        <td style="text-align: left; width: 200px; height: auto;"><%=dep.darDescripcion()%></td>
+                        <td>0</td>
+                        <td>
+                            <select id="slc_jornada" name="slc_jornada">
+                                <%for(Jornada j: dep.darJornadas() ) {%>
+                                <option id="<%= j.getId() %>"><%=j.getJornada() %></option>
+                                <%}%>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="slc_horario" name="slc_horario">
+                                <option id="">Seleccione...</option>
+                            </select>
+                        </td>
+                        <td>0</td>
                         <form action="ContratacionMonitoresServlet" method="post">
-                            <td><input type="submit" value="Eliminar"></td>
+                            <td><input id="btn_eliminar" type="image" src="img/icon_delete.png"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="eliminarD">
                         </form>
                         <td><a href="#">Modificar</a></td>
                     </tr>
-                   <%}%>
+                   <% if(color==0){color=1;}else{color=0;}
+                    }%>
+                    <tr id="tr_link_new_dep">
+                        <td >
+                            <a id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a>
+                        </td>
+                    </tr>
                 </table>  
-                <a id="regDep" href="javascript:venRegDep();">Nueva</a>
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
          
        <%
-    Dependencia existeD=(Dependencia)session.getAttribute("depExiste");        
-     
+    Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            
     Dependencia conRegDep=(Dependencia)session.getAttribute("continuarRegDep");
-    //d=null;
     if(existeD!=null){%>
         <script> 
             venRegDep();
         </script>
     <%
-        //session.removeAttribute("depExiste");
     }
    if(conRegDep!=null){%>
        <script>           
             venContRegDep();
      </script>
    <%
-        //session.removeAttribute("continuarRegDep");
    }%>
     </body>
 </html>
