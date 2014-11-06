@@ -2,11 +2,13 @@
     Created on : 25/09/2014, 09:22:36 AM
     Author     : CocoSoft
 */
+/*SE RESETEA TODO EL DOCUMENTO*/
 * {
     margin: 0;
     padding: 0;
     font-family: "Times New Roman", Georgia, Serif;
 }
+/*CABECERA*/
 header{
     background: #8bbbfd;
     margin: 0 auto 0;
@@ -33,7 +35,8 @@ header div#cabecera  h1{
     font-size: 40px;
     margin-left: 50px;
 }
-/*-------------*/
+/*-------------------------------*/
+/*BARRA DE NAVEGACION*/
 div#barraNavegacion{
     background: #4688da;
     width: 100%;
@@ -95,7 +98,7 @@ nav#barraNavSecundaria li a:hover{
     border-right:3px solid black;
 }
 /*-----------------------------*/
-
+/*CONTENIDO*/
 section{
     background: #56a2ff;
     margin: 0 auto 0;
@@ -106,8 +109,8 @@ section{
     box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
 }
 
-
-
+/*-------------------------------*/
+/*TABLA GENERAL*/
 table{
     border: 0px solid #ffffff;
     text-align: center;
@@ -126,40 +129,20 @@ table th{
 table tr{
     height: 50px;
 }
+
 table tr#tr_rows{
     font-size: 20px;
 }
-table td{
-    padding-left: 2px;
-}
-table tr#tr_link_new_dep{
-    text-align: left;
-    margin: 0 auto 0;
-    padding: 0;
-}
-table tr#tr_link_new_dep a{
-    text-decoration: none;
-    color: white;
-    //text-align: left;
-    font-size: 20px;
-    font-family: cursive;
-}
-table tr#tr_link_new_dep a:hover{
-    text-decoration: underline;
-    font-size: 22px;
-    color: #cccccc;
-}
-table tr#tr_link_new_dep img{
-    width: 30px;
-    height: 30px;
+table td#td_padd{
+    padding-left: 10px;
+    padding-right: 5px;
 }
 table select{
     width: 100px;
 }
-table input#btn_eliminar{
-    width: 30px;
-    height: 30px;
-}
+/*-------------------------------*/
+
+
 div#div_eliminar{
     text-align: center;
     margin: 0 auto 0;
@@ -214,8 +197,6 @@ form#formRegDep h4{
     color:white; 
     font-size: 13px;
 }
-
-
 form#formRegDep textArea{
     width: 200px;
     height: 80px;
@@ -234,10 +215,26 @@ form#formRegDep input#btnregDep:hover {
     background: #2d9cd9;
     color: white;
 }
-
-
-
-
+/*-------------------------------*/
+/*CLASES*/
+.icono img{
+    width: 30px;
+    height: 30px;
+}
+.icono img:hover{
+    width: 33px;
+    height: 33px;
+}
+.icono input{
+    width: 30px;
+    height: 30px;
+}
+.icono input:hover{
+    width: 27px;
+    height: 27px;
+}
+/*-------------------------------*/
+/*PIE DE PAGINA*/
 footer{
     background: #4688da;
     height: 20px;
@@ -249,3 +246,4 @@ footer a{
     color: #000000;
     font-family: fantasy;
 }
+/*-------------------------------*/

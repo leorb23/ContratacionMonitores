@@ -48,14 +48,6 @@ function venContRegDep() {
     $("#divRegDep").dialog({
         width : 500,
         height : 600,
-//        show:{
-//            //effect :"fold",
-//            duration:1
-//        },
-//        hide:{
-//            //effect :"fold",
-//            duration:1
-//        },
         resizable : "false",
         modal : "true"
     });
@@ -63,5 +55,18 @@ function venContRegDep() {
 
 function hiddenThis($ventana){
     $($ventana).dialog("close");
+}
+
+function venDeleteDep($idDep){
+    //var idDep=document.getElementById("txt_nombre");
+     $(document).ready(function(){
+          $('#divDelDep').load('util/formularios.jsp?var=delDep&idDep='+$idDep);
+    });	
+    $("#divDelDep").dialog({
+        width : 200,
+        height : 200,
+        resizable : "false",
+        modal : "true"
+    });
 }
 

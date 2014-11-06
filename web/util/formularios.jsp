@@ -63,6 +63,22 @@ if(var!=null)
     </form>
    <%         
    }
+    if(var.equals("contRegDep"))
+   {%>
+         <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post"> 
+             <h3>Esta seguro que desea eliminar la dependencia</h3>
+            <input id="accion" name="accion" type="hidden" value="regDep"/>
+            <label>Nombre</label>
+            <input type="text" name="txt_nombre" id="txt_nombre"  maxlength="25" value="<%if(nuevaD!=null){ %><%=nuevaD.darNombre() %><%}%>" required>
+            <br>
+            <br>
+            <label>Descripción</label>
+            <textarea type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="50" required><%if(nuevaD!=null){ %><%=nuevaD.darDescripcion()%><%}%><%if(existeD!=null){ %><%=existeD.darDescripcion()%><%}%></textarea> 
+            <br>
+            <br>
+            <input  type="submit"  id="btnregDep" name="btnregDep"  value="Enviar">
+    </form>
+   <%}
 }%>
 
 

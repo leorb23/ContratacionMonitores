@@ -33,7 +33,10 @@
         <title>Dependencias</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />     
+        <jsp:include page="header.jsp" /> 
+        
+        <jsp:include page="divModal.jsp" /> 
+
          <section>
             <%if(admin!=null){%> 
             <div id="contenedor">
@@ -61,18 +64,15 @@
                 }%>
                 
                 
+
+                
                 <table>
-                    <tr id="tr_link_new_dep">
+<!--                    <tr id="tr_link_new_dep">
                         <td>
-                             <a id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a>
-                            <div id="divRegDep" name="divRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
-
-                            </div>    
-                            <div id="divConRegDep" name="divConRegDep" class="ventana" class="ui-widget-content" title="Nueva Dependencia...">
-
-                            </div>
+                            <a id="regDep" href="javascript:venRegDep();"><img class="icono" src="img/icon_add.png"/></a>
+                            
                         </td>
-                    </tr>
+                    </tr>-->
                     <th  colspan="8">Lista de Dependencias</th> 
                     <tr id="tr_rows" style="background: black; color: white;">                   
                         <td>Nombre</td>
@@ -81,14 +81,14 @@
                         <td>Jornada</td>
                         <td>Horario</td>
                         <td>Cupos Disp.</td>
-                        <td colspan="2"></td>
+                        <td colspan="2"><a class="icono" id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a></td>
                     </tr>
                     <%
                     ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
                     int color=0;
                     for(Dependencia dep: dependencias){%>
-                    <tr <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
-                        <td style="text-align: left;"><%=dep.darNombre()%></td>
+                    <tr class="tr_list"  <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
+                        <td id="td_padd" style="text-align: left;"><%=dep.darNombre()%></td>
                         <td style="text-align: left;"><%=dep.darDescripcion()%></td>
                         <td>0</td>
                         <td>
@@ -105,42 +105,39 @@
                         </td>
                         <td>0</td>
                         <form action="ContratacionMonitoresServlet" method="post">
-                            <td><input id="btn_eliminar" type="image" src="img/icon_delete.png"></td>
+                            <td class="icono"><input type="image"  id="btn_img" onclick="javascript:venDeleteDep(<%=dep.darId()%>);" src="img/icon_delete.png"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>" >
                             <input type="hidden" id="accion" name="accion" value="eliminarD">
                         </form>
                         <form action="ContratacionMonitoresServlet" method="post">
-                            <td><input id="btn_eliminar" type="image" src="img/icon_update.png"></td>
+                            <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="actualizarD">
                         </form>
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
-                    <tr id="tr_link_new_dep">
-                        <td >
-                            <a id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a>
-                        </td>
-                    </tr>
                 </table>  
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
          
+         
+<!--       VERIFICA SI EL ADMIN ESTA EN UN PROCESO DE GESTION DE UNA DEPENDENCIA  -->
        <%
-    Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            
-    Dependencia conRegDep=(Dependencia)session.getAttribute("continuarRegDep");
-    if(existeD!=null){%>
-        <script> 
-            venRegDep();
-        </script>
-    <%
-    }
-   if(conRegDep!=null){%>
-       <script>           
-            venContRegDep();
-     </script>
-   <%
-   }%>
+            Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            
+            Dependencia conRegDep=(Dependencia)session.getAttribute("continuarRegDep");
+            if(existeD!=null){%>
+                <script> 
+                    venRegDep();
+                </script>
+            <%
+            }
+           if(conRegDep!=null){%>
+               <script>           
+                    venContRegDep();
+             </script>
+           <%
+       }%>
     </body>
 </html>
