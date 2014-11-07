@@ -206,12 +206,12 @@ form#formRegDep input#txt_nombre {
     width: 200px;
 }
 
-form#formRegDep input#btnregDep {
+form#formRegDep input#btnForm {
     width: 200px;
     background: #64c7ff; 
     border: 0;
 }
-form#formRegDep input#btnregDep:hover {
+form#formRegDep input#btnForm:hover {
     background: #2d9cd9;
     color: white;
 }

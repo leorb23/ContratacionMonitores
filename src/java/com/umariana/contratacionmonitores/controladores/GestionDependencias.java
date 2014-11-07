@@ -63,15 +63,45 @@ public class GestionDependencias extends HttpServlet {
                 if("existe".equalsIgnoreCase(nom)){
                     sesion.setAttribute("depExiste", dependencia);
                     sesion.setAttribute("mensaje", "La dependencia ya existe.");
-                    sesion.removeAttribute("continuarRegDep");
+                    sesion.removeAttribute("regDep2");
+                    sesion.removeAttribute("regDep1");
 
                 }
-                else
-                    sesion.setAttribute("continuarRegDep", dependencia);
+                else{
+                    sesion.removeAttribute("depExiste");
+                    sesion.removeAttribute("regDep1");
+                    sesion.setAttribute("regDep2", dependencia);
+                }
                 response.sendRedirect("dependencia.jsp");
+                break;
+            case"contRegDep":
+                String volverString=request.getParameter("atras");
+                if(volverString!=null){
+                    if(volverString.equals("si")){
+                        Dependencia regDep1 =(Dependencia)sesion.getAttribute("regDep2");
+                        sesion.removeAttribute("regDep2");
+                        sesion.setAttribute("regDep1", regDep1);
+                    }
+                }
+                else{
+                    //continua con el registro
+                }
+                
+                response.sendRedirect("dependencia.jsp");
+                break;
+            case "eliminarD":
+                int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
+                Dependencia delete = instance.buscarDependencia(idDependencia);
+                sesion.setAttribute("eliminarDep", delete);
+                sesion.setAttribute("eliminarDependencia", delete);
+                sesion.setAttribute("eliminarString", "dependencia");
                 break;
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
         //response.sendRedirect("dependencia.jsp");
+    }
+    
+    public void removerAtributosSesion(){
+        
     }
 } 

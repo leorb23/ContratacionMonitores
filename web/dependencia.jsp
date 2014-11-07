@@ -104,9 +104,9 @@
                             </select>
                         </td>
                         <td>0</td>
-                        <form action="ContratacionMonitoresServlet" method="post">
-                            <td class="icono"><input type="image"  id="btn_img" onclick="javascript:venDeleteDep(<%=dep.darId()%>);" src="img/icon_delete.png"></td>
-                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>" >
+                        <form action="GestionDependencias" method="post">
+                            <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png"></td>
+                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="eliminarD">
                         </form>
                         <form action="ContratacionMonitoresServlet" method="post">
@@ -126,18 +126,28 @@
 <!--       VERIFICA SI EL ADMIN ESTA EN UN PROCESO DE GESTION DE UNA DEPENDENCIA  -->
        <%
             Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            
-            Dependencia conRegDep=(Dependencia)session.getAttribute("continuarRegDep");
-            if(existeD!=null){%>
+            Dependencia regDep2=(Dependencia)session.getAttribute("regDep2");
+            Dependencia regDep1=(Dependencia)session.getAttribute("regDep1");
+            Dependencia eliminarDep=(Dependencia)session.getAttribute("eliminarDep");
+
+            if(existeD!=null || regDep1!=null){%>
+                <script> 
+                    venRegDep();
+                </script>
+            <%
+            }        
+           if(regDep2!=null){%>
+               <script>           
+                    venContRegDep();
+             </script>
+           <%
+            }
+           if(eliminarDep!=null){%>
                 <script> 
                     venRegDep();
                 </script>
             <%
             }
-           if(conRegDep!=null){%>
-               <script>           
-                    venContRegDep();
-             </script>
-           <%
-       }%>
+           %>
     </body>
 </html>
