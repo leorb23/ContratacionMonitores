@@ -132,6 +132,8 @@ table tr{
 
 table tr#tr_rows{
     font-size: 20px;
+    background: black; 
+    color: white;
 }
 table td#td_padd{
     padding-left: 10px;
@@ -215,6 +217,24 @@ form#formRegDep input#btnForm:hover {
     background: #2d9cd9;
     color: white;
 }
+
+fieldset#fls_mostrar{
+    padding: 10px; 
+    border: 1px solid gray;
+    margin-bottom: 10px;
+}
+fieldset#fls_mostrar legend{
+    font-size: 15px;
+    color: gray;
+}
+fieldset#fls_mostrar p{
+    margin-bottom: 15px;
+    color: gray;
+}
+fieldset#fls_mostrar input[type=number]{
+    width: 50px;
+}
+
 /*-------------------------------*/
 /*CLASES*/
 .icono img{

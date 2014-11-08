@@ -74,7 +74,7 @@
                         </td>
                     </tr>-->
                     <th  colspan="8">Lista de Dependencias</th> 
-                    <tr id="tr_rows" style="background: black; color: white;">                   
+                    <tr id="tr_rows" >                   
                         <td>Nombre</td>
                         <td>Descripcion</td>
                         <td>Cupos Tot.</td>

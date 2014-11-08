@@ -1,6 +1,7 @@
 package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dependencia 
@@ -51,6 +52,7 @@ public class Dependencia
         descripcion = nDescripcion;
         horario = nHorario;
         this.cupos = cupos;
+        jornadas= new ArrayList<>();
     }
     
     public Dependencia(String nombre,String descripcion){
@@ -58,7 +60,7 @@ public class Dependencia
         this.descripcion = descripcion;
     }
     public Dependencia(){
-        
+        jornadas= new ArrayList<>();
     }
 
     public int darId() {
@@ -139,6 +141,10 @@ public class Dependencia
     @Override
     public String toString() {
         return "Dependencia{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", jornadas=" + jornadas + '}';
+    }
+
+    public void agregarJornada(Jornada jornada) {
+        jornadas.add(jornada);
     }
     
     

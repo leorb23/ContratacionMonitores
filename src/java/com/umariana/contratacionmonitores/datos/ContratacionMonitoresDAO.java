@@ -250,14 +250,14 @@ public class ContratacionMonitoresDAO {
         if(!dependenciaDAO.existeDependencia(dependencia.darNombre())){
             int idDependencia=dependenciaDAO.resgistrarDependenciaEnBD(dependencia);
             dependencia.cambiarId(idDependencia);
-            /*for(Jornada jornada:dependencia.darJornadas()){
+            for(Jornada jornada:dependencia.darJornadas()){
                 jornada.setIdDependencia(idDependencia);
                 int idJornada=jornadaDAO.resgistrarJornadaEnBD(jornada);
                 for(Horario horario:jornada.getHorarios()){
                     horario.setIdJornada(idJornada);
                     horarioDAO.resgistrarHorarioEnBD(horario);              
                 }     
-            }  */
+            } 
         }
         else
             throw  new ExcepcionYaExiste("La dependencia ( "+dependencia.darNombre()+" ) que desea agregar ya existe !!");

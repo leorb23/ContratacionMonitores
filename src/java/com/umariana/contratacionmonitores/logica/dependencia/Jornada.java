@@ -16,10 +16,15 @@ public class Jornada {
         this.jornada = jornada;
         this.idDependencia = idDependencia;
         this.id=id;
+        horarios= new ArrayList<>();
     }
     
     public Jornada(){
-        
+        horarios= new ArrayList<>();
+    }
+    
+    public void agregarHorario(Horario horario){
+        horarios.add(horario);
     }
 
     public String getJornada() {

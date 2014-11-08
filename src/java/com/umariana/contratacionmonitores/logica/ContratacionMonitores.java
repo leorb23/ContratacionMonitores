@@ -684,6 +684,10 @@ public class ContratacionMonitores {
         cmDAO.conectarBdSistema();
     }
 
+    public void agregarDependencia(Dependencia dependencia) throws SQLException, ExcepcionYaExiste, ConnectionException {
+        cmDAO.registrarDependenciaEnBD(dependencia);
+    }
+
  
 
     
