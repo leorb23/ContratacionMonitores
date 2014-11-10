@@ -58,10 +58,10 @@
                     </form>
                 </div>
                 <%}%>
-                <%if(mensaje!=null){%>
-                     <h4 style="color: black;"><%=mensaje%></h4>
+                <%//if(mensaje!=null){%>
+<!--                     <h4 style="color: black;"><%//=mensaje%></h4>-->
                      <%//session.removeAttribute("mensaje");
-                }%>
+                //}%>
                 
                 
 
@@ -73,11 +73,12 @@
                             
                         </td>
                     </tr>-->
-                    <th  colspan="8">Lista de Dependencias</th> 
+                    <th  colspan="9">Lista de Dependencias</th> 
                     <tr id="tr_rows" >                   
                         <td>Nombre</td>
                         <td>Descripcion</td>
                         <td>Cupos Tot.</td>
+                        <td>Cupos Dispo.</td>
                         <td>Jornada</td>
                         <td>Horario</td>
                         <td>Cupos Disp.</td>
@@ -90,26 +91,28 @@
                     <tr class="tr_list"  <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
                         <td id="td_padd" style="text-align: left;"><%=dep.darNombre()%></td>
                         <td style="text-align: left;"><%=dep.darDescripcion()%></td>
-                        <td>0</td>
+                        <td><%=dep.getTotalCupos() %></td>
+                        <td><%=dep.getTotalCuposDisponibles() %></td>       
                         <td>
                             <select id="slc_jornada" name="slc_jornada">
+                                <option selected="selected" value="0">Seleccione...</option>       
                                 <%for(Jornada j: dep.darJornadas() ) {%>
-                                <option id="<%= j.getId() %>"><%=j.getJornada() %></option>
+                                    <option value="<%=j.getId()%>"><%=j.getJornada() %></option>
                                 <%}%>
                             </select>
                         </td>
                         <td>
                             <select id="slc_horario" name="slc_horario">
-                                <option id="">Seleccione...</option>
+                               <option selected="selected" value="0">Seleccione...</option>       
                             </select>
-                        </td>
+                        </td>    
                         <td>0</td>
                         <form action="GestionDependencias" method="post">
                             <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
-                            <input type="hidden" id="accion" name="accion" value="eliminarD">
+                            <input type="hidden" id="accion" name="accion" value="eliminarDepPaso1">
                         </form>
-                        <form action="ContratacionMonitoresServlet" method="post">
+                        <form action="GestionDependencias" method="post">
                             <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="actualizarD">
@@ -129,25 +132,28 @@
             Dependencia regDep2=(Dependencia)session.getAttribute("regDep2");
             Dependencia regDep1=(Dependencia)session.getAttribute("regDep1");
             Dependencia eliminarDep=(Dependencia)session.getAttribute("eliminarDep");
+            Dependencia actualizarDep=(Dependencia)session.getAttribute("actualizarDep");
 
             if(existeD!=null || regDep1!=null){%>
                 <script> 
                     venRegDep();
                 </script>
-            <%
-            }        
+            <%}        
            if(regDep2!=null){%>
                <script>           
                     venContRegDep();
              </script>
-           <%
-            }
+           <%}
            if(eliminarDep!=null){%>
                 <script> 
-                    venRegDep();
+                    venDeleteDep();
                 </script>
-            <%
-            }
+            <%}
+           if(actualizarDep!=null){%>
+                <script> 
+                    venUpdateDep();
+                </script>
+           <%}
            %>
     </body>
 </html>

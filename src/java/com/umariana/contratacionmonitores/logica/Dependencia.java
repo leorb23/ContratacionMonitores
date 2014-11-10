@@ -1,5 +1,6 @@
 package com.umariana.contratacionmonitores.logica;
 
+import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,11 @@ public class Dependencia
         /**
          * Son los cupos disponibles que tiene la dependencia
          */
-        private int cuposDisponibles;
+        private int totalCuposDisponibles;
          /**
          * Son los cupos que tiene la dependencia
          */
-        private int cupos;
+        private int totalCupos;
         /**
          * 
          */
@@ -51,7 +52,7 @@ public class Dependencia
         nombre = nNombre;
         descripcion = nDescripcion;
         horario = nHorario;
-        this.cupos = cupos;
+        this.totalCupos = cupos;
         jornadas= new ArrayList<>();
     }
     
@@ -95,34 +96,30 @@ public class Dependencia
         this.horario = horario;
     }
 
-    /**
-     * 
-     * @return 
-     */
-    public int darCuposDisponibles() {
-        return cuposDisponibles;
+    
+    public int getTotalCuposDisponibles() {
+        actualizarAtributoCupos();
+        return totalCuposDisponibles;
     }
-    /**
-     * 
-     * @param cuposDisponibles 
-     */
-    public void cambiarCuposDisponibles(int cuposDisponibles) {
-        this.cuposDisponibles = cuposDisponibles;
+
+    public void setTotalCuposDisponibles(int totalCuposDisponibles) {
+        this.totalCuposDisponibles = totalCuposDisponibles;
     }
-    /**
-     * 
-     * @return 
-     */
-    public int darCupos() {
-        return cupos;
+
+    public int getTotalCupos() {
+        actualizarAtributoCupos();
+        return totalCupos;
     }
-    /**
-     * 
-     * @param cupos 
-     */
-    public void cambiarCupos(int cupos) {
-        this.cupos = cupos;
+
+    public void setTotalCupos(int totalCupos) {
+        this.totalCupos = totalCupos;
     }
+
+
+    
+    
+    
+    
     /**
      * 
      * @return 
@@ -144,7 +141,27 @@ public class Dependencia
     }
 
     public void agregarJornada(Jornada jornada) {
-        jornadas.add(jornada);
+        boolean salir=false;
+        for(int i=0;i<jornadas.size() && !salir;i++){
+            Jornada j= jornadas.get(i);
+            if(j.getJornada().equalsIgnoreCase(jornada.getJornada())){
+                salir=true;
+                for(Horario h:jornada.getHorarios()){
+                    j.agregarHorario(h);
+                }
+            }
+        }
+        if(!salir)
+            jornadas.add(jornada);
+    }
+
+    public void actualizarAtributoCupos() {
+        totalCupos=0;
+        totalCuposDisponibles=0;
+        for(Jornada j:jornadas){
+            totalCupos+=j.getTotalCupos();
+            totalCuposDisponibles+=j.getTotalCuposDisponibles();
+        } 
     }
     
     

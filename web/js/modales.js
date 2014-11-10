@@ -57,16 +57,33 @@ function hiddenThis($ventana){
     $($ventana).dialog("close");
 }
 
-function venDeleteDep($idDep){
-    //var idDep=document.getElementById("txt_nombre");
+function venDeleteDep(){
      $(document).ready(function(){
-          $('#divDelDep').load('util/formularios.jsp?var=delDep&idDep='+$idDep);
+          $('#divDelDep').load('util/formularios.jsp?var=eliminarDep');
     });	
     $("#divDelDep").dialog({
-        width : 200,
-        height : 200,
+        width : 500,
+        height : 320,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venUpdateDep(){
+     $(document).ready(function(){
+          $('#divUpdDep').load('util/formularios.jsp?var=actualizarDep');
+    });	
+    $("#divUpdDep").dialog({
+        width : 500,
+        height : 600,
         resizable : "false",
         modal : "true"
     });
 }
 
+$(document).ready(function(){
+    $('#slc_jornada').change(function(){
+        var idJornada=$('#slc_jornada').val();
+        
+        $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+idJornada);
+    });    
+});

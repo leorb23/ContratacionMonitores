@@ -31,7 +31,7 @@ public class HorarioDAO {
     }
 
     ArrayList<Horario> listarHorarios(int idJornada) throws SQLException {
-        ArrayList<Horario> jornadas= new ArrayList<>();
+        ArrayList<Horario> horarios= new ArrayList<>();
         rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select * from "+tabla+" where id_jornada="+idJornada);
         while(rs.next()){
             Horario h=new Horario();
@@ -41,8 +41,8 @@ public class HorarioDAO {
             h.setCuposDisponibles(rs.getInt("cupos_disponibles"));
             h.setTotalCupos(rs.getInt("total_cupos"));
             h.setIdJornada(rs.getInt("id_jornada"));
-            jornadas.add(h);
+            horarios.add(h);
         }
-        return jornadas;
+        return horarios;
     }
 }

@@ -262,8 +262,8 @@ public class ContratacionMonitoresDAO {
         else
             throw  new ExcepcionYaExiste("La dependencia ( "+dependencia.darNombre()+" ) que desea agregar ya existe !!");
     }
-    public void eliminarDependenciaEnBD( String nombre) throws SQLException{
-        dependenciaDAO.eliminarDependencia(nombre);
+    public void eliminarDependenciaEnBD( int codigo) throws SQLException{
+        dependenciaDAO.eliminarDependencia(codigo);
     }
     public void actualizarDependenciaEnBd(Dependencia dependencia) throws SQLException, ExcepcionYaExiste{
         if(!dependenciaDAO.existeNombreDependencia(dependencia.darId(), dependencia.darNombre())){           
@@ -368,7 +368,8 @@ public class ContratacionMonitoresDAO {
     public static void setStBdContratacionMonitores(Statement stBdContratacionMonitores) {
         ContratacionMonitoresDAO.stBdContratacionMonitores = stBdContratacionMonitores;
     }
-
+    
+    
     public static void main(String[] args) 
     {
         try {
@@ -471,5 +472,4 @@ public class ContratacionMonitoresDAO {
         } 
     }
 
-    
 }

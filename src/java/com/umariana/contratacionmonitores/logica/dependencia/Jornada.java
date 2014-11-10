@@ -11,16 +11,22 @@ public class Jornada {
     private int idDependencia;
     private ArrayList<Horario> horarios;
     private int id;
+    private int totalCupos;
+    private int totalCuposDisponibles;
 
     public Jornada(String jornada, int idDependencia, int id) {
         this.jornada = jornada;
         this.idDependencia = idDependencia;
         this.id=id;
         horarios= new ArrayList<>();
+        totalCupos=0;
+        totalCuposDisponibles=0;
     }
     
     public Jornada(){
         horarios= new ArrayList<>();
+        totalCupos=0;
+        totalCuposDisponibles=0;
     }
     
     public void agregarHorario(Horario horario){
@@ -57,6 +63,33 @@ public class Jornada {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTotalCupos() {
+        actualizarAtributoCupos();
+        return totalCupos;
+    }
+
+    public void setTotalCupos(int totalCupos) {
+        this.totalCupos = totalCupos;
+    }
+
+    public int getTotalCuposDisponibles() {
+        actualizarAtributoCupos();
+        return totalCuposDisponibles;
+    }
+
+    public void setTotalCuposDisponibles(int totalCuposDisponibles) {
+        this.totalCuposDisponibles = totalCuposDisponibles;
+    }
+    
+    public void actualizarAtributoCupos(){
+        totalCupos=0;
+        totalCuposDisponibles=0;
+        for(Horario h:horarios){
+            totalCupos+=h.getTotalCupos();
+            totalCuposDisponibles+=h.getCuposDisponibles();
+        } 
     }
 
     @Override

@@ -16,7 +16,7 @@ public class DependenciaDAO {
     
     public int resgistrarDependenciaEnBD(Dependencia dependencia) throws  SQLException  {
       
-            rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("insert into "+tabla+" (nombre,descripcion )values ('"+dependencia.darNombre().trim()+"','"+dependencia.darDescripcion().trim()+"') returning id");
+            rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("insert into "+tabla+" (nombre,descripcion )values ('"+dependencia.darNombre()+"','"+dependencia.darDescripcion()+"') returning id");
             int idDependencia=0;
             while(rs.next()){
                 idDependencia=rs.getInt("id");
@@ -26,18 +26,18 @@ public class DependenciaDAO {
             return idDependencia;
     }
     
-    public void eliminarDependencia(String nombre) throws SQLException{
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where nombre ="+nombre.trim());
+    public void eliminarDependencia(int codigo) throws SQLException{
+        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where id ="+codigo);
     }
 
     void actualizarDependencia(Dependencia dependencia) throws SQLException  {
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set nombre ='"+dependencia.darNombre().trim()+"',descripcion='"+dependencia.darDescripcion().trim()+"' where id ="+dependencia.darId());       
+        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set nombre ='"+dependencia.darNombre()+"',descripcion='"+dependencia.darDescripcion()+"' where id ="+dependencia.darId());       
         
     }
     
     boolean existeNombreDependencia(int id, String nombre) throws SQLException{
         rs=ContratacionMonitoresDAO.getStBdContratacionMonitores().
-                executeQuery("select * from "+tabla+" where id <>"+id+" and nombre ='"+nombre.trim()+"'");       
+                executeQuery("select * from "+tabla+" where id <>"+id+" and nombre ='"+nombre+"'");       
         while (rs.next())
         { 
             return true;
@@ -46,7 +46,7 @@ public class DependenciaDAO {
     }
 
     boolean existeDependencia(String nombre) throws SQLException {
-        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select nombre from "+tabla+" where nombre ='"+nombre.trim()+"'");
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select nombre from "+tabla+" where nombre ='"+nombre+"'");
         while(rs.next()){
             return true;
         }

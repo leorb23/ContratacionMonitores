@@ -8,12 +8,14 @@ package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ConnectionException;
+import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -63,12 +65,10 @@ public class GestionDependencias extends HttpServlet {
                case"regDep":
                    String nom = request.getParameter("txt_nombre");
                    String des = request.getParameter("txt_descripcion");
-                   //instance.agregarDependencia(0, nom,des);
-                   Dependencia dependencia = new Dependencia();
-                   dependencia.cambiarId(1);
-                   dependencia.cambiarNombre(nom);
-                   dependencia.cambiarDescripcion(des);
-                   if("existe".equalsIgnoreCase(nom)){
+                   Dependencia dependencia = new Dependencia();                
+                   dependencia.cambiarNombre(nom.toUpperCase().trim());
+                   dependencia.cambiarDescripcion(des.trim());
+                   if(instance.existeDependencia(nom.toUpperCase().trim())){
                        sesion.setAttribute("depExiste", dependencia);
                        sesion.setAttribute("mensaje", "La dependencia ya existe.");
                        sesion.removeAttribute("regDep2");
@@ -91,14 +91,21 @@ public class GestionDependencias extends HttpServlet {
                case"agregarHorario":
                    Dependencia actual =(Dependencia)sesion.getAttribute("regDep2");
                    String jornadaString=request.getParameter("slc_jornada");
+                   if(jornadaString.equals("manana")){
+                       jornadaString="Mañana";
+                   }
                    int horaInicio=Integer.parseInt(request.getParameter("txtHoraInicio"));
                    int horaFin=Integer.parseInt(request.getParameter("txtHoraFin"));
-                   int cupos=Integer.parseInt(request.getParameter("txtCupos"));
-                   Jornada jornada= new Jornada(jornadaString, 0, 0);
-                   Horario horario = new Horario(horaInicio, horaFin, 0, 0, cupos, 0);
-                   jornada.agregarHorario(horario);
-                   actual.agregarJornada(jornada);
-                   sesion.setAttribute("regDep2", actual);
+                   if(horaFin<=horaInicio)
+                       sesion.setAttribute("mensaje", "Verifica la hora de inicio y de fin.");
+                   else{
+                        int cupos=Integer.parseInt(request.getParameter("txtCupos"));
+                        Jornada jornada= new Jornada(jornadaString, 0, 0);
+                        Horario horario = new Horario(horaInicio, horaFin,0,cupos,cupos, 0);
+                        jornada.agregarHorario(horario);
+                        actual.agregarJornada(jornada);
+                        sesion.setAttribute("regDep2", actual);
+                   }
                    response.sendRedirect("dependencia.jsp");
                    break;
                case"finalizarRegDep":
@@ -109,22 +116,69 @@ public class GestionDependencias extends HttpServlet {
                    sesion.removeAttribute("regDep2");
                    response.sendRedirect("dependencia.jsp");
                    break;
-               case "eliminarD":
+               case "eliminarDepPaso1":
                    int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
                    Dependencia delete = instance.buscarDependencia(idDependencia);
                    sesion.setAttribute("eliminarDep", delete);
-                   sesion.setAttribute("eliminarDependencia", delete);
-                   sesion.setAttribute("eliminarString", "dependencia");
+                   sesion.removeAttribute("depExiste");
+                   sesion.removeAttribute("regDep1");
+                   sesion.removeAttribute("regDep2");
+                   response.sendRedirect("dependencia.jsp");
+                   break;                 
+               case"aceptarDelDep":
+                   delete=(Dependencia)sesion.getAttribute("eliminarDep");
+                   instance.eliminarDependencia(delete.darId());
+                   sesion.removeAttribute("eliminarDep");   
+                   sesion.removeAttribute("depExiste");
+                   sesion.removeAttribute("regDep1");
+                   sesion.removeAttribute("regDep2");
+                   response.sendRedirect("dependencia.jsp");
                    break;
+               case"cancelar":
+                   sesion.removeAttribute("eliminarDep");   
+                   sesion.removeAttribute("actualizarDep");   
+                   sesion.removeAttribute("depExiste");
+                   sesion.removeAttribute("regDep1");
+                   sesion.removeAttribute("regDep2");
+                   response.sendRedirect("dependencia.jsp");
+                   break;    
+               case"actualizarD":
+                   idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
+                   Dependencia update = instance.buscarDependencia(idDependencia);
+                   sesion.setAttribute("actualizarDep", update);
+                   sesion.removeAttribute("eliminarDep");   
+                   sesion.removeAttribute("depExiste");
+                   sesion.removeAttribute("regDep1");
+                   sesion.removeAttribute("regDep2");
+                   response.sendRedirect("dependencia.jsp");
+                   break;
+               
            }
            ContratacionMonitoresServlet.setearSesion(sesion);
            //response.sendRedirect("dependencia.jsp");
-       } catch (SQLException | ExcepcionYaExiste | ConnectionException ex) {
+       } catch (SQLException | ExcepcionYaExiste | ConnectionException | ExcepcionNoExiste ex) {
            Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
        }
+    }
+    
+    /**
+     * Retorna la lista de horarios de una jornada en especifico
+     * Pasando como parametro el id de la jornada
+     * @param idJornada
+     * @return ArrayList<Horario> horarios
+     */
+    public static ArrayList<Horario> darHorariosJornada(String idJornada){
+       try {
+           return instance.darHorariosJornada(Integer.parseInt(idJornada));
+       } catch (SQLException ex) {
+           Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
+           System.out.println("Error: "+GestionDependencias.class.getName()+" - "+ex.getMessage());
+       }
+       return new ArrayList<>();
     }
     
     public void removerAtributosSesion(){
         
     }
+    
 } 

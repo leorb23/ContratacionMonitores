@@ -4,6 +4,8 @@ import com.umariana.contratacionmonitores.datos.ContratacionMonitoresDAO;
 import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
+import com.umariana.contratacionmonitores.logica.dependencia.Horario;
+import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -543,16 +545,10 @@ public class ContratacionMonitores {
      * @param codigo != null && !=""
      * @throws ExcepcionNoExiste 
      */
-    public void eliminarDependencia(int codigo) throws ExcepcionNoExiste{
-        
-        Dependencia dependenciaEliminar= buscarDependencia(codigo);
-        
-        if(dependenciaEliminar==null){
-            throw new ExcepcionNoExiste("La Dependencia que desea buscar no existe !!");
-        }
-        else
-            dependencias.remove(dependenciaEliminar);      
+    public void eliminarDependencia(int codigo) throws ExcepcionNoExiste, SQLException{           
+        cmDAO.eliminarDependenciaEnBD(codigo);     
     }
+    
 
     /**
     * Metodo que se encarga de buscar una dependencia segun su codigo si la encuentra la retorna 
@@ -630,6 +626,28 @@ public class ContratacionMonitores {
         if(monitor!=null)
             eliminarMonitor(identificacion);
     }
+
+    public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
+        return cmDAO.buscarAdministrador(usuario,password);
+    }
+
+    public void conectar() throws ConnectionException {
+        cmDAO.conectarBdSistema();
+    }
+
+    public void agregarDependencia(Dependencia dependencia) throws SQLException, ExcepcionYaExiste, ConnectionException {
+        cmDAO.registrarDependenciaEnBD(dependencia);
+    }
+
+    public boolean existeDependencia(String nom) throws SQLException {
+        return cmDAO.existeDependencia(nom);
+    }
+
+    public ArrayList<Horario> darHorariosJornada(int idJornada) throws SQLException {
+       return cmDAO.darHorariosJornada(idJornada);
+    }
+    
+    
     /**
      * Metodo para hacer pruebas
      * @param args 
@@ -676,19 +694,7 @@ public class ContratacionMonitores {
         }
     }
 
-    public Administrador ingresoAdmin(String usuario, String password) throws ExcepcionNoExiste {
-        return cmDAO.buscarAdministrador(usuario,password);
-    }
-
-    public void conectar() throws ConnectionException {
-        cmDAO.conectarBdSistema();
-    }
-
-    public void agregarDependencia(Dependencia dependencia) throws SQLException, ExcepcionYaExiste, ConnectionException {
-        cmDAO.registrarDependenciaEnBD(dependencia);
-    }
-
- 
+    
 
     
 }
