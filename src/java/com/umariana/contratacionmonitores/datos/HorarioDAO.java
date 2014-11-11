@@ -45,4 +45,18 @@ public class HorarioDAO {
         }
         return horarios;
     }
+
+    Horario buscarHorario(int idHorario) throws SQLException {
+        Horario horario=new Horario();
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select * from "+tabla+" where id="+idHorario);
+        while(rs.next()){  
+            horario.setId(rs.getInt("id"));
+            horario.setHasta(rs.getInt("hasta"));
+            horario.setDesde(rs.getInt("desde"));
+            horario.setCuposDisponibles(rs.getInt("cupos_disponibles"));
+            horario.setTotalCupos(rs.getInt("total_cupos"));
+            horario.setIdJornada(rs.getInt("id_jornada"));
+        }
+        return horario;
+    }
 }

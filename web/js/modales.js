@@ -79,11 +79,30 @@ function venUpdateDep(){
         modal : "true"
     });
 }
+function venVerDep($idDependencia){
+    $(document).ready(function(){
+          $('#divVerDep').load('util/formularios.jsp?var=verDependencia&idDependencia='+$idDependencia);
+    });	
+    $("#divVerDep").dialog({
+        width : 500,
+        height : 350,
+        resizable : "false",
+        modal : "true"
+    });
+}
+
+function cambiarHorarioCbx($idJornada){
+    $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+$idJornada);
+    cambiarCuposCbx("0");
+}
+function cambiarCuposCbx($idHorario){
+    $('#tdCupos').load('util/formularios.jsp?var=cambiarHorario&idHorario='+$idHorario);
+}
+
 
 $(document).ready(function(){
     $('#slc_jornada').change(function(){
         var idJornada=$('#slc_jornada').val();
-        
         $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+idJornada);
     });    
 });

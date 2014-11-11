@@ -73,16 +73,16 @@
                             
                         </td>
                     </tr>-->
-                    <th  colspan="9">Lista de Dependencias</th> 
+                    <th  colspan="7">Lista de Dependencias</th> 
                     <tr id="tr_rows" >                   
                         <td>Nombre</td>
                         <td>Descripcion</td>
-                        <td>Cupos Tot.</td>
-                        <td>Cupos Dispo.</td>
-                        <td>Jornada</td>
+                        <td style="padding-right: 15px;">C.T</td>
+                        <td style="padding-right: 15px;">C.D</td>
+<!--                        <td>Jornada</td>
                         <td>Horario</td>
-                        <td>Cupos Disp.</td>
-                        <td colspan="2"><a class="icono" id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png"/></a></td>
+                        <td>Cupos Disp.</td>-->
+                        <td colspan="3"><a class="icono" id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png" title="Nueva"/></a></td>
                     </tr>
                     <%
                     ArrayList<Dependencia> dependencias = ContratacionMonitoresServlet.darComunicacionLogica().darDependencias();
@@ -92,34 +92,24 @@
                         <td id="td_padd" style="text-align: left;"><%=dep.darNombre()%></td>
                         <td style="text-align: left;"><%=dep.darDescripcion()%></td>
                         <td><%=dep.getTotalCupos() %></td>
-                        <td><%=dep.getTotalCuposDisponibles() %></td>       
-                        <td>
-                            <select id="slc_jornada" name="slc_jornada">
-                                <option selected="selected" value="0">Seleccione...</option>       
-                                <%for(Jornada j: dep.darJornadas() ) {%>
-                                    <option value="<%=j.getId()%>"><%=j.getJornada() %></option>
-                                <%}%>
-                            </select>
-                        </td>
-                        <td>
-                            <select id="slc_horario" name="slc_horario">
-                               <option selected="selected" value="0">Seleccione...</option>       
-                            </select>
-                        </td>    
-                        <td>0</td>
+                        <td><%=dep.getTotalCuposDisponibles() %></td>     
+                        <td class="icono"><input type="image" onclick="javascript:venVerDep('<%=dep.darId()%>');"  id="btn_img" src="img/icon_see.png" title="Ver"></td>    
                         <form action="GestionDependencias" method="post">
-                            <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png"></td>
+                            <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="eliminarDepPaso1">
                         </form>
                         <form action="GestionDependencias" method="post">
-                            <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png"></td>
+                            <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="actualizarD">
                         </form>
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
+                    <tr style="text-align: left; font-size: 10px; font-family: cursive;">
+                        <td>C.T : Cupos Totales<br>C.D : Cupos Disponibles</td>
+                    </tr>
                 </table>  
             </div>
          </section>

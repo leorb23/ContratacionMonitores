@@ -4,9 +4,10 @@
 <%@page import="com.umariana.contratacionmonitores.logica.dependencia.Jornada"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
-<!--<script src="../js/modales.js" type="text/javascript"></script>-->
+<script src="../js/modales.js" type="text/javascript"></script>
 <!--<script src="../js/validaciones.js" type="text/javascript"></script>-->
 <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
+
 
 <%String var=request.getParameter("var");
 String mensaje = (String)session.getAttribute("mensaje");
@@ -178,7 +179,7 @@ if(var!=null)
                     </tr>
                     <tr>
                         <td>Descripción:</td>
-                        <td style="height: auto; text-align: left; padding-left: 5px;"><textarea type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="100" required><%if(actualizarDep!=null){ %><%=actualizarDep.darDescripcion()%><%}%></textarea> </td>
+                        <td style="height: auto; text-align: left; padding-left: 5px;"><textarea style="width: 200px; height: 100px; " type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="100" required><%if(actualizarDep!=null){ %><%=actualizarDep.darDescripcion()%><%}%></textarea> </td>
                     </tr>
                 </table>
             </fieldset>
@@ -235,13 +236,85 @@ if(var!=null)
                 </form>
             </fieldset>
    <%}
+    if(var.equals("verDependencia")){
+        String idDependencia=request.getParameter("idDependencia");
+        Dependencia buscada= GestionDependencias.buscarDependencia(idDependencia);
+        if(buscada!=null){
+            %>
+            <fieldset id="fls_mostrar">
+                <legend>Información de la Dependencia</legend>
+                <table style="text-align: left;">
+                    <tr>
+                        <td colspan="3"><%=buscada.darNombre() %>, <%=buscada.darDescripcion()%></td>
+                    </tr>
+                    <tr>
+                        <td>Cupos Totales: <%=buscada.getTotalCupos() %></td><td>Cupos Disponibles: <%=buscada.getTotalCuposDisponibles() %></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Jornada<br>
+                            <select style="width: 120px;"  id="slc_jornada" name="slc_jornada">
+                                <option onclick="javascript:cambiarHorarioCbx('0')" selected="selected" value="0">Seleccione...</option>       
+                                <%for(Jornada j: buscada.darJornadas() ) {%>
+                                <option onclick="javascript:cambiarHorarioCbx('<%=j.getId() %>')" value="<%=j.getId()%>"><%=j.getJornada() %></option>
+                                <%}%>
+                            </select>
+                        </td>
+                        <td>
+                            Horario<br>
+                            <select style="width: 120px;" id="slc_horario" name="slc_horario">
+                               <option onclick="javascript:cambiarCuposCbx('0')" selected="selected" value="0">Seleccione...</option>       
+                            </select>
+                        </td>    
+                        <td id="tdCupos">Cupos<br>T: 0  |  D: 0</td>
+                    </tr>
+                    <tr style="text-align: left; font-size: 10px; font-family: cursive;">
+                        <td></td><td></td><td colspan="3">T : Totales<br>D : Disponibles</td>
+                    </tr>
+                </table>
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
+                    <input type="submit"  id="btnForm" name="btnregDep"  value="Aceptar">
+                    <input id="accion" name="accion" type="hidden" value="cancelar"/>
+                </form>
+            </fieldset>    
+            <%
+        }
+    }
     if(var.equals("cambiarHorario")){
         String idJornada=request.getParameter("idJornada");
-        ArrayList<Horario> horarios = GestionDependencias.darHorariosJornada(idJornada);
-        for(Horario h:horarios)
-        {%>
-            <option value="<%=h.getId() %>"><%=h.getDesde() %> - <%=h.getHasta() %></option>
-        <%}
+        String idHorario=request.getParameter("idHorario");
+        if(idHorario!=null)
+        {
+            if(idHorario.equals("0")){
+                %>
+                    Cupos:<br>T: 0 | D: 0
+                <%
+            }
+            else{
+                Horario h= GestionDependencias.buscarHorario(idHorario); 
+                %>
+                    Cupos<br>T: <%if(h!=null){%> <%=h.getTotalCupos()%><%}%>  | D: <%if(h!=null){%> <%=h.getCuposDisponibles() %><%}%> 
+                <%
+            }
+        }
+        else if(idJornada!=null){
+            if(!idJornada.equals("0")){
+                 ArrayList<Horario> horarios = GestionDependencias.darHorariosJornada(idJornada);
+                 %>
+                 <option onclick="javascript:cambiarCuposCbx('0')" selected="selected" value="0">Seleccione...</option>        
+                 <%
+                for(Horario h:horarios)
+                {%>
+                    <option onclick="javascript:cambiarCuposCbx('<%=h.getId() %>')" value="<%=h.getId() %>"><%=h.getDesde() %> - <%=h.getHasta() %></option>
+                <%}
+            }
+            else{
+                 {%>
+                    <option onclick="javascript:cambiarCuposCbx('0')" selected="selected" value="0">Seleccione...</option>   
+                <%}
+            }
+        }
+           
     }
 }%>
 

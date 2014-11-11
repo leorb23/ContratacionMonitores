@@ -472,4 +472,8 @@ public class ContratacionMonitoresDAO {
         } 
     }
 
+    public Horario buscarHorario(int idHorario) throws SQLException {
+        return horarioDAO.buscarHorario(idHorario);
+    }
+
 }

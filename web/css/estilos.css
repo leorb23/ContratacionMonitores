@@ -235,6 +235,8 @@ fieldset#fls_mostrar input[type=number]{
     width: 50px;
 }
 
+
+
 /*-------------------------------*/
 /*CLASES*/
 .icono img{
@@ -245,6 +247,15 @@ fieldset#fls_mostrar input[type=number]{
     width: 33px;
     height: 33px;
 }
+/*.icono img#imgVer{
+    width: 30px;
+    height: 30px;
+}
+.icono img#imgVer:hover{
+    background-image: url(../img/icon_see_hover.png);
+    width: 33px;
+    height: 33px;
+}*/
 .icono input{
     width: 30px;
     height: 30px;

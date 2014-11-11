@@ -19,3 +19,6 @@
 <div id="divUpdDep" name="divUpdDep" class="ventana" class="ui-widget-content" title="Actualizar Dependencia...">
     
 </div>
+<div id="divVerDep" name="divVerDep" class="ventana" class="ui-widget-content" title="Información Dependencia...">
+    
+</div>

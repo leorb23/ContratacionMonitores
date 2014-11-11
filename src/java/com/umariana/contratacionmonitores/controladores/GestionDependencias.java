@@ -176,7 +176,17 @@ public class GestionDependencias extends HttpServlet {
        }
        return new ArrayList<>();
     }
-    
+    public static Dependencia buscarDependencia(String idDependencia){
+       return instance.buscarDependencia(Integer.parseInt(idDependencia));     
+    }
+    public static Horario buscarHorario(String idHorario){
+       try {
+           return instance.buscarHorario(Integer.parseInt(idHorario));
+       } catch (SQLException ex) {
+           Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return null;
+    }
     public void removerAtributosSesion(){
         
     }

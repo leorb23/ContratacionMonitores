@@ -694,6 +694,10 @@ public class ContratacionMonitores {
         }
     }
 
+    public Horario buscarHorario(int idHorario) throws SQLException {
+        return cmDAO.buscarHorario(idHorario);
+    }
+
     
 
     
