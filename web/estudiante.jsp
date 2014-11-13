@@ -22,48 +22,42 @@
     Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
+    
+    
 %>
 
 <!DOCTYPE html5>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
+        <jsp:include page="head.jsp" />
         <title>Contratacion Monitores</title>
     </head>
     <body>
         <jsp:include page="header.jsp" />
-<!--        <header>
-            <div id="cabecera">
-                <div>
-                    <a href="index.jsp"><img src="img/logo.png"></a>
-                </div>
-                <div>
-                    <h1>Contratacion de Monitores</h1>
-                </div>
-            </div>
-            <div id="barraNavegacion">
-                <nav id="barraNavPrincipal">
-                    <ul>
-                        <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="pruebas.jsp">Pruebas</a></li> 
-                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
-                        <li><a href="estudiante.jsp" style="background:#56a2ff;height: 32px;">Estudiantes</a></li>
-                        <%if(estudiante==null && monitor==null && aspirante==null) {%>
-                        <li><a href="GestionAdmin/admin.jsp">Entrar</a></li>
-                        <%}%>
-                    </ul>
-                </nav>
-            </div>     
-        </header>-->
+        <jsp:include page="divModal.jsp" /> 
         <section>
-            <div id="contenedor">  
+            <div id="contenedor">                
                 <%if(mensaje!=null){%>
                 <div id="div_mensaje">
                     <label><%=mensaje%></label>
                 </div>
                     <%session.removeAttribute("mensaje");
                 }%>
+                 <%if(aspirante==null && monitor==null && estudiante==null){%>
+                   <div style="border: 1px solid black; width: 80%; height: auto; padding: 5px; display: inline-block;">  
+                   </div>
+                   <div style="width: 70px; height: 70px; float: right;" >
+                       <label class="iconoGrande" ><input  type="image" onclick="javascript:venIngresoEstudiantes()"  id="btn_img" src="img/icon_entrar.png" title="Ingresar"></label>
+                   </div>
+                     
+               <%}else { %>
+               <form action="GestionSesionDeEstudiantes" method="post" class="icono">
+                    <div style="width: 70px; height: 70px; float: right;" >
+                        <input class="iconoGrande" type="image" id="btn_img" src="img/icon_salir.png" title="Salir">
+                    </div>
+                    <input type="hidden" id="accion" name="accion" value="cerrar">
+                </form>
+               <%}%>
                  <%if(aspirante!= null){%>
                  <div id="div_datos">
                      <table class="table_datos_est" id="table_datos_est">
@@ -169,11 +163,11 @@
                          <th colspan="2" style="text-align: center;" cellpadding="0" cellspacing="0">Datos del Estudiante</th>
                          <tr style="background: #8bbbfd;">
                              <td>Nombres</td>
-                             <td><%=estudiante.darPrimerNombre() %> <%=estudiante.darSegundoNombre()%></td>
+                             <td><%=estudiante.darPrimerNombre() %><%if(estudiante.darSegundoNombre()!=null){%> <%=estudiante.darSegundoNombre()%><%}%></td>
                          </tr>
                          <tr style="background: #bfdef8;">
                              <td>Apellidos</td>
-                             <td><%=estudiante.darPrimerApellido() %> <%=estudiante.darSegundoApellido() %></td>
+                             <td><%=estudiante.darPrimerApellido() %><%if(estudiante.darSegundoApellido()!=null){%> <%=estudiante.darSegundoApellido() %><%}%></td>
                          </tr>
                          <tr style="background: #8bbbfd;">
                              <td>Identicacion</td>
@@ -185,30 +179,27 @@
                          </tr>
                          <tr style="background: #8bbbfd;">
                              <td>Estado Matricula</td>
-                             <td><%=estudiante.darEstadoMatricula() %></td>
+                             <td><%if(estudiante.darEstadoMatricula().equals("1")){%>Matriculado<%}else{%>Inactivo<%}%></td>
                          </tr>
                          <tr style="background: #bfdef8;">
                              <td>Promedio Acumulado</td>
                              <td><%=estudiante.darPromedioAcumulado() %></td>
                          </tr>
-                         <tr style="background: #8bbbfd;">
-                             <td></td>
-                             <td><%if(estudiante.darSemestreActual()>= 3){
-                            if(estudiante.darPromedioAcumulado()>=3.5){%>
-                            <label>Desea registrarse en el Sistema de Contratacion de Monitores ?</label>  
-                                <form action="GestionSesionDeEstudiantes" method="POST">
-                                    <select id="select_registrar" name="select_registrar">
-                                        <option value="si">Si</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                    <input type="hidden" id="accion" name="accion" value="reg_estu">
-                                    <input type="submit"  value="Registrar">
-                                </form>
-                            <%}else{%>
-                            <h4>No puedes postularte como aspirante porque tiene un promedio de notas menor a 3.5</h4>
-                        <%}}else{%>
-                            <h4>Para registrarte como aspirante debes estar en tercer semestre o superior</h4>
-                        <%}%>  </td>
+                         <tr style=" height: 80px; text-align: center;">
+                            <td colspan="2">
+                            <%
+                            if(estudiante.darEstadoMatricula().equals("1")){
+                                if(estudiante.darSemestreActual()>= 3){
+                                    if(estudiante.darPromedioAcumulado()>=3.5){%> 
+                                    <label class="iconoGrande" style="width: 70px; height: 70px;"><input  type="image" onclick="javascript:venRegEst()"  id="btn_img" src="img/icon_registrar_estudiante.png" title="Postularse"></label>
+                                    <%}else{%>
+                                    <h4 class="msg_error">No puedes postularte como aspirante porque su promedio de notas es menor a 3.5</h4>
+                                <%}}else{%>
+                                    <h4 class="msg_error">Para registrarte como aspirante debes estar en tercer semestre o superior</h4>
+                                <%}}else{%>
+                                    <h4 class="msg_error">Para registrarte como aspirante tu matricula debe estar activada</h4>
+                                <%}%>  
+                            </td>
                          </tr>
                      </table>                 
                     </div>             
@@ -216,33 +207,9 @@
                     else if(admin!=null) {
                         response.sendRedirect("admin.jsp");
                     } %>        
-                <%if(aspirante==null && monitor==null && estudiante==null){%>
-                <div>
-                    <table border="1">
-                        <tr>
-                            <td>
-                                <label>Ingreso Para Estudiantes</label>
-                                <form action="GestionSesionDeEstudiantes" method="POST">
-                                    <label>Identificacion</label>
-                                    <input type="text" id="txt_identificacion" name="txt_identificacion">
-                                    <input type="submit" id="btn_enviar" value="Enviar">
-                                    <input type="hidden" id="accion" name="accion" value="ingreso">
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                </div>      
-               <%}else { %>
-                <form action="GestionSesionDeEstudiantes" method="POST">
-                    <input type="submit"  value="Cerrar Sesion">
-                    <input type="hidden" id="accion" name="accion" value="cerrar">
-                </form>
-               <%}%>
             </div>
         </section>
-        <footer>
-            <a href="#">CocoSoft</a>
-        </footer>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>
 

@@ -4,6 +4,7 @@ import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 
 public class Dependencia 
 {
@@ -162,6 +163,27 @@ public class Dependencia
             totalCupos+=j.getTotalCupos();
             totalCuposDisponibles+=j.getTotalCuposDisponibles();
         } 
+    }
+    
+    public void eliminarJornada(String idJornada){
+        for(Jornada j:jornadas){         
+            if(j.getId()==Integer.parseInt(idJornada)){
+                jornadas.remove(j);
+            }
+        }
+    }
+
+    public void eliminarHorario(String idHorario) {
+        for(Jornada j:jornadas){
+            for(Horario h:j.getHorarios()){
+                if(h.getId()==Integer.parseInt(idHorario)){
+                    j.getHorarios().remove(h);
+                }
+            }
+            if(j.getHorarios().isEmpty()){
+                jornadas.remove(j);
+            }
+        }
     }
     
     

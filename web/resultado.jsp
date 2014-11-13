@@ -12,6 +12,11 @@
         <title>Resultado</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <jsp:include page="header.jsp" />
+        <section>
+            <div id="contenedor">      
+            </div>
+        </section>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

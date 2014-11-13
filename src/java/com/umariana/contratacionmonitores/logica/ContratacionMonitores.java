@@ -268,15 +268,15 @@ public class ContratacionMonitores {
      * @throws IllegalAccessException 
      */
     public Aspirante registrarAspirante2(String identificacion) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
-        Aspirante aspirante = buscarAspirante(identificacion);
-        if(aspirante!=null)
-            throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
+//        Aspirante aspirante = buscarAspirante(identificacion);
+//        if(aspirante!=null)
+//            throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
+//        
+//        Monitor monitor = buscarMonitor(identificacion);
+//        if(monitor!=null)
+//            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");           
         
-        Monitor monitor = buscarMonitor(identificacion);
-        if(monitor!=null)
-            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");           
-        
-        aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
+        Aspirante aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
         aspirantes.add(aspirante);
         return aspirante;
     }
@@ -632,7 +632,7 @@ public class ContratacionMonitores {
     }
 
     public void conectar() throws ConnectionException {
-        cmDAO.conectarBdSistema();
+        cmDAO.conectarBd();  
     }
 
     public void agregarDependencia(Dependencia dependencia) throws SQLException, ExcepcionYaExiste, ConnectionException {
@@ -696,6 +696,10 @@ public class ContratacionMonitores {
 
     public Horario buscarHorario(int idHorario) throws SQLException {
         return cmDAO.buscarHorario(idHorario);
+    }
+
+    public void modificarDependencia(Dependencia update) throws SQLException, ExcepcionYaExiste {
+        cmDAO.actualizarDependenciaEnBd(update);
     }
 
     

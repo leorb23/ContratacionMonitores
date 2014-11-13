@@ -68,6 +68,10 @@ public class ContratacionMonitoresDAO {
         horarioDAO = new HorarioDAO();  
         conectado=false;
     }
+    public void conectarBd() throws ConnectionException{
+        conectarBdSistema();
+        conectarBdUniversidad();
+    }
     /**
      * Metodo que se encarga de realizar la conexion con la Base de Datos
      * @throws ClassNotFoundException
@@ -85,7 +89,6 @@ public class ContratacionMonitoresDAO {
             String password="123";
             String servidor="localhost";//"192.168.0.13";//192.168.0.11
             int puerto=5432;
-            //stBdSistema = null ;
             
             Class.forName(driver).newInstance();
             
@@ -105,16 +108,16 @@ public class ContratacionMonitoresDAO {
      * @throws InstantiationException
      * @throws IllegalAccessException 
      */
-    public void conectarBdUniversidad() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
-              
+    public void conectarBdUniversidad() throws ConnectionException{
+       try {       
         String driver="org.postgresql.Driver";
         String conectionString="jdbc:postgresql";
         String bd="EstudiantesUniversidad";
         String usuario="postgres";
         String password="123";
-        String servidor="localhost";//"192.168.0.13";//192.168.0.11
+        String servidor="localhost";
         int puerto=5432;   
-        
+
         Class.forName(driver).newInstance();
 
         this.conexionUniversidad = DriverManager.getConnection(conectionString+":"+"//"+servidor+":"+puerto+"/"+bd,usuario,password);
@@ -122,6 +125,9 @@ public class ContratacionMonitoresDAO {
         this.stBdUniversidad=(Statement) conexionUniversidad.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
         System.out.println("Conectado con la base de datos de estudiantes de la Universidad...");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            throw new ConnectionException("Error en la conexion con la Base de datos de estudiantes "+ex);
+        } 
     }
     
     
@@ -465,8 +471,6 @@ public class ContratacionMonitoresDAO {
             //cerrar conexion
             cm.desconectarBdContratacionMonitores();
             cm.desconectarBdUniversidad();
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
-            System.out.println("Error : "+ex.getMessage());
         } catch (ConnectionException ex) {
             Logger.getLogger(ContratacionMonitoresDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 

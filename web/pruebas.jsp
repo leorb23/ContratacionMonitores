@@ -31,37 +31,11 @@
         <title>Pruebas</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-<!--        <header>
-            <div id="cabecera">
-                <div>
-                    <a href="index.jsp"><img src="img/logo.png"></a>
-                </div>
-                <div>
-                    <h1>Contratacion de Monitores</h1>
-                </div>
-            </div>
-            <div id="barraNavegacion">
-                <nav id="barraNavPrincipal">
-                    <ul>
-                        <li><a href="index.jsp" >Inicio</a></li>
-                        <li><a href="pruebas.jsp" style="background:#56a2ff; height: 32px;">Pruebas</a></li> 
-                        <%if(admin==null){%>
-                        <li><a href="dependenciaView.jsp">Dependencias</a></li>
-                        <li><a href="estudiante.jsp">Estudiantes</a></li>
-                        <%}%>
-                        <li><a href="GestionAdmin/admin.jsp"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
-                    </ul>
-                </nav>
-            </div>     
-        </header> -->
+       <jsp:include page="header.jsp" />
         <section>
-            <div id="contenedor">
-                Pruebas
-            </div>     
+            <div id="contenedor">      
+            </div>
         </section>
-        <footer>
-            <a href="#">CocoSoft</a>
-        </footer>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

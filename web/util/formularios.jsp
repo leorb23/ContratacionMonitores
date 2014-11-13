@@ -5,16 +5,13 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <script src="../js/modales.js" type="text/javascript"></script>
-<!--<script src="../js/validaciones.js" type="text/javascript"></script>-->
 <link rel="stylesheet" href="../css/estilos.css" type="text/css" media="all">
 
 
 <%String var=request.getParameter("var");
 String mensaje = (String)session.getAttribute("mensaje");
-if(var!=null)
-{
-    if(var.equals("regDep"))
-    {%>
+if(var!=null){
+    if(var.equals("regDep")){%>
     <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post"> 
             <%
              Dependencia regDep1=(Dependencia)session.getAttribute("regDep1");
@@ -37,8 +34,8 @@ if(var!=null)
     </form>
 
    <%     
-    } if(var.equals("contRegDep"))
-   {
+    } 
+    if(var.equals("contRegDep")){
        Dependencia regDep2=(Dependencia)session.getAttribute("regDep2");
    %>
            <%if(mensaje!=null){%>
@@ -141,8 +138,7 @@ if(var!=null)
             <!--<a id="regDep" href="javascript:hiddenThis(divRegDep);venRegDep();"><input type="button" id="btnregDep" name="btnregDep"  value="Atras"></a>-->
    <%         
    }
-    if(var.equals("eliminarDep"))
-   {
+    if(var.equals("eliminarDep")){
    Dependencia eliminarD=(Dependencia)session.getAttribute("eliminarDep");
    %>
          <fieldset id="fls_mostrar">
@@ -169,63 +165,83 @@ if(var!=null)
         </fieldset>
    <%}
     if(var.equals("actualizarDep")){
-        Dependencia actualizarDep=(Dependencia)session.getAttribute("actualizarDep"); %>
+        Dependencia actualizarDep=(Dependencia)session.getAttribute("actualizarDep"); 
+        String paso=(String)session.getAttribute("actualizarDepPaso");%>
+        
          <fieldset id="fls_mostrar">
+            <%boolean disabled = paso.equals("paso1")?false:true;%>
                 <legend>Datos de la Dependencia</legend>
-                <table>
-                    <tr>
-                        <td><p style="color: black;">Nombre:</p></td>
-                        <td style="height: auto; text-align: left; padding-left: 5px;"><input type="text" name="txt_nombre" id="txt_nombre"  maxlength="25" value="<%if(actualizarDep!=null){ %><%=actualizarDep.darNombre() %><%}%>" required></td>
-                    </tr>
-                    <tr>
-                        <td>Descripción:</td>
-                        <td style="height: auto; text-align: left; padding-left: 5px;"><textarea style="width: 200px; height: 100px; " type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="100" required><%if(actualizarDep!=null){ %><%=actualizarDep.darDescripcion()%><%}%></textarea> </td>
-                    </tr>
-                </table>
-            </fieldset>
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post"> 
+                    <%if(mensaje!=null){%>
+                    <h4 style="color: red; font-size: 13px;"><%=mensaje%></h4>
+                            <%session.removeAttribute("mensaje");
+                    }%>
+                    <input id="accion" name="accion" type="hidden" value="actualizarPaso1"/>
+                    <table>
+                        <tr>
+                            <td><p style="color: black;">Nombre:</p></td>
+                            <td style="height: auto; text-align: left; padding-left: 5px;"><input type="text" name="txt_nombre" id="txt_nombre"  maxlength="25" value="<%if(actualizarDep!=null){ %><%=actualizarDep.darNombre() %><%}%>" <%if(disabled){%>disabled<%}%>  required></td>
+                        </tr>
+                        <tr>
+                            <td>Descripción:</td>
+                            <td style="height: auto; text-align: left; padding-left: 5px;"><textarea style="width: 200px; height: 100px; " type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="100" <%if(disabled){%>disabled<%}%> required><%if(actualizarDep!=null){ %><%=actualizarDep.darDescripcion()%><%}%></textarea> </td>
+                        </tr>
+                    </table>
+                    <%if(!disabled){ %>
+                        <input  type="submit"  id="btnForm" name="btnregDep"  value="Siguiente">
+                    <%}%>      
+                </form>    
+            <%if(disabled){ %>
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
+                    <input type="submit"  id="btnForm" name="btnregDep"  value="Editar">
+                    <input id="accion" name="accion" type="hidden" value="volverPaso1"/>
+                </form>
+                <%}%>     
+        </fieldset>
                     
-            <fieldset id="fls_mostrar">
-                <legend>Horarios</legend>
-                <table>
-                    <tr style="height: 30px;" id="tr_rows">
-                        <td>Jornada</td><td>Inicio</td><td>Fin</td><td>Cupos</td><td colspan="2"></td>
-                    </tr>
-                <%List<Jornada> jornadas =actualizarDep.darJornadas(); 
-                if(jornadas.isEmpty()){
-                %>
-                    <tr>
-                        <td colspan="4">No hay datos</td>
-                    </tr>
-                <%
-                }
-                else{
-                    int color=0;
-                    for(Jornada j :actualizarDep.darJornadas()){
-                        
-                        for(Horario h:j.getHorarios()){
-                        
-                        %>
-                            <tr class="tr_list"  <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%>>
-                                <td ><%=j.getJornada() %></td><td><%=h.getDesde() %> </td><td><%=h.getHasta() %></td><td><%=h.getTotalCupos() %></td>
-                                <form action="GestionDependencias" method="post">
-                                    <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png"></td>
-                                    <input type="hidden" id="idDependencia" name="idDependencia" value="<%=h.getId() %>">
-                                    <input type="hidden" id="accion" name="accion" value="eliminarHorarioDep">
-                                </form>
-                                <form action="ContratacionMonitoresServlet" method="post">
-                                    <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png"></td>
-                                    <input type="hidden" id="idDependencia" name="idDependencia" value="<%=h.getId()%>">
-                                    <input type="hidden" id="accion" name="accion" value="actualizarHorarioDep">
-                                </form>
-                           </tr>
-                        <%
-                        }
-                       if(color==0){color=1;}else{color=0;}
-                    }
-                } 
+       <fieldset id="fls_mostrar">
                 
-                %>
-                </table>
+             <%disabled=paso.equals("paso2")?false:true;%>
+
+            <legend>Horarios</legend>
+            <table>
+                <tr style="height: 30px;" id="tr_rows">
+                    <td>Jornada</td><td>Inicio</td><td>Fin</td><td>Cupos</td><td colspan="2"></td>
+                </tr>
+            <%List<Jornada> jornadas =actualizarDep.darJornadas(); 
+            if(jornadas.isEmpty()){ %>
+                <tr>
+                    <td colspan="4">No hay datos</td>
+                </tr>
+            <%}
+            else{
+                int color=0;
+                for(Jornada j :actualizarDep.darJornadas()){
+
+                    for(Horario h:j.getHorarios()){%>
+                        <tr class="tr_list"  <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%> >
+                            <td><%=j.getJornada() %></td>
+                            <td><%=h.getDesde() %> </td>
+                            <td><%=h.getHasta() %></td>
+                            <td><%=h.getTotalCupos() %></td>
+                            <form action="GestionDependencias" method="post">
+                                <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar" <%if(disabled){%> style="visibility: hidden;" <%}%>></td>
+                                <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId() %>">
+                                <input type="hidden" id="accion" name="accion" value="eliminarHorarioDep">
+                            </form>
+                            <form action="GestionDependencias" method="post">
+                                <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar" <%if(disabled){%>style="visibility: hidden;" <%}%>></td>
+                                <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId()%>">
+                                <input type="hidden" id="accion" name="accion" value="actualizarPaso2">
+                            </form>
+                       </tr>
+                    <%}
+                   if(color==0){color=1;}else{color=0;}
+                }
+            } 
+            %>
+            </table>          
+        </fieldset>
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
                     <input  type="submit"  id="btnForm" name="btnregDep"  value="Guardar Cambios">
                     <input id="accion" name="accion" type="hidden" value="finalizarActDep"/>
@@ -234,7 +250,6 @@ if(var!=null)
                     <input type="submit"  id="btnForm" name="btnregDep"  value="Cancelar">
                     <input id="accion" name="accion" type="hidden" value="cancelar"/>
                 </form>
-            </fieldset>
    <%}
     if(var.equals("verDependencia")){
         String idDependencia=request.getParameter("idDependencia");
@@ -266,7 +281,7 @@ if(var!=null)
                                <option onclick="javascript:cambiarCuposCbx('0')" selected="selected" value="0">Seleccione...</option>       
                             </select>
                         </td>    
-                        <td id="tdCupos">Cupos<br>T: 0  |  D: 0</td>
+                        <td id="tdCupos">Cupos:<br>T: 0  |  D: 0</td>
                     </tr>
                     <tr style="text-align: left; font-size: 10px; font-family: cursive;">
                         <td></td><td></td><td colspan="3">T : Totales<br>D : Disponibles</td>
@@ -293,7 +308,7 @@ if(var!=null)
             else{
                 Horario h= GestionDependencias.buscarHorario(idHorario); 
                 %>
-                    Cupos<br>T: <%if(h!=null){%> <%=h.getTotalCupos()%><%}%>  | D: <%if(h!=null){%> <%=h.getCuposDisponibles() %><%}%> 
+                    Cupos:<br>T: <%if(h!=null){%> <%=h.getTotalCupos()%><%}%>  | D: <%if(h!=null){%> <%=h.getCuposDisponibles() %><%}%> 
                 <%
             }
         }

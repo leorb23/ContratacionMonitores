@@ -19,25 +19,7 @@ function venRegDep() {
         
         //hide : "pulsate",
         resizable : "false",
-       // position : "center",
         modal : "true"
-//    buttons : {
-//        "Entrar" : function() {
-//            
-//            if(validarRegDep()){
-//                var forma = document.getElementById("formRegDep");
-//                forma.action = "../ContratacionMonitoresServlet";
-//                forma.method="post";
-//                forma.submit();
-//                return true;
-//            }
-//            else
-//                return false;    
-//        },
-//        "Cancelar" : function() {
-//                $(this).dialog("close");
-//        }
-//    }
     });
 }
 
@@ -86,6 +68,28 @@ function venVerDep($idDependencia){
     $("#divVerDep").dialog({
         width : 500,
         height : 350,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venRegEst(){
+    $(document).ready(function(){
+          $('#divRegEst').load('util/formulariosEstudiantes.jsp?var=registrarEstudiante');
+    });	
+    $("#divRegEst").dialog({
+        width : 500,
+        height : 350,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venIngresoEstudiantes(){
+    $(document).ready(function(){
+          $('#divIngreso').load('util/formulariosEstudiantes.jsp?var=ingresar');
+    });	
+    $("#divIngreso").dialog({
+        width : 300,
+        height : 190,
         resizable : "false",
         modal : "true"
     });

@@ -16,7 +16,7 @@
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
-<link rel="shortcut icon" href="img/favicon.jpg" />
+<link rel="shortcut icon" href="img/favicon.png" />
 <header>
     <div id="cabecera">
         <div>

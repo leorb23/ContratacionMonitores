@@ -34,9 +34,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp" /> 
-        
         <jsp:include page="divModal.jsp" /> 
-
          <section>
             <%if(admin!=null){%> 
             <div id="contenedor">
@@ -67,21 +65,12 @@
 
                 
                 <table>
-<!--                    <tr id="tr_link_new_dep">
-                        <td>
-                            <a id="regDep" href="javascript:venRegDep();"><img class="icono" src="img/icon_add.png"/></a>
-                            
-                        </td>
-                    </tr>-->
                     <th  colspan="7">Lista de Dependencias</th> 
                     <tr id="tr_rows" >                   
                         <td>Nombre</td>
                         <td>Descripcion</td>
                         <td style="padding-right: 15px;">C.T</td>
                         <td style="padding-right: 15px;">C.D</td>
-<!--                        <td>Jornada</td>
-                        <td>Horario</td>
-                        <td>Cupos Disp.</td>-->
                         <td colspan="3"><a class="icono" id="regDep" href="javascript:venRegDep();"><img src="img/icon_add.png" title="Nueva"/></a></td>
                     </tr>
                     <%
@@ -113,9 +102,8 @@
                 </table>  
             </div>
          </section>
+         <jsp:include page="footer.jsp"/>           
          <%} else{ response.sendRedirect("admin.jsp"); }%>
-         
-         
 <!--       VERIFICA SI EL ADMIN ESTA EN UN PROCESO DE GESTION DE UNA DEPENDENCIA  -->
        <%
             Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            

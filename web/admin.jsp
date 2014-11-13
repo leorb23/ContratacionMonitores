@@ -30,40 +30,6 @@
     </head>
     <body>
         <jsp:include page="header.jsp" />
-<!--        <header>
-            <div id="cabecera">
-                <div>
-                    <a href="../index.jsp"><img src="../img/logo.png"></a>
-                </div>
-                <div>
-                    <h1>Contratacion de Monitores</h1>
-                </div>
-            </div>
-            <div id="barraNavegacion">
-                <nav id="barraNavPrincipal">
-                    <ul>
-                        <li><a href="../index.jsp" >Inicio</a></li>
-                        <li><a href="../pruebas.jsp">Pruebas</a></li> 
-                        <%if(admin==null) {%>
-                        <li><a href="../dependenciaView.jsp">Dependencias</a></li>
-                        <li><a href="../estudiante.jsp">Estudiantes</a></li>
-                        <%}%>
-                        <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
-                    </ul>
-                </nav>
-            </div>
-            <%if(admin!=null) {%>
-            <div id="barraSecundaria">
-                <nav id="barraNavSecundaria">
-                    <ul>
-                        <li><a href="dependencia.jsp" >Dependencias</a></li>
-                        <li><a href="aspirante.jsp">Aspirantes</a></li> 
-                        <li><a href="monitor.jsp">Monitores</a></li>                       
-                    </ul>
-                </nav>
-            </div>   
-            <%}%>
-        </header>      -->
         <section>
             <div id="contenedor">
             <%if(mensaje!=null){%>
@@ -91,10 +57,12 @@
                 </div>  
             <%}else if(admin!=null) {%>           
             <label>Administrador : <%=admin.darNombre() %></label><br>  
-            <form action="GestionAdministrador" method="POST">
-                <input type="submit"  value="Cerrar Sesion">
+            <form action="GestionAdministrador" method="post" class="icono">
+                <div style="width: 70px; height: 70px; float: right;" >
+                    <input class="iconoGrande" type="image" id="btn_img" src="img/icon_salir.png" title="Salir">
+                </div>
                 <input type="hidden" id="accion" name="accion" value="cerrar">
-            </form><br>   
+            </form> 
             <div>      
                 <%if(eliminar!= null ){%>
                 <div id="div_eliminar">
@@ -265,9 +233,7 @@
             <%}%> 
         </div>
         </section>  
-        <footer>
-            <a href="#">CocoSoft</a>
-        </footer>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>
 

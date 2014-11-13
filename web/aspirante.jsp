@@ -34,34 +34,6 @@
     </head>
     <body>
         <jsp:include page="header.jsp" />
-<!--        <header>
-            <div id="cabecera">
-                <div>
-                    <a href="../index.jsp"><img src="../img/logo.png"></a>
-                </div>
-                <div>
-                    <h1>Contratacion de Monitores</h1>
-                </div>
-            </div>
-            <div id="barraNavegacion">
-                <nav id="barraNavPrincipal">
-                    <ul>
-                        <li><a href="../index.jsp" >Inicio</a></li>
-                        <li><a href="../pruebas.jsp">Pruebas</a></li> 
-                        <li><a href="admin.jsp" style="background:#56a2ff;height: 32px;"><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
-                    </ul>
-                </nav>
-            </div>
-            <div id="barraSecundaria">
-                <nav id="barraNavSecundaria">
-                    <ul>
-                        <li><a href="dependencia.jsp" >Dependencias</a></li>
-                        <li><a href="aspirante.jsp" style="background:#56a2ff;height: 32px;">Aspirantes</a></li> 
-                        <li><a href="monitor.jsp" >Monitores</a></li>                       
-                    </ul>
-                </nav>
-            </div>          
-        </header>   -->
         <%if(admin!=null) {%> 
          <section>
             <div id="contenedor">
@@ -138,5 +110,6 @@
             </div>
          </section>
          <%} else{ response.sendRedirect("admin.jsp"); }%>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

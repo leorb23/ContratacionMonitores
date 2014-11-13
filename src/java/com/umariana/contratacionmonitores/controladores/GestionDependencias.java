@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
@@ -140,19 +134,62 @@ public class GestionDependencias extends HttpServlet {
                    sesion.removeAttribute("depExiste");
                    sesion.removeAttribute("regDep1");
                    sesion.removeAttribute("regDep2");
+                   sesion.removeAttribute("actualizarDepPaso");
                    response.sendRedirect("dependencia.jsp");
                    break;    
                case"actualizarD":
                    idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
                    Dependencia update = instance.buscarDependencia(idDependencia);
                    sesion.setAttribute("actualizarDep", update);
+                   sesion.setAttribute("actualizarDepPaso", "paso1");
                    sesion.removeAttribute("eliminarDep");   
                    sesion.removeAttribute("depExiste");
                    sesion.removeAttribute("regDep1");
                    sesion.removeAttribute("regDep2");
                    response.sendRedirect("dependencia.jsp");
                    break;
-               
+               case"volverPaso1":
+                   sesion.setAttribute("actualizarDepPaso", "paso1");
+                   response.sendRedirect("dependencia.jsp");
+                   break;
+               case"actualizarPaso1":
+                   
+                   update =(Dependencia)sesion.getAttribute("actualizarDep");
+                   nom = request.getParameter("txt_nombre").toUpperCase().trim();
+                   des= request.getParameter("txt_descripcion");
+                   if(instance.existeDependencia(nom) && !update.darNombre().equalsIgnoreCase(nom)){
+                        sesion.setAttribute("mensaje", "El nombre de la dependencia ya existe.");
+                   }else{
+                       update.cambiarNombre(nom);   
+                       sesion.setAttribute("actualizarDepPaso", "paso2");
+                   }
+                   update.cambiarDescripcion(des);
+                   sesion.setAttribute("actualizarDep", update);
+                   response.sendRedirect("dependencia.jsp");
+                   break;
+               case"actualizarDPaso2":
+                   sesion.setAttribute("actualizarDepPaso", "paso3");
+                   response.sendRedirect("dependencia.jsp");
+                   break;
+               case"actualizarDPaso3":
+                   sesion.setAttribute("actualizarDepPaso", "paso2");
+                   response.sendRedirect("dependencia.jsp");
+                   break;    
+               case"eliminarHorarioDep":
+                   update =(Dependencia)sesion.getAttribute("actualizarDep");
+                   String idHorario=request.getParameter("idHorario");
+                   update.eliminarHorario(idHorario);
+                   sesion.setAttribute("actualizarDep", update);
+                   sesion.setAttribute("actualizarDepPaso", "paso2");
+                   response.sendRedirect("dependencia.jsp");
+                   break;
+               case"finalizarActDep":
+                   update =(Dependencia)sesion.getAttribute("actualizarDep");
+                   instance.modificarDependencia(update);                  
+                   sesion.removeAttribute("actualizarDep");
+                   sesion.removeAttribute("actualizarDepPaso");
+                   response.sendRedirect("dependencia.jsp");
+                   break;                  
            }
            ContratacionMonitoresServlet.setearSesion(sesion);
            //response.sendRedirect("dependencia.jsp");
@@ -187,8 +224,4 @@ public class GestionDependencias extends HttpServlet {
        }
        return null;
     }
-    public void removerAtributosSesion(){
-        
-    }
-    
 } 

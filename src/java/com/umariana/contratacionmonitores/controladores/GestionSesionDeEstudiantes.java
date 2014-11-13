@@ -87,19 +87,10 @@ public class GestionSesionDeEstudiantes extends HttpServlet {
                     limpiarAtributosSesion();
                     break; 
                     
-                case "reg_estu":
-                    Estudiante estudiante = (Estudiante)sesion.getAttribute("estudiante");
-                    String registrar=request.getParameter("select_registrar");
-                    if(registrar.equals("si")){
-                        limpiarAtributosSesion();
-                        Aspirante aspirante =instance.registrarAspirante2(estudiante.darIdentificacion());
-                        sesion.setAttribute("mensaje","Se registro Correctamente el estudiante con identificacion : "+aspirante.darIdentificacion());
-                        sesion.setAttribute("aspirante", aspirante);    
-                    }
-                    break;       
+                
             }
         } 
-        catch (ExcepcionNoExiste | ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        catch (ExcepcionNoExiste | SQLException ex) {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
@@ -108,7 +99,7 @@ public class GestionSesionDeEstudiantes extends HttpServlet {
 
     public void limpiarAtributosSesion()
     {
-        sesion.removeAttribute("admin");
+        //sesion.removeAttribute("admin");
         sesion.removeAttribute("eliminar");
         sesion.removeAttribute("mensaje");
         sesion.removeAttribute("aspirante");

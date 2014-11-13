@@ -108,6 +108,10 @@ section{
     -moz-box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
     box-shadow: 21px 24px 27px -8px rgba(0,0,0,1);
 }
+div#contenedor{
+    width: 90%;
+    min-height:200px;
+}
 
 /*-------------------------------*/
 /*TABLA GENERAL*/
@@ -142,6 +146,19 @@ table td#td_padd{
 table select{
     width: 100px;
 }
+/*tabla registrar estudiante*/
+table#tbl_reg_est th{
+    font-size: 15px;
+    padding-bottom: 15px;
+}
+table#tbl_reg_est tr{
+    height: 30px;
+}
+table#tbl_reg_est td{
+    text-align: left; 
+    padding-left: 5px;
+}
+
 /*-------------------------------*/
 
 
@@ -263,6 +280,18 @@ fieldset#fls_mostrar input[type=number]{
 .icono input:hover{
     width: 27px;
     height: 27px;
+}
+.iconoGrande input{
+    width: 50px;
+    height: 50px;
+}
+.iconoGrande input:hover{
+    width: 47px;
+    height: 47px;
+}
+.msg_error{
+    color: red;
+    background: white;
 }
 /*-------------------------------*/
 /*PIE DE PAGINA*/
