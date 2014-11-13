@@ -5,6 +5,7 @@ import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Estudiante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -53,6 +54,29 @@ public class AspiranteDAO {
         }
         rs.close();
         return buscado;
+    }
+    public ArrayList<Aspirante> darAspirantes() throws SQLException {
+        ArrayList<Aspirante> aspirantes=new ArrayList<Aspirante>();
+        rs=ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery(" select * from "+tabla);       
+        while (rs.next())
+        { 
+            Aspirante buscado = new Aspirante();
+            buscado.cambiarIdentificacion(rs.getString("identificacion"));
+            buscado.cambiarPrimerNombre(rs.getString("nombre1"));
+            buscado.cambiarSegundoNombre(rs.getString("nombre2"));
+            buscado.cambiarPrimerApellido(rs.getString("apellido1"));
+            buscado.cambiarSegundoApellido(rs.getString("apellido2"));
+            buscado.cambiarSemestreActual(Integer.parseInt(rs.getString("semestre_actual")));
+            buscado.cambiarEstadoMatricula(rs.getString("estado_matricula"));
+            buscado.cambiarPromedioAcumulado(Double.parseDouble(rs.getString("promedio_acumulado")));	
+            buscado.cambiarPromedioAcumulado(Integer.parseInt(rs.getString("puntaje_prueba")));
+            buscado.cambiarPromedioAcumulado(Integer.parseInt(rs.getString("puntaje_entrevista")));	
+            buscado.cambiarPromedioAcumulado(Double.parseDouble(rs.getString("puntaje_total")));
+            buscado.cambiarFoto(null);
+            aspirantes.add(buscado);
+        }
+        rs.close();
+        return aspirantes;
     }
 
     void actualizarAspirante(Aspirante aspirante) throws SQLException {

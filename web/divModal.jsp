@@ -29,3 +29,7 @@
 <div id="divIngreso" name="divIngreso" class="ventana" class="ui-widget-content" title="Ingreso Estudiantes...">
     
 </div>
+<!--ventanas div para aspirantes-->
+<div id="divDelAsp" name="divDelAsp" class="ventana" class="ui-widget-content" title="Eliminar Aspirante...">
+    
+</div>

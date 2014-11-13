@@ -95,6 +95,20 @@ function venIngresoEstudiantes(){
     });
 }
 
+//aspirantes
+function venDelAsp($identificacion){
+    $(document).ready(function(){
+          $('#divDelAsp').load('util/formulariosAspirantes.jsp?var=eliminarAspirante&identificacion='+$identificacion);
+          
+    });	
+    $("#divDelAsp").dialog({
+        width : 400,
+        height : 250,
+        resizable : "false",
+        modal : "true"
+    });
+}
+
 function cambiarHorarioCbx($idJornada){
     $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+$idJornada);
     cambiarCuposCbx("0");

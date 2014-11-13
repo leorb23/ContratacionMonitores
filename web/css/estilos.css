@@ -264,6 +264,14 @@ fieldset#fls_mostrar input[type=number]{
     width: 33px;
     height: 33px;
 }
+.icono_small img{
+    width: 30px;
+    height: 30px;
+}
+.icono_small img:hover{
+    width: 27px;
+    height: 27px;
+}
 /*.icono img#imgVer{
     width: 30px;
     height: 30px;

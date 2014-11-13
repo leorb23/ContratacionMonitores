@@ -293,9 +293,8 @@ public class ContratacionMonitoresDAO {
      * Metodo que retorna la lista de aspirantes que estan registrados en la base de datos del sistema
      * @return ArrayList<Aspirante>
      */
-    public ArrayList<Aspirante> darAspirantesRegistrados(){
-    
-        return new ArrayList<Aspirante>();
+    public ArrayList<Aspirante> darAspirantesRegistrados() throws SQLException{
+        return aspiranteDAO.darAspirantes();
     }
     /**
      * Metodo que retorna la lista de Monitores que estan registrados en la base de datos del sistema

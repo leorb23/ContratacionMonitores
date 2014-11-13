@@ -97,7 +97,7 @@
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
                     <tr style="text-align: left; font-size: 10px; font-family: cursive;">
-                        <td>C.T : Cupos Totales<br>C.D : Cupos Disponibles</td>
+                        <td>C.T : Cupos Totales<br>C.D : Cupos Disponibles<br>N° Dependencias <%=dependencias.size() %></td>
                     </tr>
                 </table>  
             </div>

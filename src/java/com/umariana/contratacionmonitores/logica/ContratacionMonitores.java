@@ -50,18 +50,12 @@ public class ContratacionMonitores {
     {             
         
         cmDAO = new ContratacionMonitoresDAO();
-        aspirantes   =  cmDAO.darAspirantesRegistrados();
-        resultados   =  cmDAO.darResultadosRegistrados();
-        monitores    =  cmDAO.darMonitoresRegistrados();
+        aspirantes   =  new ArrayList<Aspirante>();
+        resultados   =  new ArrayList<Resultado>();
+        monitores    =  new ArrayList<Monitor>();
         dependencias =  new ArrayList();   
-       
-        
+
         registrosDePrueba();
-        
-       
-        
-        
-        
     }           
     //
     //METODOS
@@ -146,7 +140,7 @@ public class ContratacionMonitores {
      * Retorna la lista de aspirantes
      * @return aspirantes ArrayList<Aspirante>
      */
-    public ArrayList<Aspirante> darAspirantes() 
+    public ArrayList<Aspirante> darAspirantes() throws SQLException 
     {
         aspirantes= cmDAO.darAspirantesRegistrados();
         return aspirantes;
@@ -281,7 +275,7 @@ public class ContratacionMonitores {
         return aspirante;
     }
     
-    public Estudiante buscarEstudianteSistema(String identificacion) throws ExcepcionNoExiste{
+    public Estudiante buscarEstudianteSistema(String identificacion) throws ExcepcionNoExiste, SQLException{
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null)
             return aspirante;
@@ -415,16 +409,7 @@ public class ContratacionMonitores {
      */
     public void eliminarAspirante(String identificacion) throws ExcepcionNoExiste, SQLException
     {
-        Aspirante eliminar = buscarAspirante(identificacion );
-            if( eliminar != null )
-            {                   
-                aspirantes.remove(eliminar);
-                cmDAO.eliminarAspiranteEnBD(identificacion);
-            }
-            else
-            {
-                throw new ExcepcionNoExiste("El Estudiante que desea eliminar no existe!!!");
-            }		
+        cmDAO.eliminarAspiranteEnBD(identificacion);     
     }
     /**
      * El metodo elimina un monitor registrado en el sistema
@@ -449,18 +434,18 @@ public class ContratacionMonitores {
      * @param identificacion != null && != ""
      * @return Aspirante
      */
-    public Aspirante buscarAspirante(String identificacion)
+    public Aspirante buscarAspirante(String identificacion) throws SQLException
     {
-        Aspirante aspiranteBuscado = null;
-        for (int i=0;i < aspirantes.size() ;i++ ) {
-            aspiranteBuscado = aspirantes.get(i);
-            if(aspiranteBuscado.darIdentificacion().equals(identificacion))
-            {              
-                return aspiranteBuscado;
-            }
-        }
+//        Aspirante aspiranteBuscado = null;
+//        for (int i=0;i < aspirantes.size() ;i++ ) {
+//            aspiranteBuscado = aspirantes.get(i);
+//            if(aspiranteBuscado.darIdentificacion().equals(identificacion))
+//            {              
+//                return aspiranteBuscado;
+//            }
+//        }
 
-        return null;
+        return cmDAO.buscarAspirante(identificacion);
     }    
     
     /**
@@ -470,7 +455,7 @@ public class ContratacionMonitores {
      * @throws ExcepcionYaExiste Lanza la excepcion si la postulacion que desea quitar no existe
      * @throws ExcepcionNoExiste Lanza la excepcion si si el aspirante no existe
      */
-    public void agregarPostulacionAspirante(String identificacion, int idDependencia) throws ExcepcionYaExiste, ExcepcionNoExiste{
+    public void agregarPostulacionAspirante(String identificacion, int idDependencia) throws ExcepcionYaExiste, ExcepcionNoExiste, SQLException{
         Aspirante aspirante = buscarAspirante(identificacion);
         if(aspirante!=null){ 
             Dependencia buscada= buscarDependencia(idDependencia);
@@ -487,7 +472,7 @@ public class ContratacionMonitores {
      * @param idDependencia
      * @throws ExcepcionNoExiste 
      */
-    public void quitarPostualacionAspirante(String identificacion, int idDependencia) throws ExcepcionNoExiste{
+    public void quitarPostualacionAspirante(String identificacion, int idDependencia) throws ExcepcionNoExiste, SQLException{
         Aspirante aspirante= buscarAspirante(identificacion);
         if(aspirante!=null){    
             Dependencia buscada= buscarDependencia(idDependencia);

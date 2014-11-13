@@ -32,7 +32,7 @@ public class Aspirante extends Estudiante{
     }  
 
     public Aspirante() {
-        
+        postulaciones = new ArrayList<Postulacion>();
     }
 
     /**
