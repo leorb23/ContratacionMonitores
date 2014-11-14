@@ -73,5 +73,17 @@ public class JornadaDAO {
         return jornadas;
     }
 
+    Jornada buscarJornada(int idJornada) throws SQLException {
+        Jornada j= new Jornada();
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select * from "+tabla+" where id="+idJornada);
+        while(rs.next()){
+            j=new Jornada();
+            j.setId(rs.getInt("id"));
+            j.setJornada(rs.getString("jornada"));
+            j.setIdDependencia(rs.getInt("id_dependencia"));
+        }
+        return j;
+    }
+
     
 }

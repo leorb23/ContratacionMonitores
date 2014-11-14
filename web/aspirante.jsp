@@ -42,22 +42,7 @@
                 <%if(mensaje!=null){%>
                      <h4 style="color: black;"><%=mensaje%></h4>
                     <%session.removeAttribute("mensaje");
-                }%>
-                <%if(eliminarAspirante!= null ){%>
-                <div id="div_eliminar">
-                    <form action="ContratacionMonitoresServlet" method="POST">
-                        <h2>Seguro que desea eliminar el aspirante:</h2>
-                        <p>Nombre: <%=eliminarAspirante.darPrimerNombre() %> <%=eliminarAspirante.darPrimerApellido() %></p>
-                        <p>Identificado: <%=eliminarAspirante.darIdentificacion() %></p>
-                        <select id="select_eliminar" name="select_eliminar">
-                        <option value="si">Si</option>
-                        <option value="no">No</option>
-                        </select>
-                        <input type="submit" id="btn_enviar" value="Aceptar">
-                        <input type="hidden" id="accion" name="accion" value="confirmarEliminar">
-                    </form>
-                </div>
-                <%}%>      
+                }%>            
                <%ArrayList<Aspirante> aspirantes = ContratacionMonitoresServlet.darComunicacionLogica().darAspirantes(); %>
                 <table>
                     <th  colspan="10"><h3>Lista de Aspirantes</h3></th>  

@@ -33,3 +33,7 @@
 <div id="divDelAsp" name="divDelAsp" class="ventana" class="ui-widget-content" title="Eliminar Aspirante...">
     
 </div>
+<!--ventanas div para monitores-->
+<div id="divVerDepMon" name="divVerDepMon" class="ventana" class="ui-widget-content" title="Informacion Dependencia del Monitor...">
+    
+</div>

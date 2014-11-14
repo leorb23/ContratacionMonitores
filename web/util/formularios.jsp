@@ -224,6 +224,8 @@ if(var!=null){
                             <td><%=h.getDesde() %> </td>
                             <td><%=h.getHasta() %></td>
                             <td><%=h.getTotalCupos() %></td>
+                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('eliminarHorario','<%=h.getId()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
+                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('editarHorario','<%=h.getId() %>');"><img src="img/icon_update.png" title="Editar"/></a></td> 
                             <form action="GestionDependencias" method="post">
                                 <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar" <%if(disabled){%> style="visibility: hidden;" <%}%>></td>
                                 <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId() %>">

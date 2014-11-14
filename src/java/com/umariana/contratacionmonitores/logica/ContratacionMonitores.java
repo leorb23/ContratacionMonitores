@@ -55,7 +55,7 @@ public class ContratacionMonitores {
         monitores    =  new ArrayList<Monitor>();
         dependencias =  new ArrayList();   
 
-        registrosDePrueba();
+        //registrosDePrueba();
     }           
     //
     //METODOS
@@ -100,7 +100,7 @@ public class ContratacionMonitores {
      * Retorna la lista de monitores
      * @return monitores
      */
-    public ArrayList<Monitor> darMonitores() 
+    public ArrayList<Monitor> darMonitores() throws SQLException, ConnectionException 
     {
         monitores=cmDAO.darMonitoresRegistrados();
         return monitores;
@@ -416,7 +416,7 @@ public class ContratacionMonitores {
      * @param identificacion != null && != ""
      * @throws ExcepcionNoExiste 
      */
-    public void eliminarMonitor(String identificacion) throws ExcepcionNoExiste
+    public void eliminarMonitor(String identificacion) throws ExcepcionNoExiste, SQLException
     {
         Monitor eliminar = buscarMonitor(identificacion );
             if( eliminar != null )
@@ -487,18 +487,18 @@ public class ContratacionMonitores {
      * @param identificacion != null && != ""
      * @return Monitor
      */
-    public Monitor buscarMonitor(String identificacion)
+    public Monitor buscarMonitor(String identificacion) throws SQLException
     {
-        Monitor monitorBuscado = null;
-        for (int i=0;i < monitores.size() ;i++ ) {
-            monitorBuscado = monitores.get(i);
-            if(monitorBuscado.darIdentificacion().equals(identificacion))
-            {              
-                return monitorBuscado;
-            }
-        }
+//        Monitor monitorBuscado = null;
+//        for (int i=0;i < monitores.size() ;i++ ) {
+//            monitorBuscado = monitores.get(i);
+//            if(monitorBuscado.darIdentificacion().equals(identificacion))
+//            {              
+//                return monitorBuscado;
+//            }
+//        }
 
-        return null;
+        return cmDAO.buscarMonitor(identificacion);
     }    
 
    /**
@@ -686,8 +686,4 @@ public class ContratacionMonitores {
     public void modificarDependencia(Dependencia update) throws SQLException, ExcepcionYaExiste {
         cmDAO.actualizarDependenciaEnBd(update);
     }
-
-    
-
-    
 }

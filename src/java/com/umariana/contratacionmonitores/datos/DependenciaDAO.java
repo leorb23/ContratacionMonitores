@@ -78,4 +78,15 @@ public class DependenciaDAO {
         }
         return buscada;
     }
+    Dependencia buscarDependencia(int idDependencia) throws SQLException {
+       Dependencia buscada = null;
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select * from "+tabla+" where id ='"+idDependencia+"'");
+        while(rs.next()){
+            buscada=new Dependencia();
+            buscada.cambiarId(rs.getInt("id"));
+            buscada.cambiarNombre(rs.getString("nombre"));
+            buscada.cambiarDescripcion(rs.getString("descripcion"));
+        }
+        return buscada;
+    }
 }

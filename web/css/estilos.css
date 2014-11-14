@@ -301,6 +301,15 @@ fieldset#fls_mostrar input[type=number]{
     color: red;
     background: white;
 }
+.a_enlace{
+    font-family: cursive;
+    color:#c67284;
+    text-decoration:none;
+    font-size: 15px;
+}
+.a_enlace:hover{
+    color: red;
+}
 /*-------------------------------*/
 /*PIE DE PAGINA*/
 footer{

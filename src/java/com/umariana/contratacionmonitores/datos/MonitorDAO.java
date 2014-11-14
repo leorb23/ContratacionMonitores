@@ -3,6 +3,7 @@ package com.umariana.contratacionmonitores.datos;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,8 +30,8 @@ public class MonitorDAO {
             buscado.cambiarSemestreActual(Integer.parseInt(rs.getString("semestre_actual")));
             buscado.cambiarEstadoMatricula(rs.getString("estado_matricula"));
             buscado.cambiarPromedioAcumulado(Double.parseDouble(rs.getString("promedio_acumulado")));
-            buscado.cambiarPromedioAcumulado(Integer.parseInt(rs.getString("puntaje_prueba")));
-            buscado.cambiarPromedioAcumulado(Integer.parseInt(rs.getString("id_dependencia")));
+            buscado.cambiarPuntaje_prueba(Integer.parseInt(rs.getString("puntaje_prueba")));
+            buscado.cambiarIdHorario(Integer.parseInt(rs.getString("id_horario")));
             buscado.cambiarFoto(null);
         }
         rs.close();
@@ -57,6 +58,29 @@ public class MonitorDAO {
     void actualizarMonitor(Monitor monitor) throws SQLException {
         ContratacionMonitoresDAO.getStBdContratacionMonitores().
                 executeUpdate("update "+tabla+" set nombre1='"+monitor.darPrimerNombre()+"', apellido1='"+ monitor.darPrimerApellido()+"' where identificacion='"+monitor.darIdentificacion()+"'");
+    }
+
+    ArrayList<Monitor> darMonitores() throws SQLException {
+        ArrayList<Monitor> monitores= new ArrayList<>();
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery(" select * from " + tabla);
+        
+        while (rs.next()) {
+            Monitor buscado = new Monitor();
+            buscado.cambiarIdentificacion(rs.getString("identificacion"));
+            buscado.cambiarPrimerNombre(rs.getString("nombre1"));
+            buscado.cambiarSegundoNombre(rs.getString("nombre2"));
+            buscado.cambiarPrimerApellido(rs.getString("apellido1"));
+            buscado.cambiarSegundoApellido(rs.getString("apellido2"));
+            buscado.cambiarSemestreActual(Integer.parseInt(rs.getString("semestre_actual")));
+            buscado.cambiarEstadoMatricula(rs.getString("estado_matricula"));
+            buscado.cambiarPromedioAcumulado(Double.parseDouble(rs.getString("promedio_acumulado")));
+            buscado.cambiarPromedioAcumulado(Integer.parseInt(rs.getString("puntaje_prueba")));
+            buscado.cambiarIdHorario(Integer.parseInt(rs.getString("id_horario")));
+            buscado.cambiarFoto(null);
+            monitores.add(buscado);
+        }
+        rs.close();
+        return monitores;
     }
 
 }

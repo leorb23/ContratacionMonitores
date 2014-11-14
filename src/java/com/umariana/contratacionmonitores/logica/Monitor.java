@@ -14,6 +14,8 @@ public class Monitor extends Estudiante
      * Es el puntaje total de las pruebas que realizo
      */
     private double puntaje_prueba;
+    
+    private int idHorario;
  
      /**
      * Es el constructor de la clase Monitor
@@ -68,5 +70,12 @@ public class Monitor extends Estudiante
         this.puntaje_prueba = puntaje_prueba;
     }
     
+    public int darIdHorario() {
+        return idHorario;
+    }
+
+    public void cambiarIdHorario(int idHorario) {
+        this.idHorario = idHorario;
+    }
 
 }

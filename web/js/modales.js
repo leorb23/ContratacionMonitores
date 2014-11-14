@@ -109,6 +109,20 @@ function venDelAsp($identificacion){
     });
 }
 
+//monitores
+function venVerDepMon($identificacion){
+    $(document).ready(function(){
+          $('#divVerDepMon').load('util/formulariosMonitores.jsp?var=verDependenciaM&identificacion='+$identificacion);       
+    });	
+    $("#divVerDepMon").dialog({
+        width : 500,
+        height : 330,
+        resizable : "false",
+        modal : "true"
+    });
+}
+
+//combos anidados
 function cambiarHorarioCbx($idJornada){
     $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+$idJornada);
     cambiarCuposCbx("0");
@@ -116,11 +130,17 @@ function cambiarHorarioCbx($idJornada){
 function cambiarCuposCbx($idHorario){
     $('#tdCupos').load('util/formularios.jsp?var=cambiarHorario&idHorario='+$idHorario);
 }
-
-
 $(document).ready(function(){
     $('#slc_jornada').change(function(){
         var idJornada=$('#slc_jornada').val();
         $('#slc_horario').load('util/formularios.jsp?var=cambiarHorario&idJornada='+idJornada);
     });    
 });
+
+//enviar form
+function sendForm($var,$id){
+    if($var=='eliminarHorario'){
+        
+    }
+    
+}

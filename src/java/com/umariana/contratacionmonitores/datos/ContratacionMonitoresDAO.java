@@ -250,6 +250,13 @@ public class ContratacionMonitoresDAO {
         if(buscada!=null){
             buscada.cambiarJornadas(darJornadasDependencia(buscada.darId()));       
         }
+        return null;
+    }
+    public Dependencia buscarDependencia(int idDependencia) throws SQLException{
+        Dependencia buscada= dependenciaDAO.buscarDependencia(idDependencia);
+        if(buscada!=null){
+            buscada.cambiarJornadas(darJornadasDependencia(buscada.darId()));       
+        }
         return buscada;
     }
     public void registrarDependenciaEnBD(Dependencia dependencia) throws  SQLException, ExcepcionYaExiste, ConnectionException{
@@ -299,10 +306,36 @@ public class ContratacionMonitoresDAO {
     /**
      * Metodo que retorna la lista de Monitores que estan registrados en la base de datos del sistema
      * @return ArrayList<Monitor>
+     * @throws java.sql.SQLException
+     * @throws com.umariana.contratacionmonitores.excepciones.ConnectionException
      */
-    public ArrayList<Monitor> darMonitoresRegistrados(){
-    
-        return new ArrayList<Monitor>();
+    public ArrayList<Monitor> darMonitoresRegistrados() throws SQLException, ConnectionException{
+        ArrayList<Monitor> monitores=monitorDAO.darMonitores();
+        ArrayList<Monitor> monitoresR=new ArrayList<>();
+        for(Monitor m:monitores){
+            monitoresR.add(setearDependencia(m));
+        }
+        return monitoresR;
+    }
+    /**
+     * Este metodo se encarga de asignarle al monitor la dependencia en la que esta trabajando
+     * @param m
+     * @return Monitor m
+     * @throws SQLException 
+     */
+    public Monitor setearDependencia(Monitor m) throws SQLException{
+        Dependencia d;        Jornada j;        Horario h;
+        ArrayList<Horario> hs=new ArrayList<>();
+        h = buscarHorario(m.darIdHorario());
+        hs.add(h);
+        ArrayList<Jornada> js=new ArrayList<>();
+        j = buscarJornada(h.getIdJornada());
+        js.add(j);
+        d = buscarDependencia(j.getIdDependencia());
+        j.setHorarios(hs);
+        d.cambiarJornadas(js);
+        m.cambiarDependencia(d);        
+        return m;
     }
     /**
      * Metodo que retorna la lista de Resultados que estan registrados en la base de datos del sistema
@@ -345,10 +378,10 @@ public class ContratacionMonitoresDAO {
             throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun aspirante");*/
         return null;
     }
-    private Monitor buscarMonitor(String identificacion) throws SQLException {
-         Monitor monitor = monitorDAO.buscarMonitor(identificacion); 
+    public Monitor buscarMonitor(String identificacion) throws SQLException {
+        Monitor monitor = monitorDAO.buscarMonitor(identificacion); 
         if(monitor!=null)
-            return  monitor;   
+            return  setearDependencia(monitor);   
         /*else
             throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun aspirante");*/
         return null;
@@ -478,5 +511,7 @@ public class ContratacionMonitoresDAO {
     public Horario buscarHorario(int idHorario) throws SQLException {
         return horarioDAO.buscarHorario(idHorario);
     }
-
+    public Jornada buscarJornada(int idJornada) throws SQLException{
+        return jornadaDAO.buscarJornada(idJornada);
+    }
 }
