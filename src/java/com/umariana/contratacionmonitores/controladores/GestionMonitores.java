@@ -12,8 +12,6 @@ import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -85,16 +83,16 @@ public class GestionMonitores extends HttpServlet {
         sesion= request.getSession(true);
         String accion = request.getParameter("accion");
         switch (accion){
-            case "eliminarAspirante":
+            case "eliminarMonitor":
                 String identificacion=request.getParameter("identificacion");
-                instance.eliminarAspirante(identificacion);              
+                instance.eliminarMonitor(identificacion);
                 break;
         }  
-        } catch (ExcepcionNoExiste | SQLException ex) {
+        } catch (SQLException ex) {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
-        response.sendRedirect("aspirante.jsp");
+        response.sendRedirect("monitor.jsp");
     }
 
     /**

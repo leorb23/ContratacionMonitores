@@ -59,4 +59,13 @@ public class HorarioDAO {
         }
         return horario;
     }
+
+    void aumentarCupo(int idHorario, int cupos) throws SQLException {     
+        int cuposDisponibles=cupos;
+        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select cupos_disponibles from "+tabla+" where id="+idHorario);
+        while(rs.next()){  
+            cuposDisponibles+=rs.getInt("cupos_disponibles");
+        }
+        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set cupos_disponibles="+cuposDisponibles+"where id ="+idHorario);       
+    }
 }

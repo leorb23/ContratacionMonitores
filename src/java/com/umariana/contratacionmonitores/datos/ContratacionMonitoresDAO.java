@@ -211,6 +211,8 @@ public class ContratacionMonitoresDAO {
         return encontrado;    
     }
     public void eliminarMonitorEnBD(String identificacion) throws SQLException{
+        Monitor m = buscarMonitor(identificacion);
+        horarioDAO.aumentarCupo(m.darIdHorario(), 1);
         monitorDAO.eliminarMonitor(identificacion);
     }
     private void actualizarMonitorEnBD(Monitor monitor) throws SQLException {

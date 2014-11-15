@@ -12,11 +12,19 @@ if(var!=null){
         Aspirante eliminar=GestionAspirantes.buscarAspirante(identificacion);%>
         <fieldset id="fls_mostrar">
             <legend>Eliminar Aspirante</legend>  
-            <div style="text-align: center;">¿Desea eliminar el monitor?</div>
+            <div style="text-align: center;">¿Desea eliminar el aspirante?</div>
             <br>
-            <div>Identificación: <%=eliminar.darIdentificacion() %></div>
-            <div>Nombres: <%=eliminar.darPrimerNombre()%><%if(eliminar.darSegundoNombre()!=null){%> <%=eliminar.darSegundoNombre() %><%}%>
-            <%=eliminar.darPrimerApellido() %><%if(eliminar.darSegundoApellido()!=null){%> <%=eliminar.darSegundoApellido() %><%}%></div>
+            <table id="tbl_ven">
+                <tr>
+                    <td>Identificación:</td><td><%=eliminar.darIdentificacion() %></td>
+                </tr>
+                <tr>
+                    <td>Nombres:</td><td><%=eliminar.darPrimerNombre()%><%if(eliminar.darSegundoNombre()!=null){%> <%=eliminar.darSegundoNombre() %><%}%></td>
+                </tr>
+                <tr>
+                    <td></td><td><%=eliminar.darPrimerApellido() %><%if(eliminar.darSegundoApellido()!=null){%> <%=eliminar.darSegundoApellido() %><%}%></td>
+                </tr>
+            </table>
             <br>
             <div style="text-align: center;">
                 <form action="GestionAspirantes" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">

@@ -19,8 +19,8 @@
     session.setAttribute("ubicacionPage", "dependencia.jsp");
     
     Administrador admin = (Administrador)session.getAttribute("admin");
-    String mensaje = (String)session.getAttribute("mensaje");
-    Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarDependencia");
+    //String mensaje = (String)session.getAttribute("mensaje");
+    //Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarDependencia");
     session.removeAttribute("eliminarMonitor");     
     session.removeAttribute("eliminarAspirante");     
     session.removeAttribute("eliminarString");
@@ -37,33 +37,7 @@
         <jsp:include page="divModal.jsp" /> 
          <section>
             <%if(admin!=null){%> 
-            <div id="contenedor">
-                <%if(eliminarD!= null ){%>
-                <div id="div_eliminar">
-                    <form action="ContratacionMonitoresServlet" method="POST">
-                        <h2>Seguro que desea eliminar la dependencia:</h2>
-                        <p>Id: <%=eliminarD.darId() %></p>
-                        <p>Nombre: <%=eliminarD.darNombre() %></p>
-                        <p>Horario: <%=eliminarD.darHorario() %></p>                
-                        <p>Descripción: <%=eliminarD.darDescripcion() %></p>
-                        
-                        <select id="select_eliminar" name="select_eliminar">
-                        <option value="si">Si</option>
-                        <option value="no">No</option>
-                        </select>
-                        <input type="submit" id="btn_enviar" value="Aceptar">
-                        <input type="hidden" id="accion" name="accion" value="confirmarEliminar">
-                    </form>
-                </div>
-                <%}%>
-                <%//if(mensaje!=null){%>
-<!--                     <h4 style="color: black;"><%//=mensaje%></h4>-->
-                     <%//session.removeAttribute("mensaje");
-                //}%>
-                
-                
-
-                
+            <div id="contenedor">           
                 <table>
                     <th  colspan="7">Lista de Dependencias</th> 
                     <tr id="tr_rows" >                   
@@ -89,15 +63,16 @@
                             <input type="hidden" id="accion" name="accion" value="eliminarDepPaso1">
                         </form>
                         <form action="GestionDependencias" method="post">
-                            <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar"></td>
+                            <td class="icono post" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="actualizarD">
                         </form>
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
-                    <tr style="text-align: left; font-size: 10px; font-family: cursive;">
-                        <td>C.T : Cupos Totales<br>C.D : Cupos Disponibles<br>N° Dependencias <%=dependencias.size() %></td>
+                    <tr id="tr_final">
+                        <td colspan="4">C.T : Cupos Totales<br>C.D : Cupos Disponibles</td>
+                        <td colspan="3">N° Dependencias <%=dependencias.size() %></td>
                     </tr>
                 </table>  
             </div>

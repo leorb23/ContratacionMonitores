@@ -61,15 +61,15 @@
                         <td><%=mon.darPrimerNombre()%><%if(mon.darSegundoNombre()!=null){%> <%=mon.darSegundoNombre() %><%}%></td>
                         <td><%=mon.darPrimerApellido() %><%if(mon.darSegundoApellido()!=null){%> <%=mon.darSegundoApellido() %><%}%></td>                 
                         <td><%=mon.darSemestreActual() %></td> 
-                        <td ><a class="a_enlace" href="#" onclick="javascript:venVerDepMon('<%=mon.darIdentificacion()%>');"><%=mon.darDependencia().darNombre() %></a></td>
-                        <td ><a class="icono_small" href="#" onclick="javascript:venRevPru('<%=mon.darIdentificacion()%>');"><img src="img/icon_pruebas.png" title="Revizar pruebas"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venDelAsp('<%=mon.darIdentificacion()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venActAsp('<%=mon.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venSelAsp('<%=mon.darIdentificacion()%>');"><img src="img/icon_config.png" title="Configuracion"/></a></td> 
+                        <td style="width: 40px;"><a class="a_enlace" href="#" onclick="javascript:venVerDepMon('<%=mon.darIdentificacion()%>');"><%=mon.darDependencia().darNombre() %></a></td>
+                        <td style="width: 40px;" ><a class="icono_small" href="#" onclick="javascript:venVerResMon('<%=mon.darIdentificacion()%>');"><img src="img/icon_pruebas.png" title="Revizar pruebas"/></a></td>
+                        <td style="width: 40px;"><a class="icono_small"  href="#" onclick="javascript:venDelMon('<%=mon.darIdentificacion()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
+                        <td style="width: 40px;"><a class="icono_small post"  href="#" onclick="javascript:venActAsp('<%=mon.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
+                        <td style="width: 40px;"><a class="icono_small post"  href="#" onclick="javascript:venSelAsp('<%=mon.darIdentificacion()%>');"><img src="img/icon_config.png" title="Configuracion"/></a></td> 
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
-                    <tr style="text-align: left; font-size: 10px; font-family: cursive;"><td>N° Monitores <%=monitores.size() %></td></tr>
+                    <tr id="tr_final"><td colspan="5"></td><td colspan="4">N° Monitores <%=monitores.size() %></td></tr>
                <%}
                else{%>
                <tr><td colspan="10" style="text-align: center;">No hay registros de monitores en el sistema</td></tr>

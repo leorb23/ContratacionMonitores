@@ -72,12 +72,12 @@
                         <%}%>
                         <td ><a class="icono_small" href="#" onclick="javascript:venRevPru('<%=asp.darIdentificacion()%>');"><img src="img/icon_pruebas.png" title="Revizar pruebas"/></a></td>
                         <td><a class="icono_small"  href="#" onclick="javascript:venDelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venActAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
+                        <td><a class="icono_small post"  href="#" onclick="javascript:venActAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
                         <td><a class="icono_small"  href="#" onclick="javascript:venSelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_select.png" title="Escoger"/></a></td> 
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>
-                    <tr style="text-align: left; font-size: 10px; font-family: cursive;"><td>N° Aspirantes <%=aspirantes.size() %></td></tr>
+                    <tr id="tr_final" ><td colspan="6"></td><td colspan="4">N° Aspirantes <%=aspirantes.size() %></td></tr>
                <%}
                else{%>
                <tr><td colspan="10" style="text-align: center;">No hay registros de aspirantes en el sistema</td></tr>

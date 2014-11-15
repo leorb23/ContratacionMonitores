@@ -416,17 +416,9 @@ public class ContratacionMonitores {
      * @param identificacion != null && != ""
      * @throws ExcepcionNoExiste 
      */
-    public void eliminarMonitor(String identificacion) throws ExcepcionNoExiste, SQLException
+    public void eliminarMonitor(String identificacion) throws SQLException
     {
-        Monitor eliminar = buscarMonitor(identificacion );
-            if( eliminar != null )
-            {                   
-                monitores.remove(eliminar);
-            }
-            else
-            {
-                throw new ExcepcionNoExiste("El Estudiante que desea eliminar no existe!!!");
-            }		
+        cmDAO.eliminarMonitorEnBD(identificacion);
     }
     
     /**

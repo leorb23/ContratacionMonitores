@@ -103,7 +103,7 @@ function venDelAsp($identificacion){
     });	
     $("#divDelAsp").dialog({
         width : 400,
-        height : 250,
+        height : 290,
         resizable : "false",
         modal : "true"
     });
@@ -121,6 +121,32 @@ function venVerDepMon($identificacion){
         modal : "true"
     });
 }
+function venDelMon($identificacion){
+    $(document).ready(function(){
+          $('#divDelMon').load('util/formulariosMonitores.jsp?var=eliminarMonitor&identificacion='+$identificacion);  
+          
+    });	
+    $("#divDelMon").dialog({
+        width : 400,
+        height : 290,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venVerResMon($identificacion){
+    $(document).ready(function(){
+          $('#divVerResMon').load('util/formulariosMonitores.jsp?var=verResultados&identificacion='+$identificacion);  
+          
+    });	
+    $("#divVerResMon").dialog({
+        width : 400,
+        height : 290,
+        resizable : "false",
+        modal : "true"
+    });
+}
+
+
 
 //combos anidados
 function cambiarHorarioCbx($idJornada){

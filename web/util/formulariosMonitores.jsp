@@ -33,4 +33,61 @@ if(var!=null){
             </div>
         </fieldset>
     <%}
+    if(var.equals("verResultados")){
+        String identificacion=request.getParameter("identificacion");
+        Monitor buscar=GestionMonitores.buscarMonitor(identificacion);%>
+        <fieldset id="fls_mostrar">
+            <legend>Informacion Resultados</legend>  
+            <br>
+            <div style="text-align: center;">Resultados de la prueba.</div>
+            <table id="tbl_ven">
+                <tr>
+                    <td>Identificación:</td><td><%=buscar.darIdentificacion() %></td>
+                </tr>
+                <tr>
+                    <td>Nombres:</td><td><%=buscar.darPrimerNombre()%> <%=buscar.darPrimerApellido() %></td>
+                </tr>
+                <tr>
+                    <td>Puntaje de la Prueba:</td><td><%=buscar.darPuntaje_prueba()%></td>
+                </tr>
+            </table>
+            <br>
+            <div style="text-align: center;">           
+                 <form action="" id="formRegDep" name="formRegDep" method="post" style="display: inline-block; ">
+                     <input style="width: 100px;" type="button" onclick="javascript:hiddenThis(divVerResMon);" id="btnForm" name="btnregDep"  value="Aceptar">
+                </form>
+            </div>
+        </fieldset>
+    <%}
+    if(var.equals("eliminarMonitor")){
+        String identificacion=request.getParameter("identificacion");
+        Monitor eliminar=GestionMonitores.buscarMonitor(identificacion);%>
+        <fieldset id="fls_mostrar">
+            <legend>Eliminar Monitor</legend>  
+            <div style="text-align: center;">¿Desea eliminar el monitor?</div>
+            <br>
+            <table id="tbl_ven">
+                <tr>
+                    <td>Identificación:</td><td><%=eliminar.darIdentificacion() %></td>
+                </tr>
+                <tr>
+                    <td>Nombres:</td><td><%=eliminar.darPrimerNombre()%><%if(eliminar.darSegundoNombre()!=null){%> <%=eliminar.darSegundoNombre() %><%}%></td>
+                </tr>
+                <tr>
+                    <td></td><td><%=eliminar.darPrimerApellido() %><%if(eliminar.darSegundoApellido()!=null){%> <%=eliminar.darSegundoApellido() %><%}%></td>
+                </tr>
+            </table>
+            <br>
+            <div style="text-align: center;">
+                <form action="GestionMonitores" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
+                  <input style="width: 100px;" type="submit"  id="btnForm" name="btnregDep"  value="Eliminar">
+                  <input  id="accion" name="accion" type="hidden" value="eliminarMonitor"/>
+                  <input  id="accion" name="identificacion" type="hidden" value="<%=eliminar.darIdentificacion() %>"/>
+                </form>
+                 <form action="" id="formRegDep" name="formRegDep" method="post" style="display: inline-block; ">
+                     <input style="width: 100px;" type="button" onclick="javascript:hiddenThis(divDelMon);" id="btnForm" name="btnregDep"  value="Cancelar">
+                </form>
+            </div>
+        </fieldset>
+    <%}
 }%>

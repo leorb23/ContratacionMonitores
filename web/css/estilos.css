@@ -110,7 +110,7 @@ section{
 }
 div#contenedor{
     width: 90%;
-    min-height:200px;
+    min-height:400px;
 }
 
 /*-------------------------------*/
@@ -123,7 +123,6 @@ table{
     margin-top: 10px;
     margin-bottom: 10px;
     border-collapse:collapse;
-   // border: none;
 }
 
 table th{
@@ -139,12 +138,21 @@ table tr#tr_rows{
     background: black; 
     color: white;
 }
+table tr#tr_final{
+    background: green;
+    opacity: 0.5;
+    text-align: left; 
+    font-size: 10px; 
+    font-family: cursive;
+    color: white;
+    height:20px;
+}
+table tr#tr_final td{
+    padding-left: 14px;
+}
 table td#td_padd{
     padding-left: 10px;
     padding-right: 5px;
-}
-table select{
-    width: 100px;
 }
 /*tabla registrar estudiante*/
 table#tbl_reg_est th{
@@ -158,7 +166,14 @@ table#tbl_reg_est td{
     text-align: left; 
     padding-left: 5px;
 }
-
+/*tabla para informacion*/
+table#tbl_ven{
+    width: 80%;
+    text-align: left;
+}
+table#tbl_ven tr{
+    height: 25px;
+}
 /*-------------------------------*/
 
 
@@ -309,6 +324,38 @@ fieldset#fls_mostrar input[type=number]{
 }
 .a_enlace:hover{
     color: red;
+}
+
+.post img,input {padding:0px}
+.post img:hover{
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;transition: all 1s ease;
+    -moz-transform: scale(1.2) rotate(-720deg) ;
+    -webkit-transform: scale(1.2) rotate(-720deg) ;
+    -o-transform: scale(1.2) rotate(-720deg) ;
+    -ms-transform: scale(1.2) rotate(-720deg) ;
+    transform: scale(1.2) rotate(-720deg);
+}
+.post input:hover{
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;transition: all 1s ease;
+    -moz-transform: scale(1.2) rotate(-720deg) ;
+    -webkit-transform: scale(1.2) rotate(-720deg) ;
+    -o-transform: scale(1.2) rotate(-720deg) ;
+    -ms-transform: scale(1.2) rotate(-720deg) ;
+    transform: scale(1.2) rotate(-720deg);
+}
+
+#imagen {
+    background: url(../img/icon_see.png) no-repeat ;
+    height: 30px;
+    width: 30px; 
+}
+#imagen:hover 
+{
+    background-position: url(../img/icon_see_hover.png) no-repeat ;
+    height: 27px; 
+    width: 27px; 
 }
 /*-------------------------------*/
 /*PIE DE PAGINA*/
