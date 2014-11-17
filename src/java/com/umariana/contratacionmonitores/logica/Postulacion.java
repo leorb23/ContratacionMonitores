@@ -8,14 +8,7 @@ import java.util.Date;
  */
 public class Postulacion {
     
-    /**
-     * Es la fecha de postulacion de un aspirante a una dependencia para monitoria
-     */
-    private Date fechaPostulado;
-    /**
-     * Es el identificador de la dependencia 
-     */
-    private int idDependencia;
+    private Dependencia dependencia;
     /**
      * Es la identificacion del aspirante al que pertenece la postulacion
      */
@@ -24,75 +17,44 @@ public class Postulacion {
      * Es la comunicacion con la clase resultado
      */
     private Resultado resultado;
-    /**
-     * Es el contructor de la clase Postulacion
-     * @param fechaPostulado != null
-     * @param idDependencia != null && !=""
-     * @param identificacionEstudiante != null && !=""
-     */
-    public Postulacion(int idDependencia, Date fechaPostulacion, String identificacionEstudiante) {
-        this.fechaPostulado = fechaPostulacion;
-        this.idDependencia = idDependencia;
-        this.identificacionEstudiante = identificacionEstudiante;
-    }  
-    /**
-     * Retorna la fecha de la postulacion
-     * @return Date
-     */
-    public Date darFechaPostulado() {
-        return fechaPostulado;
+    
+    private int idHorario;
+
+    
+
+    public Postulacion(){
+        
     }
-    /**
-     * 
-     * @param fechaPostulado 
-     */
-    public void cambiarFechaPostulado(Date fechaPostulado) {
-        this.fechaPostulado = fechaPostulado;
-    }
-    /**
-     * 
-     * @return 
-     */
-    public int darIdDependencia() {
-        return idDependencia;
-    }
-    /**
-     * 
-     * @param idDependencia 
-     */
-    public void cambiarIdDependencia(int idDependencia) {
-        this.idDependencia = idDependencia;
-    }
-    /**
-     * 
-     * @return 
-     */
     public String darIdentificacionEstudiante() {
         return identificacionEstudiante;
     }
-    /**
-     * 
-     * @param identificacionEstudiante 
-     */
     public void cambiarIdentificacionEstudiante(String identificacionEstudiante) {
         this.identificacionEstudiante = identificacionEstudiante;
     }
-
-    /**
-     * 
-     * @return 
-     */
     public Resultado darResultado() {
         return resultado;
     }
-    /**
-     * 
-     * @param resultado 
-     */
     public void cambiarResultado(Resultado resultado) {
         this.resultado = resultado;
     }
-    
-    
-    
+    public String getIdentificacionEstudiante() {
+        return identificacionEstudiante;
+    }
+    public void setIdentificacionEstudiante(String identificacionEstudiante) {
+        this.identificacionEstudiante = identificacionEstudiante;
+    }
+     public Dependencia getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(Dependencia dependencia) {
+        this.dependencia = dependencia;
+    }   
+    public int getIdHorario() {
+        return idHorario;
+    }
+
+    public void setIdHorario(int idHorario) {
+        this.idHorario = idHorario;
+    }
 }

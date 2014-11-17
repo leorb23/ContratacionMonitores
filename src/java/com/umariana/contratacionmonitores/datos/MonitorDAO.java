@@ -1,5 +1,4 @@
 package com.umariana.contratacionmonitores.datos;
-
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,14 +39,9 @@ public class MonitorDAO {
 
     Monitor resgistrarMonitorEnBD(Monitor monitor) throws SQLException {
 
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("insert into " + tabla + " (identificacion,nombre1,nombre2,apellido1,apellido2,estado_matricula,promedio_acumulado,semestre_actual,puntaje_prueba,id_dependencia )"
-                + "values ('" + monitor.darIdentificacion().trim() + "','" + monitor.darPrimerNombre() + "','" + monitor.darSegundoNombre() + "','" + monitor.darPrimerApellido()
-                + "','" + monitor.darSegundoApellido() + "','" + monitor.darEstadoMatricula() + "','" + monitor.darPromedioAcumulado() + "','" + monitor.darSemestreActual() + "'," + 0 + "," + 2 + ")");
-
-        /* Monitor monitor = new Monitor(estudiante.darPrimerNombre(),estudiante.darSegundoNombre(),estudiante.darPrimerApellido(), 
-         estudiante.darSegundoApellido(), estudiante.darCodigo(), estudiante.darEstadoMatricula(), estudiante.darFoto(), 
-         estudiante.darPromedioAcumulado(), estudiante.darSemestreActual(), estudiante.darIdentificacion(),null);*/
-        
+        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("insert into " + tabla + " (identificacion,nombre1,nombre2,apellido1,apellido2,estado_matricula,promedio_acumulado,semestre_actual,puntaje_prueba,id_dependencia,id_horario )"
+                + "values ('" + monitor.darIdentificacion() + "','" + monitor.darPrimerNombre() + "','" + monitor.darSegundoNombre() + "','" + monitor.darPrimerApellido()
+                + "','" + monitor.darSegundoApellido() + "','" + monitor.darEstadoMatricula() + "','" + monitor.darPromedioAcumulado() + "','" + monitor.darSemestreActual() + "'," + monitor.darPuntaje_prueba() + "," + monitor.darDependencia().darId() + "," + monitor.darIdHorario()+ ")");
         return monitor;
     }
 
@@ -82,5 +76,4 @@ public class MonitorDAO {
         rs.close();
         return monitores;
     }
-
 }

@@ -9,9 +9,13 @@ package com.umariana.contratacionmonitores.controladores;
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
+import com.umariana.contratacionmonitores.logica.Postulacion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -79,6 +83,7 @@ public class GestionAspirantes extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String irA="aspirante.jsp";
         try{
         sesion=ContratacionMonitoresServlet.darSession();
         sesion= request.getSession(true);
@@ -88,12 +93,24 @@ public class GestionAspirantes extends HttpServlet {
                 String identificacion=request.getParameter("identificacion");
                 instance.eliminarAspirante(identificacion);              
                 break;
+            case"eliminarPostulacion":
+                String idHorario=request.getParameter("idHorario");
+                instance.eliminarPostulacionAspirante(Integer.parseInt(idHorario));
+                irA="estudiante.jsp";
+                break;
+            case"seleccionarAspirante":
+                idHorario=request.getParameter("cbx_postulacion");
+                //idHorario=request.getParameter("idHorario");
+                identificacion=request.getParameter("identificacion");
+                instance.seleccionarAspirante(Integer.parseInt(idHorario),identificacion);
+                irA="monitor.jsp";
+                break;
         }  
         } catch (ExcepcionNoExiste | SQLException ex) {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
         ContratacionMonitoresServlet.setearSesion(sesion);
-        response.sendRedirect("aspirante.jsp");
+        response.sendRedirect(irA);
     }
 
     /**
@@ -113,6 +130,14 @@ public class GestionAspirantes extends HttpServlet {
             sesion.setAttribute("mensaje", ex.getMessage());
         }
         return null;
+    }
+    public static ArrayList<Postulacion> buscarPostulacionesAspirante(String identificacion){
+        try {
+            return instance.buscarPostulacionesAspirante(identificacion);
+        } catch (SQLException ex) {
+            sesion.setAttribute("mensaje", ex.getMessage());
+        }
+        return new ArrayList<>();
     }
 
 }

@@ -4,6 +4,7 @@
     Author     : CocoSoft
 --%>
 
+<%@page import="com.umariana.contratacionmonitores.controladores.GestionAspirantes"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Postulacion"%>
 <%@page import="com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet"%>
 <%@page import="java.util.ArrayList"%>
@@ -64,16 +65,17 @@
                         <td><%=asp.darPrimerNombre()%><%if(asp.darSegundoNombre()!=null){%> <%=asp.darSegundoNombre() %><%}%></td>
                         <td><%=asp.darPrimerApellido() %><%if(asp.darSegundoApellido()!=null){%> <%=asp.darSegundoApellido() %><%}%></td>                 
                         <td><%=asp.darSemestreActual() %></td>
-                        <td><%=asp.darPromedioAcumulado()%></td>                  
-                        <%if(asp.darPostulaciones().size()>0){%>
-                        <td><a href="#"><%=asp.darPostulaciones().size()%></a></td>  
+                        <td><%=asp.darPromedioAcumulado()%></td>  
+                        <%ArrayList<Postulacion> pst=GestionAspirantes.buscarPostulacionesAspirante(asp.darIdentificacion()); 
+                        if(!pst.isEmpty()){%>
+                        <td><a href="#"><%=pst.size() %></a></td>  
                         <%}else{%>
                         <td>N/A</td>
                         <%}%>
-                        <td ><a class="icono_small" href="#" onclick="javascript:venRevPru('<%=asp.darIdentificacion()%>');"><img src="img/icon_pruebas.png" title="Revizar pruebas"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venDelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
-                        <td><a class="icono_small post"  href="#" onclick="javascript:venActAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
-                        <td><a class="icono_small"  href="#" onclick="javascript:venSelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_select.png" title="Escoger"/></a></td> 
+                        <td style="width: 40px; height: 40px;"><a class="icono_small" href="#" onclick="javascript:venRevPru('<%=asp.darIdentificacion()%>');"><img src="img/icon_pruebas.png" title="Revizar pruebas"/></a></td>
+                        <td style="width: 40px; height: 40px;"><a class="icono_small"  href="#" onclick="javascript:venDelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
+                        <td style="width: 40px; height: 40px;"><a class="icono_small post"  href="#" onclick="javascript:venActAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_update.png" title="Actualizar"/></a></td>
+                        <td style="width: 40px; height: 40px;"><a class="icono_small"  href="#" onclick="javascript:venSelAsp('<%=asp.darIdentificacion()%>');"><img src="img/icon_select.png" title="Escoger"/></a></td> 
                     </tr>
                    <% if(color==0){color=1;}else{color=0;}
                     }%>

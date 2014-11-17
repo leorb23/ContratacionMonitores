@@ -73,7 +73,7 @@ public class Horario {
 
     @Override
     public String toString() {
-        return "Horario{" + "desde=" + desde + ", hasta=" + hasta + ", idJornada=" + idJornada + ", cuposDisponibles=" + cuposDisponibles + ", totalCupos=" + totalCupos + ", id=" + id + '}';
+        return getDesde()+" - "+getHasta();
     }
     
     

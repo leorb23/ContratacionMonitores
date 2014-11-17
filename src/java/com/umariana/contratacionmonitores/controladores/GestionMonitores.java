@@ -7,7 +7,6 @@
 package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
-import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.logica.Monitor;
 import java.io.IOException;
 import java.io.PrintWriter;

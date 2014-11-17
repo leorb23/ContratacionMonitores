@@ -4,6 +4,8 @@
     Author     : CocoSoft
 --%>
 
+<%@page import="com.umariana.contratacionmonitores.controladores.GestionAspirantes"%>
+<%@page import="com.umariana.contratacionmonitores.controladores.GestionDependencias"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Dependencia"%>
 <%@page import="com.umariana.contratacionmonitores.logica.Postulacion"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,7 +38,7 @@
         <jsp:include page="header.jsp" />
         <jsp:include page="divModal.jsp" /> 
         <section>
-            <div id="contenedor">                
+            <div id="contenedor" >                
                 <%if(mensaje!=null){%>
                 <div id="div_mensaje">
                     <label><%=mensaje%></label>
@@ -89,37 +91,26 @@
                          <tr style="background: #8bbbfd;">
                              <td>Postulaciones</td>
                              <td>
-                                 <%if(aspirante.darPostulaciones().size()>0){%>
-                                 <div>
-                                     <ul style="list-style: none;">
-                                 <%for(Postulacion post: aspirante.darPostulaciones()){%>       
-                                     <li>► <%=post.darIdDependencia() %></li>  
-                                 <% }%>
-                                     </ul>  
-                                 </div>    
+                                 <%ArrayList<Postulacion> pst=GestionAspirantes.buscarPostulacionesAspirante(aspirante.darIdentificacion()); 
+                                    if(!pst.isEmpty()){%>
+                                     <div style=" padding: 5px;">
+                                         <%
+                                        if(pst!=null){
+                                            for(Postulacion p: pst){%> 
+                                            <div style="margin: 0px; margin-bottom: 3px; border-bottom: 1px solid gray;">
+                                                <div style="display: inline-block; height: auto; margin-bottom: 10px; "><label style="margin-left: 20px; color: black;">► <%=p.getDependencia().darNombre() %><br><%=p.getDependencia().darJornadas().get(0).getJornada() %>, <%=p.getDependencia().darJornadas().get(0).getHorarios().get(0).toString() %></label></div>
+                                                <div style="display: inline-block; float: right; height: 40px;"><a class="icono_small" href="#" onclick="javascript:venDelPostEstuBd('<%=p.getIdHorario()%>');"><img src="img/icon_delete.png" title="Quitar"/></a></div>
+                                                </div>
+                                            <%}           
+                                        }%>
+                                     </div>
                                 <%}else{%>
                                  N/A
                                 <%}%>
                              </td>
                          </tr>
                      </table>                 
-                 </div>   
-                 <div id="div_opciones">
-                     <%if(aspirante.darPostulaciones().size()>0){%>
-                     <div>Postulaciones</div>
-                     <div>
-                         <div>
-                             <ul style="list-style: none;">
-                         <%for(Postulacion post: aspirante.darPostulaciones()){%>       
-                             <li>► <%=post.darIdDependencia() %></li>  
-                         <% }%>
-                             </ul>  
-                         </div>    
-                        <%}else{%>
-                         N/A
-                        <%}%>
-                    </div>
-                 </div>    
+                 </div>             
                     <%}
                     else if(monitor!= null){%>
                     <div id="div_datos">
@@ -185,20 +176,45 @@
                              <td>Promedio Acumulado</td>
                              <td><%=estudiante.darPromedioAcumulado() %></td>
                          </tr>
-                         <tr style=" height: 80px; text-align: center;">
+                         <tr style=" height: 80px;">
                             <td colspan="2">
                             <%
                             if(estudiante.darEstadoMatricula().equals("1")){
                                 if(estudiante.darSemestreActual()>= 3){
-                                    if(estudiante.darPromedioAcumulado()>=3.5){%> 
-                                    <label class="iconoGrande" style="width: 70px; height: 70px;"><input  type="image" onclick="javascript:venRegEst()"  id="btn_img" src="img/icon_registrar_estudiante.png" title="Postularse"></label>
-                                    <%}else{%>
-                                    <h4 class="msg_error">No puedes postularte como aspirante porque su promedio de notas es menor a 3.5</h4>
-                                <%}}else{%>
-                                    <h4 class="msg_error">Para registrarte como aspirante debes estar en tercer semestre o superior</h4>
-                                <%}}else{%>
-                                    <h4 class="msg_error">Para registrarte como aspirante tu matricula debe estar activada</h4>
-                                <%}%>  
+                                    if(estudiante.darPromedioAcumulado()>=3.5){%>
+                                    <div style="text-align: center; width: 100%; margin: 10px;"><label >Postulaciones</label></div>
+                                     <%ArrayList<Dependencia> dependencias=ContratacionMonitoresServlet.darComunicacionLogica().darDependencias(); 
+                                        ArrayList<Postulacion> postulaciones=(ArrayList<Postulacion>)session.getAttribute("listaPostulacionesTemp");
+                                        if(!dependencias.isEmpty()){%>
+                                        <div style="margin-left: 50px; "><%
+                                            for(Dependencia d: dependencias){%>
+                                            <div style="width: 400px; border-bottom: 1px solid white; padding: 5px;  min-height:40px;"><div style=" display: inline-block; "><label style=" display: block;"><%=d.darNombre() %></label>
+                                                <%
+                                                boolean postulado=false;
+                                                if(postulaciones!=null){
+                                                    for(Postulacion p: postulaciones){
+                                                        if(d.darId()==p.getDependencia().darId()){%>
+                                                        <label style="margin-left: 20px; color: #ddd4d4;">Jornada: <%=p.getDependencia().darJornadas().get(0).getJornada() %> Horario: <%=p.getDependencia().darJornadas().get(0).getHorarios().get(0).getDesde() %> - <%=p.getDependencia().darJornadas().get(0).getHorarios().get(0).getDesde() %></label></div>
+                                                            <div style="display: inline-block;  height: 40px; float: right;"><a class="icono_small" href="#" onclick="javascript:venDelPostEstu('<%=d.darId()%>');"><img src="img/icon_delete.png" title="Quitar"/></a></div>
+                                                            </div>
+                                                            <%postulado=true;
+                                                            }
+                                                        }           
+                                                }
+                                                if(!postulado){%> 
+                                                    </div>
+                                                    <div style="display: inline-block;  height: 40px; float: right;"><a class="icono_small" href="#" onclick="javascript:venPostEstu('<%=d.darId()%>');"><img src="img/icon_add.png" title="Postularme"/></a></div>
+                                                    </div>
+                                                <%}       
+                                            }%>
+                                        </div>
+                                       <%}
+                                       if(postulaciones!=null){if(!postulaciones.isEmpty()){%>
+                                        <div style="text-align: center; width: 100%;  height: 70px; padding: 10px;"><label class="iconoGrande" style="width: 70px;"><input  type="image" onclick="javascript:venRegEst()"  id="btn_img" src="img/icon_registrar_estudiante.png" title="Postularse"></label></div>
+                                         <%}}
+                                    }else{%><h4 class="msg_error">No puedes postularte como aspirante porque su promedio de notas es menor a 3.5</h4><%}
+                                }else{%><h4 class="msg_error">Para registrarte como aspirante debes estar en tercer semestre o superior</h4><%}
+                            }else{%><h4 class="msg_error">Para registrarte como aspirante tu matricula debe estar activada</h4><%}%>  
                             </td>
                          </tr>
                      </table>                 

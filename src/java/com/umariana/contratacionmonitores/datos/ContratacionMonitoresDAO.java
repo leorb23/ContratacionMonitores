@@ -8,6 +8,7 @@ import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
+import com.umariana.contratacionmonitores.logica.Postulacion;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
@@ -53,6 +54,7 @@ public class ContratacionMonitoresDAO {
     private AdministradorDAO adminDAO;
     private JornadaDAO jornadaDAO;
     private HorarioDAO horarioDAO;
+    private PostulacionDAO postulacionDAO;
     
     public boolean conectado;
 
@@ -65,7 +67,8 @@ public class ContratacionMonitoresDAO {
         adminDAO = new AdministradorDAO();
         estudianteUDAO = new EstudianteUniversidadDAO();  
         jornadaDAO = new  JornadaDAO();
-        horarioDAO = new HorarioDAO();  
+        horarioDAO = new HorarioDAO(); 
+        postulacionDAO = new PostulacionDAO();
         conectado=false;
     }
     public void conectarBd() throws ConnectionException{
@@ -163,20 +166,25 @@ public class ContratacionMonitoresDAO {
         }
     }
     
-    public Aspirante registrarAspiranteEnBD(String identificacion) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionYaExiste{
-        
+    public Aspirante registrarAspiranteEnBD(String identificacion,ArrayList<Postulacion> postulaciones) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, ExcepcionYaExiste{
         //conectarBdUniversidad();
-        
         Estudiante estudiante = estudianteUDAO.buscarEstudiante(identificacion);
         Aspirante encontrado = null;
         if(estudiante==null)
             throw new ExcepcionYaExiste("La identificacion no scorresponde a ningun estudiante");
-        else
-            encontrado = aspiranteDAO.resgistrarAspiranteEnBD(estudiante);           
-        
-        //desconectarBdUniversidad();
-
+        else{
+            encontrado = aspiranteDAO.resgistrarAspiranteEnBD(estudiante);   
+            for(Postulacion p :postulaciones){
+                p.setIdentificacionEstudiante(encontrado.darIdentificacion());
+                registrarPostulacion(p);
+                encontrado.agregarPostulacion(p);
+            }   
+        }
         return encontrado;    
+    }
+    
+    public void registrarPostulacion(Postulacion postulacion) throws SQLException{
+        postulacionDAO.registrarPostulacion(postulacion);
     }
     
     public void actualizarAspiranteEnBD(Aspirante aspirante) throws SQLException{
@@ -315,7 +323,9 @@ public class ContratacionMonitoresDAO {
         ArrayList<Monitor> monitores=monitorDAO.darMonitores();
         ArrayList<Monitor> monitoresR=new ArrayList<>();
         for(Monitor m:monitores){
-            monitoresR.add(setearDependencia(m));
+            m.cambiarDependencia(setearDependencia(m.darIdHorario()));
+            monitoresR.add(m);
+            //monitoresR.add(setearDependencia(m));
         }
         return monitoresR;
     }
@@ -338,6 +348,25 @@ public class ContratacionMonitoresDAO {
         d.cambiarJornadas(js);
         m.cambiarDependencia(d);        
         return m;
+    }
+    /**
+     * Este metodo se encarga de asignarle al monitor la dependencia en la que esta trabajando
+     * @param m
+     * @return Monitor m
+     * @throws SQLException 
+     */
+    public Dependencia setearDependencia(int idHorario) throws SQLException{
+        Dependencia d;        Jornada j;        Horario h;
+        ArrayList<Horario> hs=new ArrayList<>();
+        h = buscarHorario(idHorario);
+        hs.add(h);
+        ArrayList<Jornada> js=new ArrayList<>();
+        j = buscarJornada(h.getIdJornada());
+        js.add(j);
+        d = buscarDependencia(j.getIdDependencia());
+        j.setHorarios(hs);
+        d.cambiarJornadas(js);
+        return d;
     }
     /**
      * Metodo que retorna la lista de Resultados que estan registrados en la base de datos del sistema
@@ -374,8 +403,10 @@ public class ContratacionMonitoresDAO {
     
     public Aspirante buscarAspirante(String identificacion) throws  SQLException {
         Aspirante aspirante = aspiranteDAO.buscarAspirante(identificacion); 
-        if(aspirante!=null)
-            return  aspirante;   
+        if(aspirante!=null){
+            aspirante.cambiarPostulaciones(setearPostulaciones(aspirante.darIdentificacion()));
+            return  aspirante;  
+        }
         /*else
             throw  new ExcepcionNoExiste("La identificación: "+ identificacion+" no corresponde a ningun aspirante");*/
         return null;
@@ -515,5 +546,28 @@ public class ContratacionMonitoresDAO {
     }
     public Jornada buscarJornada(int idJornada) throws SQLException{
         return jornadaDAO.buscarJornada(idJornada);
+    }
+
+    public ArrayList<Postulacion> setearPostulaciones(String identificacion) throws SQLException {
+        ArrayList<Postulacion> postulacionesTemp=postulacionDAO.buscarPostulaciones(identificacion);
+         ArrayList<Postulacion> postulaciones= new ArrayList<>();
+        for(Postulacion p:postulacionesTemp){
+            p.setDependencia(setearDependencia(p.getIdHorario()));
+            postulaciones.add(p);
+        }
+        return postulaciones; 
+     }
+
+    public void eliminarPostulacion(int idHorario) throws SQLException {
+        postulacionDAO.eliminarPostulacion(idHorario);
+    }
+
+    public void seleccionarAspirante(int idHorario,String identificacion) throws SQLException {
+        Dependencia buscada=setearDependencia(idHorario);
+        Aspirante eliminar=buscarAspirante(identificacion);
+        Monitor nuevo= new  Monitor(eliminar.darPrimerNombre(), eliminar.darSegundoNombre(), eliminar.darPrimerApellido(), eliminar.darSegundoApellido(), 0, eliminar.darEstadoMatricula(), null, eliminar.darPromedioAcumulado(), eliminar.darSemestreActual(), eliminar.darIdentificacion(), buscada, eliminar.getPuntajePruebas());
+        nuevo.cambiarIdHorario(idHorario);
+        monitorDAO.resgistrarMonitorEnBD(nuevo);
+        eliminarAspiranteEnBD(identificacion);
     }
 }

@@ -22,7 +22,7 @@ function venRegDep() {
         modal : "true"
     });
 }
-
+//Dependencias
 function venContRegDep() {
     $(document).ready(function(){
           $('#divRegDep').load('util/formularios.jsp?var=contRegDep');
@@ -35,9 +35,7 @@ function venContRegDep() {
     });
 }
 
-function hiddenThis($ventana){
-    $($ventana).dialog("close");
-}
+
 
 function venDeleteDep(){
      $(document).ready(function(){
@@ -72,6 +70,7 @@ function venVerDep($idDependencia){
         modal : "true"
     });
 }
+//Estudiantes
 function venRegEst(){
     $(document).ready(function(){
           $('#divRegEst').load('util/formulariosEstudiantes.jsp?var=registrarEstudiante');
@@ -94,7 +93,28 @@ function venIngresoEstudiantes(){
         modal : "true"
     });
 }
-
+function venPostEstu($idDependencia){
+    $(document).ready(function(){
+          $('#divRegPostEst').load('util/formulariosEstudiantes.jsp?var=agregarPostulacion&idDependencia='+$idDependencia);
+    });	
+    $("#divRegPostEst").dialog({
+        width : 500,
+        height : 350,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venDelPostEstu($idDependencia){
+    $(document).ready(function(){
+          $('#divDelPostEst').load('util/formulariosEstudiantes.jsp?var=eliminarPostulacion&idDependencia='+$idDependencia);
+    });	
+    $("#divDelPostEst").dialog({
+        width : 380,
+        height : 200,
+        resizable : "false",
+        modal : "true"
+    });
+}
 //aspirantes
 function venDelAsp($identificacion){
     $(document).ready(function(){
@@ -108,6 +128,31 @@ function venDelAsp($identificacion){
         modal : "true"
     });
 }
+function venDelPostEstuBd($idHorario){
+    $(document).ready(function(){
+          $('#divDelPostAsp').load('util/formulariosAspirantes.jsp?var=eliminarPostulacion&idHorario='+$idHorario);
+          
+    });	
+    $("#divDelPostAsp").dialog({
+        width : 400,
+        height : 290,
+        resizable : "false",
+        modal : "true"
+    });
+}
+function venSelAsp($identificacion){
+    $(document).ready(function(){
+          $('#divSelAsp').load('util/formulariosAspirantes.jsp?var=seleccionarAspirante&identificacion='+$identificacion);
+          
+    });	
+    $("#divSelAsp").dialog({
+        width : 400,
+        height : 320,
+        resizable : "false",
+        modal : "true"
+    });
+}
+
 
 //monitores
 function venVerDepMon($identificacion){
@@ -169,4 +214,9 @@ function sendForm($var,$id){
         
     }
     
+}
+
+//util
+function hiddenThis($ventana){
+    $($ventana).dialog("close");
 }

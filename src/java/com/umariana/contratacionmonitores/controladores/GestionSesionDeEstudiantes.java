@@ -1,8 +1,6 @@
 package com.umariana.contratacionmonitores.controladores;
 
-import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
-import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
 import com.umariana.contratacionmonitores.logica.Estudiante;
 import com.umariana.contratacionmonitores.logica.Monitor;
@@ -105,6 +103,7 @@ public class GestionSesionDeEstudiantes extends HttpServlet {
         sesion.removeAttribute("aspirante");
         sesion.removeAttribute("monitor");
         sesion.removeAttribute("estudiante");
+        sesion.removeAttribute("listaPostulacionesTemp");
     }
     
     public void buscarIngreso(String identificacion) throws ExcepcionNoExiste, SQLException{

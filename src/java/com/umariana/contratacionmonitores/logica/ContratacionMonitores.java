@@ -5,7 +5,6 @@ import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
-import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -254,6 +253,7 @@ public class ContratacionMonitores {
     /**
      * 
      * @param identificacion
+     * @param postulaciones
      * @return
      * @throws ExcepcionYaExiste
      * @throws ClassNotFoundException
@@ -261,16 +261,8 @@ public class ContratacionMonitores {
      * @throws InstantiationException
      * @throws IllegalAccessException 
      */
-    public Aspirante registrarAspirante2(String identificacion) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
-//        Aspirante aspirante = buscarAspirante(identificacion);
-//        if(aspirante!=null)
-//            throw new ExcepcionYaExiste("El estudiante ya esta registrado como aspirante!!");
-//        
-//        Monitor monitor = buscarMonitor(identificacion);
-//        if(monitor!=null)
-//            throw new ExcepcionYaExiste("El estudiante ya esta registrado como monitor");           
-        
-        Aspirante aspirante = cmDAO.registrarAspiranteEnBD(identificacion);
+    public Aspirante registrarAspirante2(String identificacion,ArrayList<Postulacion> postulaciones) throws ExcepcionYaExiste, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{          
+        Aspirante aspirante = cmDAO.registrarAspiranteEnBD(identificacion,postulaciones);
         aspirantes.add(aspirante);
         return aspirante;
     }
@@ -452,7 +444,7 @@ public class ContratacionMonitores {
         if(aspirante!=null){ 
             Dependencia buscada= buscarDependencia(idDependencia);
             if(buscada!=null)
-                aspirante.agregarPostulacion(buscada.darId(), new Date(), identificacion);
+                aspirante.agregarPostulacion(new Postulacion());
         }
         else
             throw new ExcepcionNoExiste("No se puede agregar la postulacion al aspirante con identificacion :"+identificacion);
@@ -677,5 +669,21 @@ public class ContratacionMonitores {
 
     public void modificarDependencia(Dependencia update) throws SQLException, ExcepcionYaExiste {
         cmDAO.actualizarDependenciaEnBd(update);
+    }
+
+    public Dependencia setearDependencia(int idHorario) throws SQLException {
+        return cmDAO.setearDependencia(idHorario);
+    }
+
+    public ArrayList<Postulacion> buscarPostulacionesAspirante(String identificacion) throws SQLException {
+        return cmDAO.setearPostulaciones(identificacion);
+    }
+
+    public void eliminarPostulacionAspirante(int idHorario) throws SQLException {
+        cmDAO.eliminarPostulacion(idHorario);
+    }
+
+    public void seleccionarAspirante(int idHorario,String identificacion) throws SQLException {
+        cmDAO.seleccionarAspirante(idHorario,identificacion);
     }
 }

@@ -267,6 +267,13 @@ fieldset#fls_mostrar input[type=number]{
     width: 50px;
 }
 
+/*ul*/
+ul#ul_num{
+    list-style: none;
+}
+ul#ul_num li{
+   margin-bottom: 5px;
+}
 
 
 /*-------------------------------*/

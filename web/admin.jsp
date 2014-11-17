@@ -132,7 +132,7 @@
                                  <div>
                                      <ul style="list-style: none;">
                                  <%for(Postulacion post: aspiBusc.darPostulaciones()){%>       
-                                     <li>► <%=post.darIdDependencia() %></li>  
+                                     <li>► <%=post.getDependencia().darId() %></li>  
                                  <% }%>
                                      </ul>  
                                  </div>    

@@ -1,17 +1,16 @@
 package com.umariana.contratacionmonitores.logica;
 
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
-import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Aspirante extends Estudiante{
+    private double puntajePruebas;
+    
     /**
      * Es la lista de postulaciones a las que se ha inscrito el estudiante
      */
     private ArrayList<Postulacion> postulaciones;
-    
     /**
      * Es el constructor de la clase Aspirante
      * @param primerNombre != null && != ""
@@ -29,12 +28,12 @@ public class Aspirante extends Estudiante{
     {
         super(primerNombre, segundoNombre, primerApellido, segundoApellido, codigo, estadoMatricula, foto, promedioAcumulado, semestreActual, identificacion);
         postulaciones = new ArrayList<Postulacion>();
+        puntajePruebas=0;
     }  
-
     public Aspirante() {
         postulaciones = new ArrayList<Postulacion>();
+        puntajePruebas=0;
     }
-
     /**
      * 
      * @return 
@@ -66,30 +65,28 @@ public class Aspirante extends Estudiante{
     /**
      * 
      * @param idDependencia
-     * @param fechaPostulacion
-     * @param identificaiconAspirante
-     * @throws ExcepcionYaExiste 
-     */
-    public void agregarPostulacion(int idDependencia, Date fechaPostulacion, String identificaiconAspirante) throws ExcepcionYaExiste
-    {
-        if(buscarPostulacion(idDependencia)==null){
-            Postulacion nuevaPostulacion= new Postulacion(idDependencia, fechaPostulacion, identificaiconAspirante);
-            postulaciones.add(nuevaPostulacion);
-        }
-        else
-            throw  new ExcepcionYaExiste("Ya se ha postulado a esta dependencia anteriormente!!");
-    }
-    /**
-     * 
-     * @param idDependencia
      * @return 
      */
     public Postulacion buscarPostulacion(int idDependencia){
         
         for(Postulacion buscarPostulacion: postulaciones ){
-            if(buscarPostulacion.darIdDependencia()==idDependencia)
+            if(buscarPostulacion.getDependencia().darId()==idDependencia)
                 return buscarPostulacion;
         }
         return null;
     }   
+
+    public void agregarPostulacion(Postulacion p) {
+        postulaciones.add(p);
+    }
+
+    public double getPuntajePruebas() {
+        return puntajePruebas;
+    }
+
+    public void setPuntajePruebas(double puntajePruebas) {
+        this.puntajePruebas = puntajePruebas;
+    }
+    
+    
 }

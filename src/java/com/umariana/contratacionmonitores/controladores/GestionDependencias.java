@@ -5,6 +5,7 @@ import com.umariana.contratacionmonitores.excepciones.ConnectionException;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Dependencia;
+import com.umariana.contratacionmonitores.logica.Postulacion;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.io.IOException;
@@ -224,4 +225,13 @@ public class GestionDependencias extends HttpServlet {
        }
        return null;
     }
+    public static Dependencia buscarDependenciaPorHorario(String idHorario){
+       try {
+           return instance.setearDependencia(Integer.parseInt(idHorario));
+       } catch (SQLException ex) {
+           Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return null;
+    }
+
 } 

@@ -9,12 +9,12 @@ package com.umariana.contratacionmonitores.controladores;
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Aspirante;
+import com.umariana.contratacionmonitores.logica.Dependencia;
 import com.umariana.contratacionmonitores.logica.Estudiante;
+import com.umariana.contratacionmonitores.logica.Postulacion;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,11 +62,40 @@ public class GestionEstudiantes extends HttpServlet {
             switch(accion){
                 case "regEst":
                     Estudiante estudiante = (Estudiante)sesion.getAttribute("estudiante");
+                    ArrayList<Postulacion> postulaciones=(ArrayList<Postulacion>)sesion.getAttribute("listaPostulacionesTemp");
                     limpiarAtributosSesion();
-                    Aspirante aspirante =instance.registrarAspirante2(estudiante.darIdentificacion());
+                    Aspirante aspirante =new Aspirante();                  
+                    aspirante =instance.registrarAspirante2(estudiante.darIdentificacion(),postulaciones);
                     sesion.setAttribute("mensaje","Registro exitoso!!");
                     sesion.setAttribute("aspirante", aspirante);    
-                    break;      
+                    break;     
+                case"agregarPostulacion":
+                    postulaciones=(ArrayList<Postulacion>)sesion.getAttribute("listaPostulacionesTemp");
+                    if(postulaciones==null)
+                        postulaciones= new ArrayList<>();
+                    
+                    String idHorario=request.getParameter("slc_horario");   
+                    Postulacion p = new Postulacion();
+                    Dependencia d=instance.setearDependencia(Integer.parseInt(idHorario));
+                    p.setDependencia(d);
+                    postulaciones.add(p);
+                    sesion.setAttribute("listaPostulacionesTemp", postulaciones);
+                    break;
+                case"eliminarPostulacion":
+                    postulaciones=(ArrayList<Postulacion>)sesion.getAttribute("listaPostulacionesTemp");
+                    if(postulaciones==null)
+                        postulaciones= new ArrayList<>();
+                    String idDependencia=request.getParameter("idDependencia");
+                    int n=0;
+                    for(int i=0;i<postulaciones.size() && n==0;i++){
+                        Postulacion p2= postulaciones.get(i);
+                        if(p2.getDependencia().darId()==Integer.parseInt(idDependencia)){
+                            postulaciones.remove(p2);
+                            n=1;
+                        }
+                    }
+                    sesion.setAttribute("listaPostulacionesTemp", postulaciones);
+                    break;
             }  
         } catch (ExcepcionYaExiste | ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             sesion.setAttribute("mensaje", ex.getMessage());
@@ -83,6 +112,7 @@ public class GestionEstudiantes extends HttpServlet {
         sesion.removeAttribute("aspirante");
         sesion.removeAttribute("monitor");
         sesion.removeAttribute("estudiante");
+        sesion.removeAttribute("listaPostulacionesTemp");
     }
 
 
