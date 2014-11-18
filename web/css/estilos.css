@@ -15,7 +15,14 @@ header{
     padding: 0;
     width: 100%;
     margin-bottom: 1px;
+    background-image:  url("../img/logo2.png") ;
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position:1100px 0px;
+    background-color: white;
+
 }
+
 header  div#cabecera{
     margin: 0 auto 0;
     width: 960px;

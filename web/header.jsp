@@ -18,12 +18,12 @@
 <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
 <link rel="shortcut icon" href="img/favicon.png" />
 <header>
-    <div id="cabecera">
+    <div id="cabecera" >
         <div>
             <a href="index.jsp"><img src="img/logo.png"></a>
         </div>
         <div>
-            <h1>Contratacion de Monitores</h1>
+            <h1 style="font-family: sans-serif;">Contratacion de Monitores</h1>
         </div>
         <div id="div_redes_sociales" style="position: absolute; width: 500px; height: 40px; display: inline-block; margin-left: 50px; margin-top: 105px;"> 
             <a href="#"> <img style="width: 30px; height: 30px; margin: 0px;" src="img/icon_facebook.png"></a>
