@@ -39,7 +39,7 @@
                 <%}%>    
             <%if(admin==null) {%>
                 <div>
-                    <table border="1">
+                    <table>
                         <tr>
                             <td>
                                 <label>Ingreso Para Administrador</label>
@@ -79,7 +79,7 @@
                     </form>
                 </div>
                 <%}%>
-                <table align="center" border="1">
+<!--                <table align="center">
                     <tr>
                         <td>
                             <label>Buscar Estudiantes</label>
@@ -91,7 +91,7 @@
                             </form>
                         </td>
                     </tr>
-                </table>
+                </table>-->
                 <%
                 Aspirante aspiBusc=(Aspirante)session.getAttribute("aspiranteBuscado");
                 Monitor monitorBusc=(Monitor) session.getAttribute("monitorBuscado");

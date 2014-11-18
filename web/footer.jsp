@@ -7,5 +7,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="css/estilos.css" type="text/css" media="all">
 <footer>
-            <a href="#">CocoSoft</a>
+    <a href="#">CocoSoft</a>
 </footer>

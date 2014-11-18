@@ -25,6 +25,13 @@
         <div>
             <h1>Contratacion de Monitores</h1>
         </div>
+        <div id="div_redes_sociales" style="position: absolute; width: 500px; height: 40px; display: inline-block; margin-left: 50px; margin-top: 105px;"> 
+            <a href="#"> <img style="width: 30px; height: 30px; margin: 0px;" src="img/icon_facebook.png"></a>
+            <a href="#"> <img style="width: 30px; height: 30px;  margin: 0px;" src="img/icon_gmail.png"></a>
+            <a href="#"> <img style="width: 30px; height: 30px;  margin: 0px;" src="img/icon_googlemas.png"></a>
+            <a href="#"> <img style="width: 30px; height: 30px;  margin: 0px;" src="img/icon_twitter.png"></a>
+            <a href="#"> <img style="width: 30px; height: 30px;  margin: 0px;" src="img/icon_youtube.png"></a>
+        </div>
     </div>
     <div id="barraNavegacion">
         <nav id="barraNavPrincipal">
@@ -36,8 +43,8 @@
                 <li><a href="estudiante.jsp" <%if(ubicacion.equals("estudiante.jsp")){%> style="background:#56a2ff; height: 32px;"<%}%>>Estudiantes</a></li>
                 <%}%>
                 <li><a href="admin.jsp" <%if(ubicacion.equals("admin.jsp")){%> style="background:#56a2ff; height: 32px;"<%}%>><%if(admin==null) {%>Entrar<%} else{%>Admin<%}%></a></li>  
-            </ul>
-        </nav>
+            </ul>  
+        </nav>         
     </div>   
      <%if(admin!=null){ %>             
     <div id="barraSecundaria">
