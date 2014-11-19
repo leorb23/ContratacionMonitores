@@ -291,14 +291,15 @@ public class ContratacionMonitoresDAO {
     public void actualizarDependenciaEnBd(Dependencia dependencia) throws SQLException, ExcepcionYaExiste{
         if(!dependenciaDAO.existeNombreDependencia(dependencia.darId(), dependencia.darNombre())){           
             dependenciaDAO.actualizarDependencia(dependencia);
+            jornadaDAO.eliminarJornadasDependencia(dependencia.darId());
             for(Jornada jornada:dependencia.darJornadas()){
-                jornada.setIdDependencia(dependencia.darId());//temp
-                jornadaDAO.actualizarJornadaEnBd(jornada);
+                jornada.setIdDependencia(dependencia.darId());
+                int idJornada=jornadaDAO.resgistrarJornadaEnBD(jornada);
                 for(Horario horario:jornada.getHorarios()){
-                   horario.setIdJornada(jornada.getId());//temp
-                   horarioDAO.actualizarHorarioEnBd(horario);
+                    horario.setIdJornada(idJornada);
+                    horarioDAO.resgistrarHorarioEnBD(horario);              
                 }     
-            }  
+            } 
         }
         else{
             throw  new ExcepcionYaExiste("El nombre de la dependencia ( "+dependencia.darNombre()+" ), que desea agregar ya existe!!");

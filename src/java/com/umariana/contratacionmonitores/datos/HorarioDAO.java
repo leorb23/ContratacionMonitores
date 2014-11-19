@@ -26,9 +26,14 @@ public class HorarioDAO {
         return idHorario;
     }
 
-    void actualizarHorarioEnBd(Horario horario) throws SQLException {
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set desde="+horario.getDesde()+",hasta="+horario.getHasta()+",cupos_disponibles="+horario.getCuposDisponibles()+",total_cupos="+horario.getTotalCupos()+"where id ="+horario.getId());       
-    }
+//    void actualizarHorarioEnBd(Horario horario) throws SQLException {
+//        int registro=ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set desde="+horario.getDesde()+",hasta="+horario.getHasta()+",cupos_disponibles="+horario.getCuposDisponibles()+",total_cupos="+horario.getTotalCupos()+"where id ="+horario.getId());       
+//        if(registro==0){
+//            rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("insert into "+tabla+" (desde,hasta,id_jornada,cupos_disponibles,total_cupos)values ("+horario.getDesde()+","+horario.getHasta()+","+horario.getIdJornada()+","+horario.getCuposDisponibles()+","+horario.getTotalCupos()+") returning id");
+//            rs.close();
+//        }
+//            
+//    }
 
     ArrayList<Horario> listarHorarios(int idJornada) throws SQLException {
         ArrayList<Horario> horarios= new ArrayList<>();

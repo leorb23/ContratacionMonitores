@@ -169,14 +169,18 @@ public class Dependencia
     }
 
     public void eliminarHorario(String idHorario) {
-        for(Jornada j:jornadas){
-            for(Horario h:j.getHorarios()){
+        for(int n=0;n<jornadas.size();n++){
+            Jornada j=jornadas.get(n);
+            for(int i=0;i<j.getHorarios().size();i++){
+                Horario h=j.getHorarios().get(i);
                 if(h.getId()==Integer.parseInt(idHorario)){
                     j.getHorarios().remove(h);
+                    i=j.getHorarios().size();
                 }
             }
             if(j.getHorarios().isEmpty()){
                 jornadas.remove(j);
+                n=jornadas.size();
             }
         }
     }

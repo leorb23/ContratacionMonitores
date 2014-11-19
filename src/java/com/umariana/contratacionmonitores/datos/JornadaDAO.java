@@ -26,8 +26,8 @@ public class JornadaDAO {
         return idJornada;
     }
     
-    public void eliminarAspirante(String identificacion) throws SQLException{
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where identificacion ="+identificacion);
+    public void eliminarJornadasDependencia(int idDependencia) throws SQLException{
+        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where id_dependencia ="+idDependencia);
     }
 
     public Aspirante buscarAspirante(String identificacion) throws SQLException {
@@ -54,11 +54,21 @@ public class JornadaDAO {
         return buscado;
     }
 
-    void actualizarJornadaEnBd(Jornada jornada) throws SQLException {
-       
-         ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set jornada ='"+jornada.getJornada()+"' where id ="+jornada.getId());       
-        
-    }
+//    int actualizarJornadaEnBd(Jornada jornada) throws SQLException {
+//        int idJornada=0;
+//        Jornada j=buscarJornada(jornada.getJornada());
+//        if(j==null){
+//            rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("insert into "+tabla+" (jornada,id_dependencia )values ('"+jornada.getJornada()+"','"+jornada.getIdDependencia()+"') returning id");
+//            while(rs.next()){
+//                idJornada=rs.getInt("id");
+//            }
+//            rs.close();
+//        }else{
+//            ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("update "+tabla+" set jornada ='"+jornada.getJornada()+"' where id ="+jornada.getId());       
+//            idJornada=j.getId();
+//        }
+//     return idJornada;   
+//    }
 
     ArrayList<Jornada> listarJornadas(int idDependencia) throws SQLException {
         ArrayList<Jornada> jornadas= new ArrayList<>();
@@ -84,6 +94,17 @@ public class JornadaDAO {
         }
         return j;
     }
+//    Jornada buscarJornada(String jornada) throws SQLException {
+//        Jornada j= null;
+//        rs = ContratacionMonitoresDAO.getStBdContratacionMonitores().executeQuery("select * from "+tabla+" where jornada='"+jornada+"'");
+//        while(rs.next()){
+//            j=new Jornada();
+//            j.setId(rs.getInt("id"));
+//            j.setJornada(rs.getString("jornada"));
+//            j.setIdDependencia(rs.getInt("id_dependencia"));
+//        }
+//        return j;
+//    }
 
     
 }

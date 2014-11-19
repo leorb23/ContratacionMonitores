@@ -202,7 +202,10 @@ if(var!=null){
        <fieldset id="fls_mostrar">
                 
              <%disabled=paso.equals("paso2")?false:true;%>
-
+            <form action="" method="post" id="formSend">
+                <input id="accion" name="accion" type="hidden" value="1111"/>
+                <input id="idHorario" name="idHorario" type="hidden" value=""/>
+            </form>
             <legend>Horarios</legend>
             <table>
                 <tr style="height: 30px;" id="tr_rows">
@@ -217,16 +220,16 @@ if(var!=null){
             else{
                 int color=0;
                 for(Jornada j :actualizarDep.darJornadas()){
-
                     for(Horario h:j.getHorarios()){%>
                         <tr class="tr_list"  <%if(color==0){%> style="background: white;" <%}else{%>style="background: #aad4ff;"<%}%> >
                             <td><%=j.getJornada() %></td>
                             <td><%=h.getDesde() %> </td>
                             <td><%=h.getHasta() %></td>
                             <td><%=h.getTotalCupos() %></td>
-                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('eliminarHorario','<%=h.getId()%>');"><img src="img/icon_delete.png" title="Eliminar"/></a></td>
-                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('editarHorario','<%=h.getId() %>');"><img src="img/icon_update.png" title="Editar"/></a></td> 
-                            <form action="GestionDependencias" method="post">
+                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('eliminarHorarioDep','<%=h.getId()%>');" <%if(disabled){%> style="visibility: hidden;" <%}%>><img src="img/icon_delete.png" title="Eliminar"/></a></td>
+                            <td><a class="icono_small"  href="#" onclick="javascript:sendForm('editarHorario','<%=h.getId() %>');" <%if(disabled){%> style="visibility: hidden;" <%}%>><img src="img/icon_update.png" title="Editar"/></a></td> 
+                            
+<!--                            <form action="GestionDependencias" method="post">
                                 <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar" <%if(disabled){%> style="visibility: hidden;" <%}%>></td>
                                 <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId() %>">
                                 <input type="hidden" id="accion" name="accion" value="eliminarHorarioDep">
@@ -235,15 +238,53 @@ if(var!=null){
                                 <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar" <%if(disabled){%>style="visibility: hidden;" <%}%>></td>
                                 <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId()%>">
                                 <input type="hidden" id="accion" name="accion" value="actualizarPaso2">
-                            </form>
+                            </form>-->
                        </tr>
                     <%}
                    if(color==0){color=1;}else{color=0;}
                 }
+                
             } 
             %>
+
             </table>          
         </fieldset>
+        <fieldset id="fls_mostrar">
+                <legend>Registro de Horarios</legend>
+                <%if(mensaje!=null){%>
+                <h4 style="color: red; font-size: 13px;"><%=mensaje%></h4>
+                        <%session.removeAttribute("mensaje");
+                }%>
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post">
+                    <table style="text-align: left;">
+                        <tr>
+                            <td><label>Jornada</label>
+                                <select id="slc_jornada" name="slc_jornada" required>
+                                    <option value="manana">Mañana</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noche">Noche</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label>Número de Cupos</label>
+                                <input type="number" id="txtCupos" name="txtCupos" min="1" max="10" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Hora de Inicio</label>
+                                <input type="number" id="txtHoraInicio" name="txtHoraInicio" min="0" max="23" required>
+                            </td>
+                            <td>
+                                <label>Finalización</label>
+                                <input type="number" id="txtHoraFin" name="txtHoraFin" min="0" max="23" required>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit"  id="btnForm" name="btnregDep"  value="Agregar">
+                    <input id="accion" name="accion" type="hidden" value="agregarHorario"/>
+                    <input id="atras" name="atras" type="hidden" value="si"/>
+                </form>
+            </fieldset>    
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
                     <input  type="submit"  id="btnForm" name="btnregDep"  value="Guardar Cambios">
                     <input id="accion" name="accion" type="hidden" value="finalizarActDep"/>

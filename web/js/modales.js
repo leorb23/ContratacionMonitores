@@ -210,9 +210,18 @@ $(document).ready(function(){
 
 //enviar form
 function sendForm($var,$id){
-    if($var=='eliminarHorario'){
-        
+    if($var==='eliminarHorarioDep'){
+        var forma = document.getElementById("formSend");
+	forma.action = "GestionDependencias";
+        var accion = forma.accion;
+        var idHorario = forma.idHorario;
+        forma.get
+        accion.value=$var;
+        idHorario.value=$id;
+	forma.submit();
+	return true;
     }
+    
     
 }
 

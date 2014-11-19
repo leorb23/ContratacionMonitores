@@ -84,7 +84,15 @@ public class GestionDependencias extends HttpServlet {
                    response.sendRedirect("dependencia.jsp");
                    break;
                case"agregarHorario":
+                   String atributo="";
                    Dependencia actual =(Dependencia)sesion.getAttribute("regDep2");
+                   if(actual!=null)
+                        atributo="regDep2";
+                   else{
+                       actual =(Dependencia)sesion.getAttribute("actualizarDep");
+                       atributo="actualizarDep";
+                   }
+                   
                    String jornadaString=request.getParameter("slc_jornada");
                    if(jornadaString.equals("manana")){
                        jornadaString="Mañana";
@@ -99,7 +107,7 @@ public class GestionDependencias extends HttpServlet {
                         Horario horario = new Horario(horaInicio, horaFin,0,cupos,cupos, 0);
                         jornada.agregarHorario(horario);
                         actual.agregarJornada(jornada);
-                        sesion.setAttribute("regDep2", actual);
+                        sesion.setAttribute(atributo, actual);
                    }
                    response.sendRedirect("dependencia.jsp");
                    break;
