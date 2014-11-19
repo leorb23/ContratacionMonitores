@@ -4,8 +4,12 @@ function venRegDep() {
           $('#divRegDep').load('util/formularios.jsp?var=regDep');
     });	
     $("#divRegDep").dialog({
+        closeOnEscape: false,
+        open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
         width : 260,
         height : 320,
+        resizable : "false",
+        modal : "true"
         //autOpen:false,
         //show : "fold",
 //        show:{
@@ -18,8 +22,7 @@ function venRegDep() {
 //        },
         
         //hide : "pulsate",
-        resizable : "false",
-        modal : "true"
+        
     });
 }
 //Dependencias
@@ -28,6 +31,8 @@ function venContRegDep() {
           $('#divRegDep').load('util/formularios.jsp?var=contRegDep');
     });	
     $("#divRegDep").dialog({
+        closeOnEscape: false,
+        open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
         width : 500,
         height : 600,
         resizable : "false",
@@ -35,11 +40,9 @@ function venContRegDep() {
     });
 }
 
-
-
-function venDeleteDep(){
+function venDeleteDep($idDependencia){
      $(document).ready(function(){
-          $('#divDelDep').load('util/formularios.jsp?var=eliminarDep');
+          $('#divDelDep').load('util/formularios.jsp?var=eliminarDep&idDependencia='+$idDependencia);
     });	
     $("#divDelDep").dialog({
         width : 500,
@@ -53,6 +56,8 @@ function venUpdateDep(){
           $('#divUpdDep').load('util/formularios.jsp?var=actualizarDep');
     });	
     $("#divUpdDep").dialog({
+        closeOnEscape: false,
+        open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
         width : 500,
         height : 600,
         resizable : "false",
@@ -215,11 +220,21 @@ function sendForm($var,$id){
 	forma.action = "GestionDependencias";
         var accion = forma.accion;
         var idHorario = forma.idHorario;
-        forma.get
         accion.value=$var;
         idHorario.value=$id;
 	forma.submit();
 	return true;
+    }
+    else if($var==='editarHorario'){
+        alert("Peticion en mantenimiento :) :O :D");
+//        var forma = document.getElementById("formSend");
+//	forma.action = "GestionDependencias";
+//        var accion = forma.accion;
+//        var idHorario = forma.idHorario;
+//        accion.value=$var;
+//        idHorario.value=$id;
+//	forma.submit();
+//	return true;
     }
     
     

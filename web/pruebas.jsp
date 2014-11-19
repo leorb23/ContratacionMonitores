@@ -16,12 +16,7 @@
 
 <%  
     session.setAttribute("ubicacionPage", "pruebas.jsp");
-    
-    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
-    Administrador admin = (Administrador)session.getAttribute("admin");
-    String mensaje = (String)session.getAttribute("mensaje");
+
 %>
 
 <!DOCTYPE html5>

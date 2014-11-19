@@ -16,13 +16,9 @@
 <%  
     session.setAttribute("ubicacionPage", "aspirante.jsp");
     
-    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
-    Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
-    Aspirante eliminarAspirante=(Aspirante)session.getAttribute("eliminarAspirante");
+
     session.removeAttribute("eliminarMonitor");     
     session.removeAttribute("eliminarDependencia");
     session.removeAttribute("eliminarString");

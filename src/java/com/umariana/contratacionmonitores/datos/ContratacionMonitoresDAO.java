@@ -12,6 +12,7 @@ import com.umariana.contratacionmonitores.logica.Postulacion;
 import com.umariana.contratacionmonitores.logica.Resultado;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -285,7 +286,7 @@ public class ContratacionMonitoresDAO {
         else
             throw  new ExcepcionYaExiste("La dependencia ( "+dependencia.darNombre()+" ) que desea agregar ya existe !!");
     }
-    public void eliminarDependenciaEnBD( int codigo) throws SQLException{
+    public void eliminarDependenciaEnBD( int codigo) throws SQLException {
         dependenciaDAO.eliminarDependencia(codigo);
     }
     public void actualizarDependenciaEnBd(Dependencia dependencia) throws SQLException, ExcepcionYaExiste{

@@ -14,9 +14,7 @@
 <%@page import="com.umariana.contratacionmonitores.logica.Aspirante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%  //Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+<%  
     session.setAttribute("ubicacionPage", "admin.jsp");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
@@ -42,14 +40,22 @@
                     <table>
                         <tr>
                             <td>
-                                <label>Ingreso Para Administrador</label>
                                 <form action="GestionAdministrador" method="POST">
-                                    <label>Usuario</label>
-                                    <input type="text" id="txt_usuario" name="txt_usuario" required>
-                                    <label>Contraseña</label>
-                                    <input type="password" id="txt_contrasena" name="txt_contrasena" required>
-                                    <input type="submit" id="btn_enviar" value="Entrar">
-                                    <input type="hidden" id="accion" name="accion" value="entrar">                       
+                                    <div style="width: 350px;  text-align: center; background: #bfdef8; padding: 10px; margin: 0 auto 0;"> 
+                                        <label style=" margin: 0 auto 0;">Ingreso Para Administrador</label>
+                                        <table>
+                                            <tr style="height: 10px;">
+                                                <td >Usuario</td>
+                                                <td><input type="text" id="txt_usuario" name="txt_usuario" required></td>
+                                                <td rowspan="2"><input style="width: 30px; height: 30px; " class="icono"  type="image" id="btn_img" src="img/icon_entrar_admin.png" title="Ingresar"> </td>
+                                            </tr>
+                                            <tr style="height: 10px;">
+                                                <td>Contraseña</td>
+                                                <td><input type="password" id="txt_contrasena" name="txt_contrasena" required></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" id="accion" name="accion" value="entrar">                      
                                 </form>
                             </td>
                         </tr>
@@ -59,7 +65,7 @@
             <label>Administrador : <%=admin.darNombre() %></label><br>  
             <form action="GestionAdministrador" method="post" class="icono">
                 <div style="width: 70px; height: 70px; float: right;" >
-                    <input class="iconoGrande" type="image" id="btn_img" src="img/icon_salir.png" title="Salir">
+                    <input class="iconoGrande" type="image" id="btn_img" src="img/icon_salir_admin.png" title="Salir">
                 </div>
                 <input type="hidden" id="accion" name="accion" value="cerrar">
             </form> 
@@ -79,19 +85,6 @@
                     </form>
                 </div>
                 <%}%>
-<!--                <table align="center">
-                    <tr>
-                        <td>
-                            <label>Buscar Estudiantes</label>
-                            <form action="ContratacionMonitoresServlet" method="POST">
-                                <label>Identificacion</label>
-                                <input type="text" id="txt_identificacion" name="txt_identificacion">
-                                <input type="submit" id="btn_enviar" value="Enviar">
-                                <input type="hidden" id="accion" name="accion" value="buscarPorAdmin">
-                            </form>
-                        </td>
-                    </tr>
-                </table>-->
                 <%
                 Aspirante aspiBusc=(Aspirante)session.getAttribute("aspiranteBuscado");
                 Monitor monitorBusc=(Monitor) session.getAttribute("monitorBuscado");

@@ -19,8 +19,7 @@
     session.setAttribute("ubicacionPage", "dependencia.jsp");
     
     Administrador admin = (Administrador)session.getAttribute("admin");
-    //String mensaje = (String)session.getAttribute("mensaje");
-    //Dependencia eliminarD = (Dependencia)session.getAttribute("eliminarDependencia");
+    String mensaje = (String)session.getAttribute("mensajeSQL");
     session.removeAttribute("eliminarMonitor");     
     session.removeAttribute("eliminarAspirante");     
     session.removeAttribute("eliminarString");
@@ -37,6 +36,10 @@
         <jsp:include page="divModal.jsp" /> 
          <section>
             <%if(admin!=null){%> 
+             <%if(mensaje!=null){%>
+                <h4 style=" background: white;color: red; font-size: 13px;"><%=mensaje%></h4>
+                        <%session.removeAttribute("mensajeSQL");
+                }%>
             <div id="contenedor">           
                 <table>
                     <th  colspan="7">Lista de Dependencias</th> 
@@ -56,14 +59,10 @@
                         <td style="text-align: left;"><%=dep.darDescripcion()%></td>
                         <td><%=dep.getTotalCupos() %></td>
                         <td><%=dep.getTotalCuposDisponibles() %></td>     
-                        <td class="icono"><input type="image" onclick="javascript:venVerDep('<%=dep.darId()%>');"  id="btn_img" src="img/icon_see.png" title="Ver"></td>    
+                        <td style="width: 40px;" class="icono"><input type="image" onclick="javascript:venVerDep('<%=dep.darId()%>');"  id="btn_img" src="img/icon_see.png" title="Ver"></td>    
+                        <td style="width: 40px;" class="icono"><input type="image" onclick="javascript:venDeleteDep('<%=dep.darId()%>');"  id="btn_img" src="img/icon_delete.png" title="Eliminar"></td>    
                         <form action="GestionDependencias" method="post">
-                            <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar"></td>
-                            <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
-                            <input type="hidden" id="accion" name="accion" value="eliminarDepPaso1">
-                        </form>
-                        <form action="GestionDependencias" method="post">
-                            <td class="icono post" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar"></td>
+                            <td style="width: 40px;" class="icono post" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar"></td>
                             <input type="hidden" id="idDependencia" name="idDependencia" value="<%=dep.darId()%>">
                             <input type="hidden" id="accion" name="accion" value="actualizarD">
                         </form>
@@ -84,7 +83,6 @@
             Dependencia existeD=(Dependencia)session.getAttribute("depExiste");            
             Dependencia regDep2=(Dependencia)session.getAttribute("regDep2");
             Dependencia regDep1=(Dependencia)session.getAttribute("regDep1");
-            Dependencia eliminarDep=(Dependencia)session.getAttribute("eliminarDep");
             Dependencia actualizarDep=(Dependencia)session.getAttribute("actualizarDep");
 
             if(existeD!=null || regDep1!=null){%>
@@ -97,11 +95,7 @@
                     venContRegDep();
              </script>
            <%}
-           if(eliminarDep!=null){%>
-                <script> 
-                    venDeleteDep();
-                </script>
-            <%}
+           
            if(actualizarDep!=null){%>
                 <script> 
                     venUpdateDep();

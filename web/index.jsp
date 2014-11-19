@@ -25,11 +25,11 @@ if(instance==null){
 
 <%  
     session.setAttribute("ubicacionPage", "index.jsp");
-    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
-    Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
-    Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
-    Administrador admin = (Administrador)session.getAttribute("admin");
-    String mensaje = (String)session.getAttribute("mensaje");
+    //Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+    //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
+    //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
+    //Administrador admin = (Administrador)session.getAttribute("admin");
+    //String mensaje = (String)session.getAttribute("mensaje");
 %>
 
 <!DOCTYPE html5>

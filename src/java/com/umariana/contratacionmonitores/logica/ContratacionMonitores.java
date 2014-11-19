@@ -6,6 +6,7 @@ import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import java.io.File;
+import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -514,7 +515,7 @@ public class ContratacionMonitores {
      * @param codigo != null && !=""
      * @throws ExcepcionNoExiste 
      */
-    public void eliminarDependencia(int codigo) throws ExcepcionNoExiste, SQLException{           
+    public void eliminarDependencia(int codigo) throws SQLException    {           
         cmDAO.eliminarDependenciaEnBD(codigo);     
     }
     

@@ -13,13 +13,13 @@
 <%  
     session.setAttribute("ubicacionPage", "monitor.jsp");
     
-    Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
+    //Aspirante aspirante =(Aspirante) session.getAttribute("aspirante");
     //Monitor monitor=monitor =(Monitor) session.getAttribute("monitor");
     //Estudiante estudiante = (Estudiante)session.getAttribute("estudiante");
     Administrador admin = (Administrador)session.getAttribute("admin");
     String mensaje = (String)session.getAttribute("mensaje");
-    Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
-    Monitor eliminarMonitor = (Monitor)session.getAttribute("eliminarMonitor");
+    //Estudiante eliminar = (Estudiante)session.getAttribute("eliminar");
+    //Monitor eliminarMonitor = (Monitor)session.getAttribute("eliminarMonitor");
     session.removeAttribute("eliminarDependencia");     
     session.removeAttribute("eliminarAspirante");
     session.removeAttribute("eliminarString");

@@ -30,7 +30,11 @@ if(var!=null){
             <textarea type="text" name="txt_descripcion" id="txt_descripcion"  maxlength="100" required><%if(regDep1!=null){ %><%=regDep1.darDescripcion()%><%}%><%if(existeD!=null){ %><%=existeD.darDescripcion()%><%}%></textarea> 
             <br>
             <br>
-            <input  type="submit"  id="btnForm" name="btnregDep"  value="Enviar">
+            <input  type="submit"  id="btnForm" name="btnregDep"  value="Enviar" style="display: inline-block;width: 200px;"> 
+    </form>
+    <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style=" margin-top: 10px;display: inline-block;">
+        <input type="submit"  id="btnForm" name="btnregDep"  value="Cancelar" style="color:  red;">
+        <input id="accion" name="accion" type="hidden" value="cancelar"/>
     </form>
 
    <%     
@@ -53,9 +57,7 @@ if(var!=null){
                         <td></td>
                         <td style="height: auto; text-align: left; padding-left: 5px;"><p><%if(regDep2!=null){ %><%=regDep2.darDescripcion()%><%}%></p></td>
                     </tr>
-                </table>
-                
-                         
+                </table>      
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post">
                     <input type="submit"  id="btnForm" name="btnregDep"  value="Editar">
                     <input id="accion" name="accion" type="hidden" value="volverRegDep"/>                 
@@ -129,9 +131,13 @@ if(var!=null){
                 
                 %>
                 </table>
-                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post">
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
                     <input type="submit"  id="btnForm" name="btnregDep"  value="Terminar">
                     <input id="accion" name="accion" type="hidden" value="finalizarRegDep"/>
+                </form>
+                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
+                    <input type="submit"  id="btnForm" name="btnregDep"  value="Cancelar" style="color: red;">
+                    <input id="accion" name="accion" type="hidden" value="cancelar"/>
                 </form>
             </fieldset>
                 
@@ -139,7 +145,8 @@ if(var!=null){
    <%         
    }
     if(var.equals("eliminarDep")){
-   Dependencia eliminarD=(Dependencia)session.getAttribute("eliminarDep");
+        String idDependencia=request.getParameter("idDependencia");
+        Dependencia eliminarD= GestionDependencias.buscarDependencia(idDependencia);
    %>
          <fieldset id="fls_mostrar">
             <legend>Eliminar Dependencia</legend>  
@@ -156,11 +163,9 @@ if(var!=null){
             </table>
             <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
               <input type="submit"  id="btnForm" name="btnregDep"  value="Eliminar">
+              <input id="idDependencia" name="idDependencia" type="hidden" value="<%=eliminarD.darId() %>"/>
               <input id="accion" name="accion" type="hidden" value="aceptarDelDep"/>
-          </form>
-           <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
-              <input type="submit"  id="btnForm" name="btnregDep"  value="Cancelar">
-              <input id="accion" name="accion" type="hidden" value="cancelar"/>
+              <input style="width: 200px;" type="button" onclick="javascript:hiddenThis(divDelDep);" id="btnForm" name="btnregDep"  value="Cancelar">
           </form>
         </fieldset>
    <%}
@@ -172,7 +177,7 @@ if(var!=null){
             <%boolean disabled = paso.equals("paso1")?false:true;%>
                 <legend>Datos de la Dependencia</legend>
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post"> 
-                    <%if(mensaje!=null){%>
+                    <%if(mensaje!=null && !disabled){%>
                     <h4 style="color: red; font-size: 13px;"><%=mensaje%></h4>
                             <%session.removeAttribute("mensaje");
                     }%>
@@ -198,10 +203,10 @@ if(var!=null){
                 </form>
                 <%}%>     
         </fieldset>
-                    
+       <%disabled=paso.equals("paso2")?false:true;%>             
        <fieldset id="fls_mostrar">
                 
-             <%disabled=paso.equals("paso2")?false:true;%>
+             
             <form action="" method="post" id="formSend">
                 <input id="accion" name="accion" type="hidden" value="1111"/>
                 <input id="idHorario" name="idHorario" type="hidden" value=""/>
@@ -228,22 +233,10 @@ if(var!=null){
                             <td><%=h.getTotalCupos() %></td>
                             <td><a class="icono_small"  href="#" onclick="javascript:sendForm('eliminarHorarioDep','<%=h.getId()%>');" <%if(disabled){%> style="visibility: hidden;" <%}%>><img src="img/icon_delete.png" title="Eliminar"/></a></td>
                             <td><a class="icono_small"  href="#" onclick="javascript:sendForm('editarHorario','<%=h.getId() %>');" <%if(disabled){%> style="visibility: hidden;" <%}%>><img src="img/icon_update.png" title="Editar"/></a></td> 
-                            
-<!--                            <form action="GestionDependencias" method="post">
-                                <td class="icono"><input type="image"  id="btn_img" src="img/icon_delete.png" title="Eliminar" <%if(disabled){%> style="visibility: hidden;" <%}%>></td>
-                                <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId() %>">
-                                <input type="hidden" id="accion" name="accion" value="eliminarHorarioDep">
-                            </form>
-                            <form action="GestionDependencias" method="post">
-                                <td class="icono" id="td_padd"><input type="image"  id="btn_img"  src="img/icon_update.png" title="Editar" <%if(disabled){%>style="visibility: hidden;" <%}%>></td>
-                                <input type="hidden" id="idHorario" name="idHorario" value="<%=h.getId()%>">
-                                <input type="hidden" id="accion" name="accion" value="actualizarPaso2">
-                            </form>-->
                        </tr>
                     <%}
                    if(color==0){color=1;}else{color=0;}
-                }
-                
+                }        
             } 
             %>
 
@@ -251,7 +244,7 @@ if(var!=null){
         </fieldset>
         <fieldset id="fls_mostrar">
                 <legend>Registro de Horarios</legend>
-                <%if(mensaje!=null){%>
+                <%if(mensaje!=null && !disabled){%>
                 <h4 style="color: red; font-size: 13px;"><%=mensaje%></h4>
                         <%session.removeAttribute("mensaje");
                 }%>
@@ -259,7 +252,7 @@ if(var!=null){
                     <table style="text-align: left;">
                         <tr>
                             <td><label>Jornada</label>
-                                <select id="slc_jornada" name="slc_jornada" required>
+                                <select id="slc_jornada" name="slc_jornada" <%if(disabled){%> disabled="disabled" <%}%> required>
                                     <option value="manana">Mañana</option>
                                     <option value="Tarde">Tarde</option>
                                     <option value="Noche">Noche</option>
@@ -267,20 +260,20 @@ if(var!=null){
                             </td>
                             <td>
                                 <label>Número de Cupos</label>
-                                <input type="number" id="txtCupos" name="txtCupos" min="1" max="10" required>
+                                <input <%if(disabled){%> disabled="disabled" <%}%> type="number" id="txtCupos" name="txtCupos" min="1" max="10" required>
                             </td>
                         </tr>
                         <tr>
                             <td><label>Hora de Inicio</label>
-                                <input type="number" id="txtHoraInicio" name="txtHoraInicio" min="0" max="23" required>
+                                <input <%if(disabled){%> disabled="disabled" <%}%> type="number" id="txtHoraInicio" name="txtHoraInicio" min="0" max="23" required>
                             </td>
                             <td>
                                 <label>Finalización</label>
-                                <input type="number" id="txtHoraFin" name="txtHoraFin" min="0" max="23" required>
+                                <input <%if(disabled){%> disabled="disabled" <%}%> type="number" id="txtHoraFin" name="txtHoraFin" min="0" max="23" required>
                             </td>
                         </tr>
                     </table>
-                    <input type="submit"  id="btnForm" name="btnregDep"  value="Agregar">
+                    <input <%if(disabled){%> style="visibility: hidden;" <%}%> type="submit"  id="btnForm" name="btnregDep"  value="Agregar">
                     <input id="accion" name="accion" type="hidden" value="agregarHorario"/>
                     <input id="atras" name="atras" type="hidden" value="si"/>
                 </form>
@@ -288,6 +281,7 @@ if(var!=null){
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
                     <input  type="submit"  id="btnForm" name="btnregDep"  value="Guardar Cambios">
                     <input id="accion" name="accion" type="hidden" value="finalizarActDep"/>
+<!--                    <input style="width: 100px;" type="button" onclick="javascript:hiddenThis(divUpdDep);" id="btnForm" name="btnregDep"  value="Aceptar">            -->
                 </form>
                 <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
                     <input type="submit"  id="btnForm" name="btnregDep"  value="Cancelar">
@@ -330,9 +324,9 @@ if(var!=null){
                         <td></td><td></td><td colspan="3">T : Totales<br>D : Disponibles</td>
                     </tr>
                 </table>
-                <form action="GestionDependencias" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
-                    <input type="submit"  id="btnForm" name="btnregDep"  value="Aceptar">
-                    <input id="accion" name="accion" type="hidden" value="cancelar"/>
+                
+                <form action="" id="formRegDep" name="formRegDep" method="post" style="display: inline-block;">
+                    <input style="width: 200px;" type="button" onclick="javascript:hiddenThis(divVerDep);" id="btnForm" name="btnregDep"  value="Aceptar">            
                 </form>
             </fieldset>    
             <%

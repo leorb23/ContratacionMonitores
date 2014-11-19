@@ -1,9 +1,12 @@
 package com.umariana.contratacionmonitores.datos;
 
 import com.umariana.contratacionmonitores.logica.Dependencia;
+import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,8 +29,8 @@ public class DependenciaDAO {
             return idDependencia;
     }
     
-    public void eliminarDependencia(int codigo) throws SQLException{
-        ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where id ="+codigo);
+    public void eliminarDependencia(int codigo) throws SQLException {
+            ContratacionMonitoresDAO.getStBdContratacionMonitores().executeUpdate("delete from "+tabla+" where id ="+codigo);
     }
 
     void actualizarDependencia(Dependencia dependencia) throws SQLException  {

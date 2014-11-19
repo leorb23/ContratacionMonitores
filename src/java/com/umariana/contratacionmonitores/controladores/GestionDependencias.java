@@ -2,10 +2,8 @@ package com.umariana.contratacionmonitores.controladores;
 
 import static com.umariana.contratacionmonitores.controladores.ContratacionMonitoresServlet.instance;
 import com.umariana.contratacionmonitores.excepciones.ConnectionException;
-import com.umariana.contratacionmonitores.excepciones.ExcepcionNoExiste;
 import com.umariana.contratacionmonitores.excepciones.ExcepcionYaExiste;
 import com.umariana.contratacionmonitores.logica.Dependencia;
-import com.umariana.contratacionmonitores.logica.Postulacion;
 import com.umariana.contratacionmonitores.logica.dependencia.Horario;
 import com.umariana.contratacionmonitores.logica.dependencia.Jornada;
 import java.io.IOException;
@@ -119,18 +117,19 @@ public class GestionDependencias extends HttpServlet {
                    sesion.removeAttribute("regDep2");
                    response.sendRedirect("dependencia.jsp");
                    break;
-               case "eliminarDepPaso1":
-                   int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
-                   Dependencia delete = instance.buscarDependencia(idDependencia);
-                   sesion.setAttribute("eliminarDep", delete);
-                   sesion.removeAttribute("depExiste");
-                   sesion.removeAttribute("regDep1");
-                   sesion.removeAttribute("regDep2");
-                   response.sendRedirect("dependencia.jsp");
-                   break;                 
+//               case "eliminarDepPaso1":
+//                   int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
+//                   Dependencia delete = instance.buscarDependencia(idDependencia);
+//                   sesion.setAttribute("eliminarDep", delete);
+//                   sesion.removeAttribute("depExiste");
+//                   sesion.removeAttribute("regDep1");
+//                   sesion.removeAttribute("regDep2");
+//                   response.sendRedirect("dependencia.jsp");
+//                   break;                 
                case"aceptarDelDep":
-                   delete=(Dependencia)sesion.getAttribute("eliminarDep");
-                   instance.eliminarDependencia(delete.darId());
+                   int idDependencia=Integer.parseInt(request.getParameter("idDependencia"));
+                   //delete=(Dependencia)sesion.getAttribute("eliminarDep");
+                   instance.eliminarDependencia(idDependencia);
                    sesion.removeAttribute("eliminarDep");   
                    sesion.removeAttribute("depExiste");
                    sesion.removeAttribute("regDep1");
@@ -202,8 +201,13 @@ public class GestionDependencias extends HttpServlet {
            }
            ContratacionMonitoresServlet.setearSesion(sesion);
            //response.sendRedirect("dependencia.jsp");
-       } catch (SQLException | ExcepcionYaExiste | ConnectionException | ExcepcionNoExiste ex) {
-           Logger.getLogger(GestionDependencias.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (SQLException | ExcepcionYaExiste | ConnectionException ex) {
+           if(ex.getMessage().startsWith("ERROR: update o delete"))
+               sesion.setAttribute("mensajeSQL","Error: Hay monitores registrados en la dependencia!!");
+           else{
+               sesion.setAttribute("mensaje","Error: "+ex.getMessage());
+           }
+           response.sendRedirect("dependencia.jsp");
        }
     }
     
